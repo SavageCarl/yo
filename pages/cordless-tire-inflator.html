@@ -107,12 +107,14 @@
   #nsi .nsi-problem{background:var(--nsi-problem-bg);color:var(--nsi-problem-ink);border-radius:20px;margin:0 12px;}
   #nsi .nsi-problem h2{color:var(--nsi-problem-ink);font-size:clamp(1.7rem,4vw,2.5rem);max-width:20ch;}
   #nsi .nsi-problem .nsi-lede{color:var(--nsi-problem-ink-soft);max-width:52ch;margin-top:.9rem;font-size:1.08rem;}
-  #nsi .nsi-scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.2rem;}
+  #nsi .nsi-problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4vw,3rem);align-items:center;}
+  #nsi .nsi-problem-media img{width:100%;border-radius:16px;aspect-ratio:4/5;object-fit:cover;background:rgba(247,244,237,.08);}
+  #nsi .nsi-scenarios{display:grid;grid-template-columns:1fr;gap:1.1rem;margin-top:2.2rem;}
   #nsi .nsi-scenario{background:rgba(247,244,237,.06);border:1px solid rgba(247,244,237,.16);border-radius:var(--nsi-radius);padding:1.4rem;}
   #nsi .nsi-scenario .nsi-tag{font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#E8B27F;margin-bottom:.6rem;display:block;}
   #nsi .nsi-scenario p{font-size:1.02rem;}
   #nsi .nsi-problem .nsi-turn{font-family:var(--nsi-font-head);font-style:italic;color:#E8B27F;font-size:1.18rem;margin-top:1.8rem;}
-  @media(max-width:820px){#nsi .nsi-scenarios{grid-template-columns:1fr;}#nsi .nsi-problem{margin:0;border-radius:0;}}
+  @media(max-width:820px){#nsi .nsi-problem-grid{grid-template-columns:1fr;}#nsi .nsi-problem-media{order:-1;max-width:360px;margin:0 auto;width:100%;}#nsi .nsi-problem{margin:0;border-radius:0;}}
 
   /* SOLUTION */
   #nsi .nsi-solution{background:var(--nsi-bg);}
@@ -235,11 +237,15 @@
   @media(max-width:760px){#nsi .nsi-bundle-items{grid-template-columns:1fr;}}
 
   /* FINAL CTA */
-  #nsi .nsi-final{background:var(--nsi-bg);text-align:center;}
-  #nsi .nsi-final h2{font-size:clamp(1.7rem,4vw,2.4rem);max-width:20ch;margin:0 auto;}
-  #nsi .nsi-final .nsi-sub{margin:.9rem auto 0;max-width:42ch;color:var(--nsi-ink-soft);font-size:1.05rem;}
-  #nsi .nsi-final .nsi-price-row{justify-content:center;margin-top:1.4rem;}
+  #nsi .nsi-final{background:var(--nsi-bg);}
+  #nsi .nsi-final-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.6rem,4vw,3rem);align-items:center;}
+  #nsi .nsi-final-media img{width:100%;border-radius:16px;aspect-ratio:4/3;object-fit:cover;background:#EAE3D3;}
+  #nsi .nsi-final-copy{text-align:left;}
+  #nsi .nsi-final h2{font-size:clamp(1.7rem,4vw,2.4rem);max-width:16ch;}
+  #nsi .nsi-final .nsi-sub{margin-top:.9rem;max-width:42ch;color:var(--nsi-ink-soft);font-size:1.05rem;}
+  #nsi .nsi-final .nsi-price-row{margin-top:1.4rem;}
   #nsi .nsi-final .nsi-btn{margin-top:.4rem;}
+  @media(max-width:820px){#nsi .nsi-final-grid{grid-template-columns:1fr;}#nsi .nsi-final-media{order:-1;max-width:420px;margin:0 auto;width:100%;}#nsi .nsi-final-copy{text-align:center;}#nsi .nsi-final .nsi-price-row{justify-content:center;}}
 
   /* FOOTER */
   #nsi .nsi-footer{
@@ -331,8 +337,8 @@ var content = {
   // Real Shopify variant ID for the inflator — do not change unless the product/variant changes in Shopify.
   productVariantId: "43085441204299",
 
-  heroImage: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/fa221672407dad11fd7b84a286cf.png?v=1788311057",
-  heroImageAlt: "Cordless digital tire inflator with hose, ready to use on a vehicle",
+  heroImage: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-hero.png?v=1788735023",
+  heroImageAlt: "Man calmly using a cordless tire inflator on his SUV in a sunny driveway",
 
   // ---- SECTION 1: HERO ----
   hero: {
@@ -347,6 +353,8 @@ var content = {
     eyebrow: "It happens more than you'd think",
     headline: "A Low Tire Can Happen Anywhere.",
     lede: "None of these are emergencies. But each one is a lot easier when you're already prepared for it.",
+    image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-problem-roadside.png?v=1788735023",
+    imageAlt: "Driver safely pulled over checking a tire after a pressure warning light",
     scenarios: [
       { tag: "At Home", text: "Your tire is low before you leave." },
       { tag: "On The Road", text: "The tire-pressure warning light comes on." },
@@ -359,8 +367,8 @@ var content = {
   solution: {
     eyebrow: "How it works",
     headline: "Be Ready Before You Need It.",
-    image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/950adbbc4a5b9b014078ab34c49e.png?v=1788311077",
-    imageAlt: "Close-up of the cordless tire inflator's digital pressure display",
+    image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-product-hero.png?v=1788735022",
+    imageAlt: "Cordless digital tire inflator on a warm cream studio background",
     steps: [
       { num: "01", title: "Connect", text: "Attach it to your tire." },
       { num: "02", title: "Set", text: "Choose your desired pressure." },
@@ -377,11 +385,11 @@ var content = {
     eyebrow: "Watch it work",
     headline: "See How Simple It Is.",
     sequence: [
-      { label: "Low Tire", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/fa221672407dad11fd7b84a286cf.png?v=1788311057" },
-      { label: "Connect", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/aae971a045878f7b58a8ff679748.png?v=1788014536" },
-      { label: "Set PSI", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/cti-set-psi-demo.png?v=1788410978" },
-      { label: "Inflate", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/94d6e54d42a09612b582dab99c8c.png?v=1788014548" },
-      { label: "Done", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/cti-trunk-dusk.png?v=1788411007" }
+      { label: "Low Tire", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-problem-driveway.png?v=1788735023" },
+      { label: "Connect", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-connect.png?v=1788735022" },
+      { label: "Set PSI", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-set-psi.png?v=1788735023" },
+      { label: "Inflate", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-inflate.png?v=1788735023" },
+      { label: "Done", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-trunk.png?v=1788735023" }
     ],
     caption: "Screw on · set PSI · press start · automatic shut-off"
   },
@@ -459,8 +467,8 @@ var content = {
     explainerDeadPhone: "Power it",
     bundleName: "Glovebox Rescue Duo",
     bundleDescription: "The cordless tire inflator, plus a 20,000mAh power bank with built-in cables — the two things worth keeping in the glovebox.",
-    bundleImage: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/glovebox-rescue.png?v=1788065150",
-    bundleImageAlt: "Cordless tire inflator and 20,000mAh power bank included in the Glovebox Rescue Duo",
+    bundleImage: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-roadside-essentials.png?v=1788735023",
+    bundleImageAlt: "Cordless tire inflator and power bank styled together as Roadside Essentials",
     bundlePrice: "$52.99",
     bundleComparePrice: "$61.48",
     bundleCTA: "Add Roadside Essentials →",
@@ -485,8 +493,8 @@ var content = {
     bundlePrice: "$185.99",
     bundleComparePrice: "$204.97",
     shippingText: "Free Shipping",
-    bundleImage: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/roadside-kit.png?v=1788065147",
-    bundleImageAlt: "The Never-Stranded Roadside Kit: jump starter, cordless tire inflator, and power bank",
+    bundleImage: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-complete-kit.png?v=1788735023",
+    bundleImageAlt: "Tire inflator, jump starter, and power bank arranged together in a vehicle trunk",
     bundleVariantId: "43087166046283",
     ctaText: "Get the Complete Kit →"
   },
@@ -495,7 +503,9 @@ var content = {
   finalCta: {
     headline: "Be Ready Before You Need It.",
     subheadline: "Keep a tire inflator in your trunk and handle a low tire wherever you are.",
-    ctaText: "Get Yours →"
+    ctaText: "Get Yours →",
+    image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/nsi-final-cta.png?v=1788735023",
+    imageAlt: "Driver calmly getting into his SUV at golden hour, ready to go"
   },
 
   // ---- FOOTER ----
@@ -572,8 +582,8 @@ function renderMidCta(targetId, loc){
 
 function renderProblem(){
   var p = content.problem;
-  document.getElementById("nsi-problem").innerHTML =
-    '<div class="nsi-wrap">' +
+  var copy =
+    '<div>' +
       '<p class="nsi-eyebrow lt">' + esc(p.eyebrow) + '</p>' +
       '<h2>' + esc(p.headline) + '</h2>' +
       '<p class="nsi-lede">' + esc(p.lede) + '</p>' +
@@ -581,6 +591,11 @@ function renderProblem(){
         return '<div class="nsi-scenario"><span class="nsi-tag">' + esc(s.tag) + '</span><p>' + esc(s.text) + '</p></div>';
       }).join("") + '</div>' +
       '<p class="nsi-turn">' + esc(p.transition) + '</p>' +
+    '</div>';
+  var media = p.image ? '<div class="nsi-problem-media"><img src="' + esc(p.image) + '" alt="' + esc(p.imageAlt) + '" loading="lazy"></div>' : '';
+  document.getElementById("nsi-problem").innerHTML =
+    '<div class="nsi-wrap">' +
+      (media ? '<div class="nsi-problem-grid">' + copy + media + '</div>' : copy) +
     '</div>';
 }
 
@@ -742,14 +757,19 @@ function renderBundle(){
 
 function renderFinal(){
   var f = content.finalCta;
-  document.getElementById("nsi-final").innerHTML =
-    '<div class="nsi-wrap">' +
+  var copy =
+    '<div class="nsi-final-copy">' +
       '<h2>' + esc(f.headline) + '</h2>' +
       '<p class="nsi-sub">' + esc(f.subheadline) + '</p>' +
       '<div class="nsi-price-row">' +
         '<span class="nsi-price">' + esc(content.productName) + ' — ' + esc(content.productPrice) + '</span>' +
       '</div>' +
       '<a class="nsi-btn" href="' + cartLink(content.productVariantId) + '" data-loc="final">' + esc(f.ctaText) + '</a>' +
+    '</div>';
+  var media = f.image ? '<div class="nsi-final-media"><img src="' + esc(f.image) + '" alt="' + esc(f.imageAlt) + '" loading="lazy"></div>' : '';
+  document.getElementById("nsi-final").innerHTML =
+    '<div class="nsi-wrap">' +
+      (media ? '<div class="nsi-final-grid">' + copy + media + '</div>' : copy) +
     '</div>';
 }
 
