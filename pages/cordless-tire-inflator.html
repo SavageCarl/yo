@@ -1,0 +1,824 @@
+<!--
+  NEVER-STRANDED CORDLESS TIRE INFLATOR — LANDING PAGE
+  Store: Hearth & Nook (hearthandnook.store)
+  Shopify Page handle: cordless-inflator
+
+  ============================================================
+  HOW TO EDIT THIS PAGE
+  ============================================================
+  Everything a non-developer needs to change lives in the single
+  `content` object below, inside the <script id="nsi-config"> tag.
+  Scroll to "1. EDITABLE CONTENT / DESIGN CONFIG" and change values
+  there — headlines, prices, images, colors, FAQ, reviews, on/off
+  toggles for whole sections. Nothing below that point needs to be
+  touched for ordinary marketing edits.
+
+  Do NOT edit the CSS or the render() function unless you're
+  changing layout/behavior, not just words, prices or colors.
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap">
+<style>
+  #nsi{
+    --nsi-bg:#F7F4ED;
+    --nsi-bg-alt:#FFFFFF;
+    --nsi-ink:#12263F;
+    --nsi-ink-soft:#4C5B6E;
+    --nsi-accent:#C1662F;
+    --nsi-accent-dark:#A4531F;
+    --nsi-problem-bg:#12263F;
+    --nsi-problem-ink:#F7F4ED;
+    --nsi-problem-ink-soft:#B9C4D3;
+    --nsi-card:#FFFFFF;
+    --nsi-line:#E4DDCE;
+    --nsi-good:#3F7D4E;
+    --nsi-font-head:'Fraunces',Georgia,'Iowan Old Style',serif;
+    --nsi-font-body:'Hanken Grotesk',-apple-system,'Segoe UI',Roboto,sans-serif;
+    --nsi-radius:12px;
+    all:initial;
+    display:block;
+    font-family:var(--nsi-font-body);
+    color:var(--nsi-ink);
+    background:var(--nsi-bg);
+    line-height:1.6;
+    font-size:16px;
+    -webkit-text-size-adjust:100%;
+  }
+  #nsi *{box-sizing:border-box;min-width:0;}
+  #nsi h1,#nsi h2,#nsi h3,#nsi p,#nsi ul,#nsi li,#nsi div,#nsi span,#nsi a,#nsi button,#nsi img,#nsi section,#nsi details,#nsi summary,#nsi table,#nsi td,#nsi tr{
+    font-family:inherit;color:inherit;margin:0;padding:0;border:0;line-height:inherit;text-decoration:none;
+  }
+  #nsi img{max-width:100%;display:block;}
+  #nsi ul{list-style:none;}
+  #nsi h1,#nsi h2,#nsi h3{font-family:var(--nsi-font-head);font-weight:700;line-height:1.15;letter-spacing:-0.01em;}
+  #nsi .nsi-wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
+  #nsi .nsi-sec{padding:clamp(2.75rem,6vw,5rem) 20px;}
+  #nsi .nsi-eyebrow{
+    font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--nsi-accent);display:flex;align-items:center;gap:.65rem;margin-bottom:.9rem;
+  }
+  #nsi .nsi-eyebrow:after{content:"";height:2px;width:2rem;background:var(--nsi-accent);flex:0 0 auto;}
+  #nsi .nsi-eyebrow.lt{color:#E8B27F;}
+  #nsi .nsi-eyebrow.lt:after{background:#E8B27F;}
+  #nsi .nsi-eyebrow.ctr{justify-content:center;}
+  #nsi .nsi-center{text-align:center;}
+
+  /* Buttons */
+  #nsi .nsi-btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+    font-family:var(--nsi-font-body);font-weight:700;font-size:1.05rem;
+    padding:1rem 1.9rem;border-radius:999px;min-height:56px;
+    background:var(--nsi-accent);color:#FFF9F1;cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+  }
+  #nsi .nsi-btn:hover{background:var(--nsi-accent-dark);}
+  #nsi .nsi-btn:active{transform:scale(.98);}
+  #nsi .nsi-btn-outline{background:transparent;color:var(--nsi-ink);border:2px solid var(--nsi-line);}
+  #nsi .nsi-btn-outline:hover{background:var(--nsi-bg);}
+  #nsi .nsi-btn-ghost{
+    display:inline-block;font-weight:600;font-size:.95rem;color:var(--nsi-ink-soft);
+    text-decoration:underline;text-underline-offset:3px;min-height:auto;padding:.4rem 0;
+  }
+  #nsi .nsi-btn-block{width:100%;}
+  #nsi .nsi-microcopy{margin-top:.65rem;font-size:.88rem;color:var(--nsi-ink-soft);}
+  #nsi .nsi-microcopy b{color:var(--nsi-ink);}
+
+  /* HERO */
+  #nsi .nsi-hero{background:var(--nsi-bg);}
+  #nsi .nsi-hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.8rem,4vw,3.5rem);align-items:center;
+  }
+  #nsi .nsi-hero h1{font-size:clamp(1.9rem,4.4vw,3.1rem);}
+  #nsi .nsi-hero .nsi-sub{font-size:clamp(1.05rem,2vw,1.2rem);color:var(--nsi-ink-soft);margin-top:1.1rem;max-width:46ch;}
+  #nsi .nsi-hero-media img{width:100%;border-radius:16px;aspect-ratio:1/1;object-fit:cover;background:#EAE3D3;}
+  #nsi .nsi-hero-benefits{list-style:none;margin:1.4rem 0 0;padding:1.1rem 0 0;border-top:1px solid var(--nsi-line);display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;}
+  #nsi .nsi-hero-benefits li{font-weight:600;font-size:.98rem;display:flex;gap:.5rem;align-items:flex-start;}
+  #nsi .nsi-hero-benefits li:before{content:"✓";color:var(--nsi-good);font-weight:800;}
+  #nsi .nsi-hero-buy{margin-top:1.8rem;}
+  #nsi .nsi-price-row{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;margin-bottom:1rem;}
+  #nsi .nsi-price{font-family:var(--nsi-font-head);font-size:2.3rem;font-weight:700;}
+  #nsi .nsi-compare{font-size:1.1rem;color:var(--nsi-ink-soft);text-decoration:line-through;}
+  #nsi .nsi-discount-badge{font-size:.78rem;font-weight:700;background:rgba(63,125,78,.14);color:var(--nsi-good);padding:.25rem .6rem;border-radius:6px;}
+  @media(max-width:820px){
+    #nsi .nsi-hero-grid{grid-template-columns:1fr;}
+    #nsi .nsi-hero-media{order:-1;max-width:420px;margin:0 auto;width:100%;}
+  }
+
+  /* PROBLEM (deep navy) */
+  #nsi .nsi-problem{background:var(--nsi-problem-bg);color:var(--nsi-problem-ink);border-radius:20px;margin:0 12px;}
+  #nsi .nsi-problem h2{color:var(--nsi-problem-ink);font-size:clamp(1.7rem,4vw,2.5rem);max-width:20ch;}
+  #nsi .nsi-problem .nsi-lede{color:var(--nsi-problem-ink-soft);max-width:52ch;margin-top:.9rem;font-size:1.08rem;}
+  #nsi .nsi-scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:2.2rem;}
+  #nsi .nsi-scenario{background:rgba(247,244,237,.06);border:1px solid rgba(247,244,237,.16);border-radius:var(--nsi-radius);padding:1.4rem;}
+  #nsi .nsi-scenario .nsi-tag{font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#E8B27F;margin-bottom:.6rem;display:block;}
+  #nsi .nsi-scenario p{font-size:1.02rem;}
+  #nsi .nsi-problem .nsi-turn{font-family:var(--nsi-font-head);font-style:italic;color:#E8B27F;font-size:1.18rem;margin-top:1.8rem;}
+  @media(max-width:820px){#nsi .nsi-scenarios{grid-template-columns:1fr;}#nsi .nsi-problem{margin:0;border-radius:0;}}
+
+  /* SOLUTION */
+  #nsi .nsi-solution{background:var(--nsi-bg);}
+  #nsi .nsi-solution-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(1.6rem,4vw,3.2rem);align-items:center;}
+  #nsi .nsi-solution-grid img{width:100%;border-radius:16px;aspect-ratio:1/1;object-fit:cover;background:#EAE3D3;}
+  #nsi .nsi-solution h2{font-size:clamp(1.8rem,4vw,2.5rem);}
+  #nsi .nsi-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:1.8rem;}
+  #nsi .nsi-step{background:var(--nsi-card);border:1px solid var(--nsi-line);border-top:4px solid var(--nsi-accent);border-radius:var(--nsi-radius);padding:1.3rem 1.2rem;}
+  #nsi .nsi-step .nsi-num{font-family:var(--nsi-font-head);font-weight:700;font-size:2.1rem;color:var(--nsi-accent);display:block;margin-bottom:.4rem;}
+  #nsi .nsi-step h3{font-size:1.08rem;margin-bottom:.3rem;}
+  #nsi .nsi-step p{color:var(--nsi-ink-soft);font-size:.95rem;}
+  #nsi .nsi-thats-it{margin-top:1.5rem;font-family:var(--nsi-font-head);font-style:italic;font-size:1.2rem;color:var(--nsi-accent-dark);}
+  @media(max-width:820px){#nsi .nsi-solution-grid{grid-template-columns:1fr;}#nsi .nsi-solution-grid img{max-width:340px;margin:0 auto;}#nsi .nsi-steps{grid-template-columns:1fr;max-width:420px;}}
+
+  /* DEMO */
+  #nsi .nsi-demo{background:var(--nsi-bg-alt);border-top:1px solid var(--nsi-line);border-bottom:1px solid var(--nsi-line);}
+  #nsi .nsi-demo h2{font-size:clamp(1.8rem,4vw,2.5rem);}
+  #nsi .nsi-demo-media{margin-top:1.8rem;border-radius:16px;overflow:hidden;background:var(--nsi-ink);position:relative;}
+  #nsi .nsi-demo-media video{width:100%;display:block;}
+  #nsi .nsi-demo-sequence{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;}
+  #nsi .nsi-demo-frame{position:relative;aspect-ratio:3/4;background:#0e1e33;}
+  #nsi .nsi-demo-frame img{width:100%;height:100%;object-fit:cover;opacity:.92;}
+  #nsi .nsi-demo-frame .nsi-frame-label{
+    position:absolute;left:0;right:0;bottom:0;padding:.5rem .4rem;text-align:center;
+    background:linear-gradient(0deg,rgba(0,0,0,.72),transparent);color:#fff;
+    font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  }
+  #nsi .nsi-demo-frame .nsi-arrow{display:none;}
+  @media(max-width:640px){
+    #nsi .nsi-demo-sequence{grid-template-columns:repeat(3,1fr);}
+  }
+
+  /* BENEFITS (4 cards) */
+  #nsi .nsi-benefits{background:var(--nsi-bg);}
+  #nsi .nsi-benefits h2{font-size:clamp(1.8rem,4vw,2.5rem);}
+  #nsi .nsi-benefit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:1.8rem;}
+  #nsi .nsi-benefit-card{background:var(--nsi-card);border:1px solid var(--nsi-line);border-radius:var(--nsi-radius);padding:1.3rem;}
+  #nsi .nsi-benefit-card h3{font-size:1.05rem;margin-bottom:.35rem;}
+  #nsi .nsi-benefit-card p{font-size:.92rem;color:var(--nsi-ink-soft);}
+  @media(max-width:820px){#nsi .nsi-benefit-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){#nsi .nsi-benefit-grid{grid-template-columns:1fr;}}
+
+  /* PSYCHOLOGICAL CORE */
+  #nsi .nsi-core{background:var(--nsi-problem-bg);color:var(--nsi-problem-ink);text-align:center;padding-top:clamp(3.5rem,8vw,6rem);padding-bottom:clamp(3.5rem,8vw,6rem);}
+  #nsi .nsi-core .nsi-kicker{font-size:1.15rem;color:var(--nsi-problem-ink-soft);max-width:32ch;margin:0 auto;}
+  #nsi .nsi-core .nsi-statement{
+    font-family:var(--nsi-font-head);font-weight:700;font-size:clamp(1.7rem,4.6vw,3rem);
+    max-width:22ch;margin:1.3rem auto 0;color:#FFFFFF;
+  }
+  #nsi .nsi-core .nsi-statement em{color:#E8B27F;font-style:normal;}
+
+  /* REVIEWS */
+  #nsi .nsi-reviews{background:var(--nsi-bg-alt);}
+  #nsi .nsi-reviews h2{font-size:clamp(1.7rem,4vw,2.3rem);}
+  #nsi .nsi-review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:1.8rem;}
+  #nsi .nsi-review-card{background:var(--nsi-card);border:1px solid var(--nsi-line);border-radius:var(--nsi-radius);padding:1.4rem;}
+  #nsi .nsi-review-stars{color:var(--nsi-accent);font-size:.95rem;letter-spacing:.1em;margin-bottom:.6rem;}
+  #nsi .nsi-review-card p.nsi-quote{font-size:.98rem;color:var(--nsi-ink);}
+  #nsi .nsi-review-card .nsi-reviewer{margin-top:.8rem;font-size:.85rem;font-weight:700;color:var(--nsi-ink-soft);}
+  @media(max-width:820px){#nsi .nsi-review-grid{grid-template-columns:1fr;max-width:460px;margin-inline:auto;}}
+
+  /* FAQ */
+  #nsi .nsi-faq{background:var(--nsi-bg);}
+  #nsi .nsi-faq h2{font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:1.3rem;}
+  #nsi .nsi-faq details{border-bottom:1px solid var(--nsi-line);padding:1.05rem 0;}
+  #nsi .nsi-faq summary{font-family:var(--nsi-font-head);font-weight:600;font-size:1.08rem;cursor:pointer;list-style:none;position:relative;padding-right:1.6rem;}
+  #nsi .nsi-faq summary::-webkit-details-marker{display:none;}
+  #nsi .nsi-faq summary:after{content:"+";position:absolute;right:0;top:0;font-size:1.3rem;color:var(--nsi-accent);font-family:var(--nsi-font-body);}
+  #nsi .nsi-faq details[open] summary:after{content:"–";}
+  #nsi .nsi-faq details p{margin-top:.7rem;color:var(--nsi-ink-soft);max-width:64ch;font-size:.98rem;}
+
+  /* PRIMARY OFFER */
+  #nsi .nsi-offer{background:var(--nsi-bg-alt);border-top:1px solid var(--nsi-line);border-bottom:1px solid var(--nsi-line);}
+  #nsi .nsi-offer-card{
+    max-width:640px;margin:1.8rem auto 0;background:var(--nsi-card);border:2px solid var(--nsi-ink);
+    border-radius:20px;padding:clamp(1.8rem,4vw,2.6rem);text-align:center;
+  }
+  #nsi .nsi-offer-card .nsi-kicker{font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--nsi-ink-soft);}
+  #nsi .nsi-offer-card h3{font-family:var(--nsi-font-head);font-size:clamp(1.5rem,3.6vw,1.9rem);margin-top:.5rem;}
+  #nsi .nsi-offer-card .nsi-price-row{justify-content:center;margin-top:1rem;}
+  #nsi .nsi-offer-checks{display:inline-flex;flex-direction:column;gap:.55rem;text-align:left;margin-top:1.2rem;}
+  #nsi .nsi-offer-checks li{font-weight:600;font-size:1rem;display:flex;gap:.55rem;}
+  #nsi .nsi-offer-checks li:before{content:"✓";color:var(--nsi-good);font-weight:800;}
+  #nsi .nsi-offer-card .nsi-btn{margin-top:1.5rem;max-width:420px;width:100%;}
+
+  /* TRIPWIRE */
+  #nsi .nsi-tripwire{background:var(--nsi-bg);}
+  #nsi .nsi-tripwire-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(1.6rem,4vw,3rem);align-items:center;background:var(--nsi-card);border:1px solid var(--nsi-line);border-radius:20px;padding:clamp(1.6rem,4vw,2.4rem);margin-top:1.8rem;}
+  #nsi .nsi-tripwire-grid img{width:100%;border-radius:14px;aspect-ratio:1/1;object-fit:cover;background:#EAE3D3;}
+  #nsi .nsi-tripwire h2{font-size:clamp(1.6rem,4vw,2.2rem);}
+  #nsi .nsi-tripwire .nsi-then{font-family:var(--nsi-font-head);font-style:italic;font-size:1.25rem;color:var(--nsi-accent-dark);margin-top:.3rem;}
+  #nsi .nsi-pair{display:flex;gap:1.4rem;margin-top:1.3rem;flex-wrap:wrap;}
+  #nsi .nsi-pair div{flex:1 1 160px;}
+  #nsi .nsi-pair .nsi-tag{font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--nsi-ink-soft);}
+  #nsi .nsi-pair p.nsi-sol{font-weight:700;margin-top:.2rem;}
+  #nsi .nsi-tripwire-buy{margin-top:1.4rem;}
+  @media(max-width:820px){#nsi .nsi-tripwire-grid{grid-template-columns:1fr;}#nsi .nsi-tripwire-grid img{max-width:280px;margin:0 auto;}}
+
+  /* PREMIUM BUNDLE */
+  #nsi .nsi-bundle{background:var(--nsi-problem-bg);color:var(--nsi-problem-ink);}
+  #nsi .nsi-bundle h2{color:#fff;font-size:clamp(1.9rem,4.4vw,2.7rem);}
+  #nsi .nsi-bundle .nsi-lede{color:var(--nsi-problem-ink-soft);max-width:50ch;margin:.8rem auto 0;}
+  #nsi .nsi-bundle-card{
+    max-width:780px;margin:2rem auto 0;background:var(--nsi-bg-alt);color:var(--nsi-ink);
+    border-radius:20px;padding:clamp(1.8rem,4vw,2.6rem);position:relative;
+  }
+  #nsi .nsi-badge{
+    position:absolute;top:-.85rem;left:50%;transform:translateX(-50%);
+    background:var(--nsi-accent);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.09em;
+    text-transform:uppercase;padding:.4rem 1rem;border-radius:999px;white-space:nowrap;
+  }
+  #nsi .nsi-bundle-items{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:.6rem;}
+  #nsi .nsi-bundle-item{border:1px solid var(--nsi-line);border-radius:var(--nsi-radius);padding:1.1rem;text-align:center;}
+  #nsi .nsi-bundle-item .nsi-tag{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--nsi-accent);display:block;margin-bottom:.35rem;}
+  #nsi .nsi-bundle-item p{font-weight:600;font-size:.96rem;}
+  #nsi .nsi-bundle-price{text-align:center;margin-top:1.6rem;}
+  #nsi .nsi-bundle-price .nsi-price{font-size:2.5rem;}
+  #nsi .nsi-bundle-ship{display:block;margin-top:.4rem;font-weight:700;color:var(--nsi-good);font-size:.92rem;}
+  #nsi .nsi-bundle-card .nsi-btn{display:flex;max-width:440px;margin:1.4rem auto 0;}
+  @media(max-width:760px){#nsi .nsi-bundle-items{grid-template-columns:1fr;}}
+
+  /* FINAL CTA */
+  #nsi .nsi-final{background:var(--nsi-bg);text-align:center;}
+  #nsi .nsi-final h2{font-size:clamp(1.7rem,4vw,2.4rem);max-width:20ch;margin:0 auto;}
+  #nsi .nsi-final .nsi-sub{margin:.9rem auto 0;max-width:42ch;color:var(--nsi-ink-soft);font-size:1.05rem;}
+  #nsi .nsi-final .nsi-price-row{justify-content:center;margin-top:1.4rem;}
+  #nsi .nsi-final .nsi-btn{margin-top:.4rem;}
+
+  /* FOOTER */
+  #nsi .nsi-footer{
+    display:flex;flex-wrap:wrap;gap:1rem 2rem;justify-content:space-between;align-items:center;
+    padding:1.6rem 20px;border-top:1px solid var(--nsi-line);font-size:.85rem;color:var(--nsi-ink-soft);
+  }
+  #nsi .nsi-footer strong{font-family:var(--nsi-font-head);color:var(--nsi-ink);}
+  #nsi .nsi-footer .nsi-footer-links{display:flex;gap:1.2rem;flex-wrap:wrap;}
+  #nsi .nsi-footer .nsi-footer-links a{color:var(--nsi-ink-soft);text-decoration:underline;text-underline-offset:3px;}
+
+  /* STICKY MOBILE BAR */
+  #nsi-sticky{
+    position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;gap:.9rem;align-items:center;justify-content:space-between;
+    background:var(--nsi-ink);color:#fff;padding:.65rem .9rem;box-shadow:0 -6px 20px rgba(0,0,0,.2);
+    transform:translateY(0);transition:transform .25s ease;font-family:var(--nsi-font-body);
+  }
+  #nsi-sticky.nsi-hero-visible{transform:translateY(110%);}
+  #nsi-sticky .nsi-sticky-price{font-family:var(--nsi-font-head);font-weight:700;font-size:1.1rem;}
+  #nsi-sticky .nsi-sticky-price s{color:#B9C4D3;font-weight:400;font-size:.8rem;margin-left:.35rem;}
+  #nsi-sticky .nsi-btn{padding:.7rem 1.1rem;min-height:46px;font-size:.95rem;flex:0 0 auto;}
+  @media(max-width:760px){#nsi-sticky[data-enabled="true"]{display:flex;}#nsi{padding-bottom:74px;}}
+  @media(prefers-reduced-motion:reduce){#nsi-sticky{transition:none;}}
+</style>
+
+<div id="nsi">
+  <section class="nsi-sec nsi-hero" id="nsi-hero"></section>
+  <div class="nsi-wrap" id="nsi-mid-cta-1"></div>
+  <section class="nsi-sec nsi-problem" id="nsi-problem"></section>
+  <section class="nsi-sec nsi-solution" id="nsi-solution"></section>
+  <section class="nsi-sec nsi-demo" id="nsi-demo"></section>
+  <section class="nsi-sec nsi-benefits" id="nsi-benefits"></section>
+  <section class="nsi-core" id="nsi-core"></section>
+  <section class="nsi-sec nsi-reviews" id="nsi-reviews"></section>
+  <section class="nsi-sec nsi-offer" id="nsi-offer"></section>
+  <section class="nsi-sec nsi-tripwire" id="nsi-tripwire"></section>
+  <section class="nsi-sec nsi-bundle" id="nsi-bundle"></section>
+  <section class="nsi-sec nsi-faq" id="nsi-faq"></section>
+  <section class="nsi-sec nsi-final" id="nsi-final"></section>
+  <div class="nsi-footer" id="nsi-footer"></div>
+</div>
+
+<div id="nsi-sticky" role="region" aria-label="Buy the tire inflator"></div>
+
+<script type="application/ld+json" id="nsi-jsonld"></script>
+
+<script id="nsi-config">
+(function(){
+"use strict";
+
+/* ============================================================
+   1. EDITABLE CONTENT / DESIGN CONFIG
+   ------------------------------------------------------------
+   Change anything in this object to update the page. No HTML
+   or CSS knowledge required. Section order below matches the
+   order sections appear on the page, top to bottom.
+   ============================================================ */
+var content = {
+
+  // ---- BRAND / STORE (used in footer + schema; keep in sync with Shopify) ----
+  brandName: "Hearth & Nook",
+  supportPhone: "1-855-589-2915",
+  supportEmail: "hearthandnook@hearthandnook.store",
+
+  // ---- GLOBAL DESIGN CONTROLS ----
+  backgroundColor: "#F7F4ED",      // cream — main page background
+  textColor: "#12263F",            // deep navy — main text/headings
+  accentColor: "#C1662F",          // warm amber — CTAs, prices, highlights
+  accentColorDark: "#A4531F",      // amber hover/active state
+  problemSectionColor: "#12263F",  // deep navy — Problem + psychological-core + bundle sections
+  headingFont: "'Fraunces', Georgia, 'Iowan Old Style', serif",
+  bodyFont: "'Hanken Grotesk', -apple-system, 'Segoe UI', Roboto, sans-serif",
+
+  // ---- SECTION ON/OFF SWITCHES ----
+  showVideo: true,           // Section 4 — demonstration
+  showReviews: false,        // Section 7 — set true once real, verified reviews are added below
+  showFAQ: true,             // Section 8
+  showTripwire: true,        // Section 10 — Roadside Essentials upgrade
+  showPremiumBundle: true,   // Section 11 — full Roadside Kit
+
+  // ---- PRIMARY PRODUCT ----
+  productName: "Never-Stranded Cordless Tire Inflator",
+  productPrice: "$39.99",
+  comparePrice: "$63.45",
+  discountText: "10% off your first order with code FirstOrder10",
+  shippingText: "Free shipping",
+  guaranteeText: "30-day returns · 12-month warranty",
+  primaryCTA: "Get Yours →",
+  secureCheckoutText: "Secure checkout",
+  // Real Shopify variant ID for the inflator — do not change unless the product/variant changes in Shopify.
+  productVariantId: "43085441204299",
+
+  heroImage: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/fa221672407dad11fd7b84a286cf.png?v=1788311057",
+  heroImageAlt: "Cordless digital tire inflator with hose, ready to use on a vehicle",
+
+  // ---- SECTION 1: HERO ----
+  hero: {
+    eyebrow: "Be Ready Before You Need It",
+    headline: "Don't Let a Low Tire Leave You Stranded.",
+    subheadline: "Keep a cordless tire inflator in your trunk and handle low tire pressure wherever you are — without searching for a gas station or waiting for help.",
+    benefits: ["Cordless & Portable", "Digital Pressure Display", "Automatic Shutoff"]
+  },
+
+  // ---- SECTION 2: PROBLEM RECOGNITION ----
+  problem: {
+    eyebrow: "It happens more than you'd think",
+    headline: "A Low Tire Can Happen Anywhere.",
+    lede: "None of these are emergencies. But each one is a lot easier when you're already prepared for it.",
+    scenarios: [
+      { tag: "At Home", text: "Your tire is low before you leave." },
+      { tag: "On The Road", text: "The tire-pressure warning light comes on." },
+      { tag: "Away From A Gas Station", text: "You simply need air but don't want to search for a pump." }
+    ],
+    transition: "That's why keeping one in your trunk makes sense."
+  },
+
+  // ---- SECTION 3: SOLUTION ----
+  solution: {
+    eyebrow: "How it works",
+    headline: "Be Ready Before You Need It.",
+    image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/950adbbc4a5b9b014078ab34c49e.png?v=1788311077",
+    imageAlt: "Close-up of the cordless tire inflator's digital pressure display",
+    steps: [
+      { num: "01", title: "Connect", text: "Attach it to your tire." },
+      { num: "02", title: "Set", text: "Choose your desired pressure." },
+      { num: "03", title: "Inflate", text: "Let the inflator do the work." }
+    ],
+    closing: "That's it."
+  },
+
+  // ---- SECTION 4: PRODUCT DEMONSTRATION ----
+  // demoVideo: paste a direct .mp4 URL (or leave blank) to show a real video instead
+  // of the step-by-step image sequence below.
+  demoVideo: "",
+  demo: {
+    eyebrow: "Watch it work",
+    headline: "See How Simple It Is.",
+    sequence: [
+      { label: "Low Tire", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/fa221672407dad11fd7b84a286cf.png?v=1788311057" },
+      { label: "Connect", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/aae971a045878f7b58a8ff679748.png?v=1788014536" },
+      { label: "Set PSI", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/cti-set-psi-demo.png?v=1788410978" },
+      { label: "Inflate", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/94d6e54d42a09612b582dab99c8c.png?v=1788014548" },
+      { label: "Done", image: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/cti-trunk-dusk.png?v=1788411007" }
+    ],
+    caption: "Screw on · set PSI · press start · automatic shut-off"
+  },
+
+  // ---- SECTION 5: BENEFITS (only real, supported claims) ----
+  benefits: {
+    eyebrow: "Made for the moment you need it",
+    headline: "Made for the Moment You Need It.",
+    items: [
+      { title: "Cordless", text: "No need to find a power outlet." },
+      { title: "Digital Display", text: "Clearly see the tire pressure." },
+      { title: "Automatic Shutoff", text: "Set the desired pressure and let it stop automatically." },
+      { title: "Compact Design", text: "Easy to keep with your roadside essentials." }
+    ]
+  },
+
+  // ---- SECTION 6: PSYCHOLOGICAL CORE ----
+  core: {
+    kicker: "You Don't Buy It Because Your Tire Is Low Today.",
+    statementBefore: "You Buy It Because You Don't Want To Be ",
+    statementEmphasis: "Stuck",
+    statementAfter: " When It Is."
+  },
+
+  // ---- SECTION 7: SOCIAL PROOF ----
+  // showReviews is false above because this page has no existing, verified reviews
+  // to preserve. Replace the placeholders below with real customer quotes (with
+  // permission) before setting showReviews to true — never publish invented reviews.
+  reviews: {
+    eyebrow: "What owners say",
+    headline: "Trusted By Drivers Who'd Rather Handle It Themselves.",
+    items: [
+      { rating: 5, quote: "PLACEHOLDER — replace with a real, verified customer quote before enabling this section.", name: "Add reviewer name", detail: "Add city/state or verified-buyer tag" },
+      { rating: 5, quote: "PLACEHOLDER — replace with a real, verified customer quote before enabling this section.", name: "Add reviewer name", detail: "Add city/state or verified-buyer tag" },
+      { rating: 5, quote: "PLACEHOLDER — replace with a real, verified customer quote before enabling this section.", name: "Add reviewer name", detail: "Add city/state or verified-buyer tag" }
+    ]
+  },
+
+  // ---- SECTION 8: FAQ ----
+  faq: {
+    eyebrow: "Before you buy",
+    headline: "Before You Buy, Here's What You Should Know.",
+    items: [
+      { q: "Is it cordless?", a: "Yes. It runs on its own rechargeable battery — no cord, no outlet, no need to run your engine." },
+      { q: "Is it easy to use?", a: "Yes. Connect it to the valve, set your target pressure, and press start. If you can read a number, you can use this." },
+      { q: "Does it automatically stop?", a: "Yes. Set the pressure you want and it shuts off on its own when the tire reaches it." },
+      { q: "Will it work with my vehicle?", a: "Yes — it's built for car, SUV, motorcycle and bike tires, with adapters included for balls and inflatables." },
+      { q: "How do I use it?", a: "Screw the hose onto the tire's valve, set your target PSI (printed on the sticker inside your driver's door), and press start." },
+      { q: "How long does inflation take?", a: "A few minutes for a typical top-up. Exact time depends on how low the tire is." },
+      { q: "Can I keep it in my vehicle?", a: "Yes — that's exactly what it's made for. It's compact enough for the glovebox or a door pocket." },
+      { q: "What is included?", a: "The inflator, hose, nozzle adapters, a USB-C charging cable, and a storage bag." },
+      { q: "What is the return policy?", a: "30-day returns on an unused unit in its original packaging, plus a 12-month warranty on defects." },
+      { q: "How does shipping work?", a: "Orders ship free within the US, dispatched in 1–3 business days, with tracking sent by email." }
+    ]
+  },
+
+  // ---- SECTION 9: PRIMARY OFFER ----
+  offer: {
+    eyebrow: "The offer",
+    headline: "Pick The One That Fits.",
+    kicker: "Your Everyday Roadside Essential",
+    features: ["Cordless", "Digital pressure display", "Automatic shutoff", "Compact design"],
+    ctaText: "Get My Tire Inflator →"
+  },
+
+  // ---- SECTION 10: TRIPWIRE / EASY UPGRADE ----
+  // Real Shopify product: "Glovebox Rescue Duo" — Tire Inflator + Mini 20,000mAh
+  // Power Bank with Built-in Cables. Price and variant ID come straight from that
+  // live product, so the price shown here always matches what the customer is charged.
+  tripwire: {
+    eyebrow: "If you're preparing for a low tire…",
+    headline: "Why Not Prepare for a Dead Phone Too?",
+    positioning: "Roadside Essentials",
+    explainerLowTire: "Inflate it",
+    explainerDeadPhone: "Power it",
+    bundleName: "Glovebox Rescue Duo",
+    bundleDescription: "The cordless tire inflator, plus a 20,000mAh power bank with built-in cables — the two things worth keeping in the glovebox.",
+    bundleImage: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/glovebox-rescue.png?v=1788065150",
+    bundleImageAlt: "Cordless tire inflator and 20,000mAh power bank included in the Glovebox Rescue Duo",
+    bundlePrice: "$52.99",
+    bundleComparePrice: "$61.48",
+    bundleCTA: "Add Roadside Essentials →",
+    bundleVariantId: "43087166734411",
+    continueAloneText: "Prefer just the inflator? Continue with the inflator only ↓"
+  },
+
+  // ---- SECTION 11: PREMIUM BUNDLE ----
+  // Real Shopify product: "Never-Stranded Roadside Kit" — M5 Jump Starter + Air
+  // Compressor, the Cordless Tire Inflator, and a PD100W 20,000mAh Power Bank.
+  premiumBundle: {
+    eyebrow: "The complete kit",
+    headline: "Three Essentials. One Trunk.",
+    subheadline: "Be ready for the most common roadside headaches.",
+    badge: "Best Value",
+    bundleName: "Never-Stranded Roadside Kit",
+    items: [
+      { tag: "Low Tire", solution: "Tire Inflator" },
+      { tag: "Dead Battery", solution: "Jump Starter" },
+      { tag: "Dead Phone", solution: "Power Bank" }
+    ],
+    bundlePrice: "$185.99",
+    bundleComparePrice: "$204.97",
+    shippingText: "Free Shipping",
+    bundleImage: "https://cdn.shopify.com/s/files/1/0683/2354/1067/files/roadside-kit.png?v=1788065147",
+    bundleImageAlt: "The Never-Stranded Roadside Kit: jump starter, cordless tire inflator, and power bank",
+    bundleVariantId: "43087166046283",
+    ctaText: "Get the Complete Kit →"
+  },
+
+  // ---- SECTION 12: FINAL CTA ----
+  finalCta: {
+    headline: "Be Ready Before You Need It.",
+    subheadline: "Keep a tire inflator in your trunk and handle a low tire wherever you are.",
+    ctaText: "Get Yours →"
+  },
+
+  // ---- FOOTER ----
+  footer: {
+    links: [
+      { label: "Shipping", href: "/policies/shipping-policy" },
+      { label: "Returns", href: "/policies/refund-policy" },
+      { label: "Terms", href: "/policies/terms-of-service" },
+      { label: "Privacy", href: "/policies/privacy-policy" },
+      { label: "Contact", href: "/pages/contact" }
+    ]
+  }
+};
+
+/* ============================================================
+   2. RENDER ENGINE — reads `content` above and builds the page.
+   You should not need to edit anything below this line to make
+   ordinary marketing edits (copy, prices, images, colors).
+   ============================================================ */
+
+function esc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+function cartLink(variantId){ return "/cart/add?id=" + encodeURIComponent(variantId) + "&quantity=1"; }
+function stars(n){ return "★★★★★☆☆☆☆☆".slice(5 - n, 10 - n); }
+
+function applyDesignTokens(){
+  var root = document.getElementById("nsi");
+  if(!root) return;
+  root.style.setProperty("--nsi-bg", content.backgroundColor);
+  root.style.setProperty("--nsi-ink", content.textColor);
+  root.style.setProperty("--nsi-accent", content.accentColor);
+  root.style.setProperty("--nsi-accent-dark", content.accentColorDark);
+  root.style.setProperty("--nsi-problem-bg", content.problemSectionColor);
+  root.style.setProperty("--nsi-font-head", content.headingFont);
+  root.style.setProperty("--nsi-font-body", content.bodyFont);
+}
+
+function renderHero(){
+  var h = content.hero;
+  document.getElementById("nsi-hero").innerHTML =
+    '<div class="nsi-wrap"><div class="nsi-hero-grid">' +
+      '<div class="nsi-hero-copy">' +
+        '<p class="nsi-eyebrow">' + esc(h.eyebrow) + '</p>' +
+        '<h1>' + esc(h.headline) + '</h1>' +
+        '<p class="nsi-sub">' + esc(h.subheadline) + '</p>' +
+        '<ul class="nsi-hero-benefits">' + h.benefits.map(function(b){ return '<li>' + esc(b) + '</li>'; }).join("") + '</ul>' +
+        '<div class="nsi-hero-buy">' +
+          '<div class="nsi-price-row">' +
+            '<span class="nsi-price">' + esc(content.productPrice) + '</span>' +
+            (content.comparePrice ? '<span class="nsi-compare">' + esc(content.comparePrice) + '</span>' : '') +
+          '</div>' +
+          '<a class="nsi-btn" href="' + cartLink(content.productVariantId) + '" data-loc="hero">' + esc(content.primaryCTA) + '</a>' +
+          '<p class="nsi-microcopy">' +
+            (content.shippingText ? esc(content.shippingText) + ' · ' : '') +
+            (content.discountText ? esc(content.discountText) + ' · ' : '') +
+            esc(content.secureCheckoutText) +
+          '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="nsi-hero-media"><img src="' + esc(content.heroImage) + '" alt="' + esc(content.heroImageAlt) + '" width="900" height="900"></div>' +
+    '</div></div>';
+}
+
+function renderMidCta(targetId, loc){
+  document.getElementById(targetId).innerHTML =
+    '<div class="nsi-sec nsi-center" style="padding-top:0">' +
+      '<a class="nsi-btn" href="' + cartLink(content.productVariantId) + '" data-loc="' + loc + '">' + esc(content.primaryCTA) + '</a>' +
+      '<p class="nsi-microcopy">' + esc(content.guaranteeText) + '</p>' +
+    '</div>';
+}
+
+function renderProblem(){
+  var p = content.problem;
+  document.getElementById("nsi-problem").innerHTML =
+    '<div class="nsi-wrap">' +
+      '<p class="nsi-eyebrow lt">' + esc(p.eyebrow) + '</p>' +
+      '<h2>' + esc(p.headline) + '</h2>' +
+      '<p class="nsi-lede">' + esc(p.lede) + '</p>' +
+      '<div class="nsi-scenarios">' + p.scenarios.map(function(s){
+        return '<div class="nsi-scenario"><span class="nsi-tag">' + esc(s.tag) + '</span><p>' + esc(s.text) + '</p></div>';
+      }).join("") + '</div>' +
+      '<p class="nsi-turn">' + esc(p.transition) + '</p>' +
+    '</div>';
+}
+
+function renderSolution(){
+  var s = content.solution;
+  document.getElementById("nsi-solution").innerHTML =
+    '<div class="nsi-wrap"><div class="nsi-solution-grid">' +
+      '<img src="' + esc(s.image) + '" alt="' + esc(s.imageAlt) + '" loading="lazy">' +
+      '<div>' +
+        '<p class="nsi-eyebrow">' + esc(s.eyebrow) + '</p>' +
+        '<h2>' + esc(s.headline) + '</h2>' +
+        '<div class="nsi-steps">' + s.steps.map(function(st){
+          return '<div class="nsi-step"><span class="nsi-num">' + esc(st.num) + '</span><h3>' + esc(st.title) + '</h3><p>' + esc(st.text) + '</p></div>';
+        }).join("") + '</div>' +
+        '<p class="nsi-thats-it">' + esc(s.closing) + '</p>' +
+      '</div>' +
+    '</div></div>';
+}
+
+function renderDemo(){
+  if(!content.showVideo){ document.getElementById("nsi-demo").style.display = "none"; return; }
+  var d = content.demo;
+  var media;
+  if(content.demoVideo){
+    media = '<div class="nsi-demo-media"><video src="' + esc(content.demoVideo) + '" controls playsinline preload="metadata"></video></div>';
+  } else {
+    media = '<div class="nsi-demo-media"><div class="nsi-demo-sequence">' + d.sequence.map(function(f){
+      return '<div class="nsi-demo-frame"><img src="' + esc(f.image) + '" alt="' + esc(f.label) + '" loading="lazy"><span class="nsi-frame-label">' + esc(f.label) + '</span></div>';
+    }).join("") + '</div></div>';
+  }
+  document.getElementById("nsi-demo").innerHTML =
+    '<div class="nsi-wrap">' +
+      '<p class="nsi-eyebrow">' + esc(d.eyebrow) + '</p>' +
+      '<h2>' + esc(d.headline) + '</h2>' +
+      media +
+      '<p class="nsi-microcopy" style="margin-top:1rem;text-align:center">' + esc(d.caption) + '</p>' +
+    '</div>';
+}
+
+function renderBenefits(){
+  var b = content.benefits;
+  document.getElementById("nsi-benefits").innerHTML =
+    '<div class="nsi-wrap">' +
+      '<p class="nsi-eyebrow">' + esc(b.eyebrow) + '</p>' +
+      '<h2>' + esc(b.headline) + '</h2>' +
+      '<div class="nsi-benefit-grid">' + b.items.map(function(it){
+        return '<div class="nsi-benefit-card"><h3>' + esc(it.title) + '</h3><p>' + esc(it.text) + '</p></div>';
+      }).join("") + '</div>' +
+    '</div>';
+}
+
+function renderCore(){
+  var c = content.core;
+  document.getElementById("nsi-core").innerHTML =
+    '<div class="nsi-wrap">' +
+      '<p class="nsi-kicker">' + esc(c.kicker) + '</p>' +
+      '<p class="nsi-statement">' + esc(c.statementBefore) + '<em>' + esc(c.statementEmphasis) + '</em>' + esc(c.statementAfter) + '</p>' +
+    '</div>';
+}
+
+function renderReviews(){
+  if(!content.showReviews){ document.getElementById("nsi-reviews").style.display = "none"; return; }
+  var r = content.reviews;
+  document.getElementById("nsi-reviews").innerHTML =
+    '<div class="nsi-wrap">' +
+      '<p class="nsi-eyebrow">' + esc(r.eyebrow) + '</p>' +
+      '<h2>' + esc(r.headline) + '</h2>' +
+      '<div class="nsi-review-grid">' + r.items.map(function(rv){
+        return '<div class="nsi-review-card"><div class="nsi-review-stars">' + stars(rv.rating) + '</div><p class="nsi-quote">"' + esc(rv.quote) + '"</p><p class="nsi-reviewer">' + esc(rv.name) + ' — ' + esc(rv.detail) + '</p></div>';
+      }).join("") + '</div>' +
+    '</div>';
+}
+
+function renderFaq(){
+  if(!content.showFAQ){ document.getElementById("nsi-faq").style.display = "none"; return; }
+  var f = content.faq;
+  document.getElementById("nsi-faq").innerHTML =
+    '<div class="nsi-wrap">' +
+      '<p class="nsi-eyebrow">' + esc(f.eyebrow) + '</p>' +
+      '<h2>' + esc(f.headline) + '</h2>' +
+      f.items.map(function(it){
+        return '<details><summary>' + esc(it.q) + '</summary><p>' + esc(it.a) + '</p></details>';
+      }).join("") +
+    '</div>';
+}
+
+function renderOffer(){
+  var o = content.offer;
+  document.getElementById("nsi-offer").innerHTML =
+    '<div class="nsi-wrap nsi-center">' +
+      '<p class="nsi-eyebrow ctr">' + esc(o.eyebrow) + '</p>' +
+      '<h2>' + esc(o.headline) + '</h2>' +
+      '<div class="nsi-offer-card">' +
+        '<p class="nsi-kicker">' + esc(o.kicker) + '</p>' +
+        '<h3>' + esc(content.productName) + '</h3>' +
+        '<div class="nsi-price-row">' +
+          '<span class="nsi-price">' + esc(content.productPrice) + '</span>' +
+          (content.comparePrice ? '<span class="nsi-compare">' + esc(content.comparePrice) + '</span>' : '') +
+        '</div>' +
+        '<ul class="nsi-offer-checks">' + o.features.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' +
+        '<a class="nsi-btn nsi-btn-block" href="' + cartLink(content.productVariantId) + '" data-loc="offer">' + esc(o.ctaText) + '</a>' +
+        '<p class="nsi-microcopy">' + esc(content.discountText) + (content.shippingText ? ' · ' + esc(content.shippingText) : '') + '</p>' +
+      '</div>' +
+    '</div>';
+}
+
+function renderTripwire(){
+  if(!content.showTripwire){ document.getElementById("nsi-tripwire").style.display = "none"; return; }
+  var t = content.tripwire;
+  document.getElementById("nsi-tripwire").innerHTML =
+    '<div class="nsi-wrap">' +
+      '<p class="nsi-eyebrow">' + esc(t.eyebrow) + '</p>' +
+      '<h2>' + esc(t.headline) + '</h2>' +
+      '<p class="nsi-then">' + esc(t.positioning) + '</p>' +
+      '<div class="nsi-tripwire-grid">' +
+        '<img src="' + esc(t.bundleImage) + '" alt="' + esc(t.bundleImageAlt) + '" loading="lazy">' +
+        '<div>' +
+          '<div class="nsi-pair">' +
+            '<div><span class="nsi-tag">Low Tire</span><p class="nsi-sol">' + esc(t.explainerLowTire) + '</p></div>' +
+            '<div><span class="nsi-tag">Dead Phone</span><p class="nsi-sol">' + esc(t.explainerDeadPhone) + '</p></div>' +
+          '</div>' +
+          '<p style="margin-top:1rem;color:var(--nsi-ink-soft)">' + esc(t.bundleDescription) + '</p>' +
+          '<div class="nsi-tripwire-buy">' +
+            '<div class="nsi-price-row">' +
+              '<span class="nsi-price">' + esc(t.bundlePrice) + '</span>' +
+              (t.bundleComparePrice ? '<span class="nsi-compare">' + esc(t.bundleComparePrice) + '</span>' : '') +
+            '</div>' +
+            '<a class="nsi-btn" href="' + cartLink(t.bundleVariantId) + '" data-loc="tripwire">' + esc(t.bundleCTA) + '</a>' +
+            '<p class="nsi-microcopy"><a class="nsi-btn-ghost" href="#nsi-offer">' + esc(t.continueAloneText) + '</a></p>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function renderBundle(){
+  if(!content.showPremiumBundle){ document.getElementById("nsi-bundle").style.display = "none"; return; }
+  var pb = content.premiumBundle;
+  document.getElementById("nsi-bundle").innerHTML =
+    '<div class="nsi-wrap nsi-center">' +
+      '<p class="nsi-eyebrow lt ctr">' + esc(pb.eyebrow) + '</p>' +
+      '<h2>' + esc(pb.headline) + '</h2>' +
+      '<p class="nsi-lede">' + esc(pb.subheadline) + '</p>' +
+      '<div class="nsi-bundle-card">' +
+        (pb.badge ? '<span class="nsi-badge">' + esc(pb.badge) + '</span>' : '') +
+        '<h3 style="font-size:1.4rem">' + esc(pb.bundleName) + '</h3>' +
+        '<div class="nsi-bundle-items">' + pb.items.map(function(it){
+          return '<div class="nsi-bundle-item"><span class="nsi-tag">' + esc(it.tag) + '</span><p>' + esc(it.solution) + '</p></div>';
+        }).join("") + '</div>' +
+        '<div class="nsi-bundle-price">' +
+          '<span class="nsi-price">' + esc(pb.bundlePrice) + '</span> ' +
+          (pb.bundleComparePrice ? '<span class="nsi-compare">' + esc(pb.bundleComparePrice) + '</span>' : '') +
+          (pb.shippingText ? '<span class="nsi-bundle-ship">' + esc(pb.shippingText) + '</span>' : '') +
+        '</div>' +
+        '<a class="nsi-btn nsi-btn-block" href="' + cartLink(pb.bundleVariantId) + '" data-loc="bundle">' + esc(pb.ctaText) + '</a>' +
+      '</div>' +
+    '</div>';
+}
+
+function renderFinal(){
+  var f = content.finalCta;
+  document.getElementById("nsi-final").innerHTML =
+    '<div class="nsi-wrap">' +
+      '<h2>' + esc(f.headline) + '</h2>' +
+      '<p class="nsi-sub">' + esc(f.subheadline) + '</p>' +
+      '<div class="nsi-price-row">' +
+        '<span class="nsi-price">' + esc(content.productName) + ' — ' + esc(content.productPrice) + '</span>' +
+      '</div>' +
+      '<a class="nsi-btn" href="' + cartLink(content.productVariantId) + '" data-loc="final">' + esc(f.ctaText) + '</a>' +
+    '</div>';
+}
+
+function renderFooter(){
+  var f = content.footer;
+  document.getElementById("nsi-footer").innerHTML =
+    '<strong>' + esc(content.brandName) + '</strong> · ' + esc(content.supportPhone) + ' · ' + esc(content.supportEmail) +
+    '<span class="nsi-footer-links">' + f.links.map(function(l){
+      return '<a href="' + esc(l.href) + '">' + esc(l.label) + '</a>';
+    }).join("") + '</span>';
+}
+
+function renderSticky(){
+  var bar = document.getElementById("nsi-sticky");
+  bar.innerHTML =
+    '<span class="nsi-sticky-price">' + esc(content.productPrice) + (content.comparePrice ? '<s>' + esc(content.comparePrice) + '</s>' : '') + '</span>' +
+    '<a class="nsi-btn" href="' + cartLink(content.productVariantId) + '" data-loc="sticky">' + esc(content.primaryCTA) + '</a>';
+  bar.setAttribute("data-enabled", "true");
+  var hero = document.getElementById("nsi-hero");
+  if(hero && "IntersectionObserver" in window){
+    bar.classList.add("nsi-hero-visible");
+    new IntersectionObserver(function(entries){
+      bar.classList.toggle("nsi-hero-visible", entries[0].isIntersecting);
+    }, { threshold: 0 }).observe(hero);
+  }
+}
+
+function renderJsonLd(){
+  var data = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": content.productName,
+    "brand": { "@type": "Brand", "name": content.brandName },
+    "description": content.hero.subheadline,
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "price": content.productPrice.replace(/[^0-9.]/g, ""),
+      "availability": "https://schema.org/InStock"
+    }
+  };
+  document.getElementById("nsi-jsonld").textContent = JSON.stringify(data);
+}
+
+function render(){
+  applyDesignTokens();
+  renderHero();
+  renderMidCta("nsi-mid-cta-1", "after-problem-lead-in");
+  renderProblem();
+  renderSolution();
+  renderDemo();
+  renderBenefits();
+  renderCore();
+  renderReviews();
+  renderOffer();
+  renderTripwire();
+  renderBundle();
+  renderFaq();
+  renderFinal();
+  renderFooter();
+  renderSticky();
+  renderJsonLd();
+}
+
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", render);
+} else {
+  render();
+}
+
+})();
+</script>
