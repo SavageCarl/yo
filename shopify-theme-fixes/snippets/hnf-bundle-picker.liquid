@@ -1,0 +1,103 @@
+{%- comment -%}
+  Native "Bundle & save" quantity picker (replaces the Kaching Bundles app block).
+  Pricing is enforced by the native Shopify automatic discount
+  "Bundle & Save: 15% off 2+ items" (mix & match); this block only sets the
+  quantity input and shows the maths. Rendered inside #hnf-pdp-form.
+  Hidden for products that have no quantity break, i.e. products that are not on the
+  discount: walking pad, bike, bundle, yoga foam roller, free gift.
+{%- endcomment -%}
+{%- liquid
+  assign hnf_bp_skip = false
+  if product.id == 8107948834891 or product.id == 8109643825227 or product.id == 8110436974667 or product.id == 8107907317835 or product.id == 9588018315339
+    assign hnf_bp_skip = true
+  endif
+  assign hnf_unit = current_variant.price
+-%}
+{%- unless hnf_bp_skip -%}
+<style>
+  .hnf-bp { margin: 0 0 1.6rem; }
+  .hnf-bp__title { font: 700 1.2rem/1 var(--font-body-family); letter-spacing: .14em; text-transform: uppercase; text-align: center; margin: 0 0 1rem; display: flex; align-items: center; gap: 1rem; }
+  .hnf-bp__title::before, .hnf-bp__title::after { content: ""; flex: 1; height: 1px; background: #d9d9d9; }
+  .hnf-bp__opt { position: relative; display: flex; align-items: center; gap: 1.2rem; padding: 1.3rem 1.4rem; border: 2px solid #e2e2e2; border-radius: 10px; margin-bottom: .8rem; cursor: pointer; background: #fff; transition: border-color .15s; }
+  .hnf-bp__opt.is-selected { border-color: #0b0b0b; background: #fafafa; }
+  .hnf-bp__opt input { accent-color: #0b0b0b; width: 1.8rem; height: 1.8rem; margin: 0; flex: none; }
+  .hnf-bp__name { flex: 1; font-weight: 700; font-size: 1.5rem; color: #0b0b0b; }
+  .hnf-bp__save { display: inline-block; margin-left: .6rem; font: 700 1.1rem/1 var(--font-body-family); background: #0b0b0b; color: #fff; padding: .4rem .6rem; border-radius: 3px; vertical-align: middle; }
+  .hnf-bp__price { text-align: right; font-weight: 700; font-size: 1.5rem; color: #0b0b0b; white-space: nowrap; }
+  .hnf-bp__price s { display: block; font-weight: 500; font-size: 1.2rem; color: #8a8a8a; }
+  .hnf-bp__badge { position: absolute; top: -1rem; right: 1.4rem; background: #ff5a1f; color: #fff; font: 700 1rem/1 var(--font-body-family); letter-spacing: .08em; text-transform: uppercase; padding: .45rem .7rem; border-radius: 3px; }
+  .hnf-bp__note { font-size: 1.25rem; color: #555; margin: .4rem 0 0; }
+  .hnf-bp__gift { margin: 1rem 0 0; padding: 1.1rem 1.3rem; border: 1px dashed #ff5a1f; border-radius: 10px; font-size: 1.35rem; color: #0b0b0b; background: #fff7f3; }
+  .hnf-bp__gift b { color: #ff5a1f; }
+</style>
+<div class="hnf-bp" data-hnf-bp data-variant-prices='{%- capture vp -%}{ {%- for v in product.variants -%}"{{ v.id }}":{{ v.price }}{% unless forloop.last %},{% endunless %}{%- endfor -%} }{%- endcapture -%}{{ vp | strip }}'>
+  <div class="hnf-bp__title">Bundle &amp; save</div>
+  {%- for n in (1..3) -%}
+    {%- liquid
+      assign full = hnf_unit | times: n
+      if n > 1
+        assign disc = full | times: 85 | divided_by: 100
+      else
+        assign disc = full
+      endif
+    -%}
+    <label class="hnf-bp__opt{% if n == 1 %} is-selected{% endif %}">
+      {%- if n == 2 -%}<span class="hnf-bp__badge">Most popular</span>{%- endif -%}
+      <input type="radio" name="hnf_bp_qty" value="{{ n }}" {% if n == 1 %}checked{% endif %} form="hnf-bp-dummy">
+      <span class="hnf-bp__name">{{ n }} {% if n == 1 %}item{% else %}items{% endif %}{% if n > 1 %}<span class="hnf-bp__save">SAVE 15%</span>{% endif %}</span>
+      <span class="hnf-bp__price">
+        {%- if n > 1 -%}<s data-bp-full="{{ n }}">{{ full | money }}</s>{%- endif -%}
+        <span data-bp-price="{{ n }}">{{ disc | money }}</span>
+      </span>
+    </label>
+  {%- endfor -%}
+  <p class="hnf-bp__note">15% off applies automatically in your cart to any 2 or more items: mix and match across the store.</p>
+  <p class="hnf-bp__gift" data-bp-gift>🎁 <b>Free Yoga Foam Roller</b> ($12.99 value) on orders over $100. Added to your cart automatically.</p>
+</div>
+<script>
+(function () {
+  var box = document.querySelector('[data-hnf-bp]');
+  if (!box) return;
+  var form = box.closest('form') || document;
+  function qtyEl() { return document.querySelector('[data-hnf-qty-input]'); }
+  var variantInput = document.querySelector('[data-hnf-variant-id]');
+  var prices = {};
+  try { prices = JSON.parse(box.getAttribute('data-variant-prices')); } catch (e) {}
+  function money(c) { return '$' + (c / 100).toFixed(2); }
+  function unit() { var id = variantInput && variantInput.value; return prices[id] || prices[Object.keys(prices)[0]] || 0; }
+  function paint() {
+    var u = unit();
+    [1, 2, 3].forEach(function (n) {
+      var full = u * n, disc = n > 1 ? Math.floor(full * 85 / 100) : full;
+      var p = box.querySelector('[data-bp-price="' + n + '"]'); if (p) p.textContent = money(disc);
+      var f = box.querySelector('[data-bp-full="' + n + '"]'); if (f) f.textContent = money(full);
+    });
+    var sel = box.querySelector('input[name="hnf_bp_qty"]:checked');
+    var n = sel ? parseInt(sel.value, 10) : 1;
+    var total = n > 1 ? Math.floor(u * n * 85 / 100) : u * n;
+    var gift = box.querySelector('[data-bp-gift]');
+    if (gift) gift.innerHTML = total >= 10000
+      ? '🎁 <b>Free Yoga Foam Roller unlocked</b> ($12.99 value). Added to your cart automatically.'
+      : '🎁 <b>Free Yoga Foam Roller</b> ($12.99 value) on orders over $100. You\'re ' + money(10000 - total) + ' away.';
+  }
+  function select(n) {
+    box.querySelectorAll('.hnf-bp__opt').forEach(function (l) {
+      var i = l.querySelector('input'); var on = parseInt(i.value, 10) === n;
+      i.checked = on; l.classList.toggle('is-selected', on);
+    });
+    var q = qtyEl(); if (q) q.value = n;
+    paint();
+  }
+  box.addEventListener('change', function (e) { if (e.target.name === 'hnf_bp_qty') select(parseInt(e.target.value, 10)); });
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-hnf-qty-minus],[data-hnf-qty-plus]')) setTimeout(function () {
+      var qe = qtyEl(); var q = parseInt(qe && qe.value, 10) || 1;
+      box.querySelectorAll('.hnf-bp__opt').forEach(function (l) { var i = l.querySelector('input'); var on = parseInt(i.value, 10) === q; i.checked = on; l.classList.toggle('is-selected', on); });
+      paint();
+    }, 0);
+    if (e.target.closest('[data-hnf-option-btn]')) setTimeout(paint, 50);
+  });
+  paint();
+})();
+</script>
+{%- endunless -%}

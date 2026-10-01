@@ -1,0 +1,575 @@
+diff --git a/live/assets/cart-notification.js b/live/assets/cart-notification.js
+index af421bf..ec598e7 100644
+--- a/live/assets/cart-notification.js
++++ b/live/assets/cart-notification.js
+@@ -64,7 +64,8 @@ class CartNotification extends HTMLElement {
+   }
+ 
+   renderContents(parsedState) {
+-    this.cartItemKey = parsedState.key;
++    // A multi-line /cart/add.js ({ items: [...] }) response has no top-level key.
++    this.cartItemKey = parsedState.key || parsedState.items?.[0]?.key;
+     this.getSectionsToRender().forEach((section) => {
+       document.getElementById(section.id).innerHTML = this.getSectionInnerHTML(
+         parsedState.sections[section.id],
+diff --git a/live/assets/cart.js b/live/assets/cart.js
+index a8d5df6..ffd049b 100644
+--- a/live/assets/cart.js
++++ b/live/assets/cart.js
+@@ -12,7 +12,13 @@ class CartRemoveButton extends HTMLElement {
+ 
+ customElements.define('cart-remove-button', CartRemoveButton);
+ 
+-class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement) {
++// StandardEvents comes from a CDN module (layout/theme.liquid). If that import is
++// blocked or fails, fall back to a plain element so cart quantity/remove still work.
++const CartItemsBase = window.StandardEvents?.createViewEventElement
++  ? window.StandardEvents.createViewEventElement(HTMLElement)
++  : HTMLElement;
++
++class CartItems extends CartItemsBase {
+   constructor() {
+     super();
+     this.lineItemStatusElement =
+@@ -33,7 +39,7 @@ class CartItems extends window.StandardEvents.createViewEventElement(HTMLElement
+     // The factory base class auto-dispatches cart:view from the
+     // `view-event-payload` attribute (Liquid filter output). The drawer
+     // sets `view-event-trigger="manual"` to skip auto-dispatch.
+-    super.connectedCallback();
++    super.connectedCallback?.();
+ 
+     this.cartUpdateUnsubscriber = subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
+       if (event.source === 'cart-items') return;
+diff --git a/live/sections/hnf-advertorial.liquid b/live/sections/hnf-advertorial.liquid
+index 235fb7b..95cb1b5 100644
+--- a/live/sections/hnf-advertorial.liquid
++++ b/live/sections/hnf-advertorial.liquid
+@@ -7,6 +7,11 @@
+ <style>
+   .hnf-advertorial { padding: 2.4rem 1.6rem 5.6rem; }
+   @media screen and (min-width: 750px) { .hnf-advertorial { padding: 4rem 2.4rem 7.2rem; } }
++  /* Comparison/feature tables: base.css gives .rte tables a fixed layout, which on a
++     phone squeezes 4 columns into ~80px each and overlaps the words. Let them keep a
++     readable width and scroll sideways inside the article instead. */
++  .hnf-advertorial table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
++  .hnf-advertorial table > tbody { display: table; width: 100%; min-width: 560px; }
+ </style>
+ <div class="hnf-advertorial">
+   <article class="rte">{{ page.content }}</article>
+diff --git a/live/sections/hnf-cart-extras.liquid b/live/sections/hnf-cart-extras.liquid
+index d334252..ec3b06f 100644
+--- a/live/sections/hnf-cart-extras.liquid
++++ b/live/sections/hnf-cart-extras.liquid
+@@ -4,15 +4,26 @@
+   - single-item carts get an "add 1 more, save 15%" nudge (the "Bundle & Save: 15% off 2+ items"
+     automatic discount is live), with two quick-add suggestions
+   Placed in templates/cart.json between cart-items and cart-footer.
++
++  "Bundle & Save" only covers the products listed on that discount. These product ids
++  are NOT on it (Walking Pad, Indoor Cycling Bike, Everyday Set bundle, Yoga Foam
++  Roller, free gift), so they don't count toward the 2 items and are never suggested.
++  Keep this list in step with the discount (same ids as snippets/hnf-bundle-picker.liquid).
+ {%- endcomment -%}
++{%- assign hnf_not_bundle_ids = '8107948834891,8109643825227,8110436974667,8107907317835,9588018315339' | split: ',' -%}
++<div id="hnf-cart-extras" data-id="{{ section.id }}">
+ {%- if cart != empty -%}
+   {%- liquid
+-    assign hnf_paid_qty = 0
+     assign hnf_paid_total = 0
++    assign hnf_bundle_qty = 0
+     for item in cart.items
+-      unless item.properties._hnf_gift
+-        assign hnf_paid_qty = hnf_paid_qty | plus: item.quantity
+-        assign hnf_paid_total = hnf_paid_total | plus: item.final_line_price
++      if item.variant.id == 48947160383563 or item.properties._hnf_gift
++        continue
++      endif
++      assign hnf_paid_total = hnf_paid_total | plus: item.final_line_price
++      assign hnf_pid = item.product_id | append: ''
++      unless hnf_not_bundle_ids contains hnf_pid
++        assign hnf_bundle_qty = hnf_bundle_qty | plus: item.quantity
+       endunless
+     endfor
+   -%}
+@@ -32,16 +43,17 @@
+   </style>
+   <div class="hnf-cx">
+     <div class="hnf-cx__row">
+-      {%- if hnf_paid_qty == 1 -%}
++      {%- if hnf_bundle_qty == 1 -%}
+         <div class="hnf-cx__box hnf-cx__nudge">
+           <strong>Add 1 more item and save 15% on both.</strong>
+-          Mix and match anything in the store. The discount applies automatically, right here in your cart.
++          Mix and match across the store (the Walking Pad, Indoor Cycling Bike and Everyday Set are already priced separately). The discount applies automatically, right here in your cart.
+           {%- assign hnf_in_cart = cart.items | map: 'product_id' -%}
+           {%- assign hnf_shown = 0 -%}
+           <div class="hnf-cx__picks">
+             {%- for p in collections.all.products -%}
+               {%- if hnf_shown >= 2 -%}{%- break -%}{%- endif -%}
+-              {%- if hnf_in_cart contains p.id or p.available == false or p.handle contains 'free-gift' or p.price < 1500 or p.price > 6000 -%}{%- continue -%}{%- endif -%}
++              {%- assign hnf_p_id = p.id | append: '' -%}
++              {%- if hnf_in_cart contains p.id or p.available == false or hnf_not_bundle_ids contains hnf_p_id or p.tags contains 'hidden' or p.price < 1500 or p.price > 6000 -%}{%- continue -%}{%- endif -%}
+               {%- assign hnf_shown = hnf_shown | plus: 1 -%}
+               <div class="hnf-cx__pick">
+                 {%- if p.featured_image -%}<img src="{{ p.featured_image | image_url: width: 120 }}" alt="{{ p.title | escape }}" loading="lazy" width="48" height="48">{%- endif -%}
+@@ -63,6 +75,8 @@
+       {%- endif -%}
+     </div>
+   </div>
++{%- endif -%}
++</div>
+   <script>
+     document.addEventListener('click', function (e) {
+       var b = e.target.closest('[data-hnf-cx-add]');
+@@ -70,10 +84,35 @@
+       b.disabled = true; b.textContent = 'Adding…';
+       fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+         body: JSON.stringify({ items: [{ id: Number(b.getAttribute('data-hnf-cx-add')), quantity: 1 }] }) })
+-        .then(function () { setTimeout(function () { location.reload(); }, 600); });
++        .then(function () { setTimeout(function () { location.reload(); }, 600); }, function () { location.reload(); });
++    });
++
++    /* Dawn's cart.js only re-renders the line items and the totals block after a
++       quantity change, so this section and the free-shipping bar in the cart footer
++       went stale (e.g. "add 1 more" still showing with 2 items). Re-render both. */
++    document.addEventListener('DOMContentLoaded', function () {
++      if (typeof subscribe !== 'function' || typeof PUB_SUB_EVENTS === 'undefined') return;
++      subscribe(PUB_SUB_EVENTS.cartUpdate, function () {
++        var extras = document.getElementById('hnf-cart-extras');
++        var footer = document.getElementById('main-cart-footer');
++        var ids = [extras && extras.dataset.id, footer && footer.dataset.id].filter(Boolean);
++        if (!ids.length) return;
++        return fetch(window.location.pathname + '?sections=' + ids.join(','))
++          .then(function (r) { return r.json(); })
++          .then(function (sections) {
++            function parse(id) { return sections[id] ? new DOMParser().parseFromString(sections[id], 'text/html') : null; }
++            var ex = extras && parse(extras.dataset.id);
++            var exNew = ex && ex.getElementById('hnf-cart-extras');
++            if (exNew) extras.innerHTML = exNew.innerHTML;
++            var ft = footer && parse(footer.dataset.id);
++            var barOld = footer && footer.querySelector('.hnf-cart-shipping-bar');
++            var barNew = ft && ft.querySelector('.hnf-cart-shipping-bar');
++            if (barOld && barNew) barOld.innerHTML = barNew.innerHTML;
++          })
++          .catch(function () {});
++      });
+     });
+   </script>
+-{%- endif -%}
+ 
+ {% schema %}
+ {
+diff --git a/live/sections/hnf-everyday-set-landing.liquid b/live/sections/hnf-everyday-set-landing.liquid
+index 82a71be..6eea841 100644
+--- a/live/sections/hnf-everyday-set-landing.liquid
++++ b/live/sections/hnf-everyday-set-landing.liquid
+@@ -379,7 +379,7 @@
+   </section>
+ 
+   {%- comment -%} 7. BEST SELLERS — real per-product quick add {%- endcomment -%}
+-  <section class="hnf-lp__section hnf-lp__section--white">
++  <section class="hnf-lp__section hnf-lp__section--white" id="build-your-own">
+     <div class="hnf-lp__inner hnf-lp__inner--wide">
+       <span class="hnf-lp__eyebrow">Prefer to build your own?</span>
+       <h2 class="hnf-lp__h2">Every piece, sold individually.</h2>
+@@ -587,6 +587,8 @@
+             return res.json();
+           })
+           .then(function (item) {
++            /* An `items` add answers { items: [...] }; cart-notification needs a top-level key. */
++            if (item && !item.key && item.items && item.items[0]) item.key = item.items[0].key;
+             btn.setAttribute('data-state', 'added');
+             btn.textContent = 'Added ✓';
+             if (item.sections) {
+@@ -596,7 +598,9 @@
+                 var section = parsed.querySelector('.shopify-section');
+                 if (section) bubble.innerHTML = section.innerHTML;
+               }
+-              if (cartUi && typeof cartUi.renderContents === 'function') cartUi.renderContents(item);
++              if (cartUi && typeof cartUi.renderContents === 'function') {
++                try { cartUi.renderContents(item); } catch (renderError) { /* item is already in the cart */ }
++              }
+             }
+             document.dispatchEvent(new CustomEvent('cart:refresh'));
+             setTimeout(function () {
+@@ -607,7 +611,9 @@
+           .catch(function () {
+             btn.setAttribute('data-state', 'idle');
+             btn.textContent = originalText;
+-            window.location.href = '/cart/' + variantId + ':1';
++            /* Never fall back to a /cart/{id}:1 permalink: it skips the cart and opens
++               a checkout holding only this item. */
++            window.location.href = '/cart';
+           });
+       });
+     });
+diff --git a/live/sections/hnf-product.liquid b/live/sections/hnf-product.liquid
+index 7160c44..6181286 100644
+--- a/live/sections/hnf-product.liquid
++++ b/live/sections/hnf-product.liquid
+@@ -216,7 +216,8 @@
+ 
+   .hnf-pdp__add--outline:hover { background: var(--ink); color: #fff; }
+ 
+-  .hnf-pdp__dynamic-checkout { margin-bottom: 1.8rem; }
++  .hnf-pdp__dynamic-checkout { margin-bottom: 1.8rem; }
++  .hnf-pdp__add-error { margin: -0.8rem 0 1.6rem; font-size: 1.35rem; color: #b42318; }
+ 
+   .hnf-pdp__dynamic-checkout .shopify-payment-button__button { min-height: 5.4rem; border-radius: 2px; overflow: hidden; }
+ 
+@@ -837,8 +838,8 @@
+ 
+ 
+ 
+-          {%- if current_variant.available -%}
+-
++          <p class="hnf-pdp__add-error" data-hnf-add-error role="alert" hidden></p>
++          {%- if current_variant.available -%}
+             <div class="hnf-pdp__dynamic-checkout">
+ 
+               {{ form | payment_button }}
+@@ -1437,7 +1438,7 @@
+ 
+       <div class="hnf-pdp__quickbuy-actions">
+ 
+-        <button type="button" class="hnf-pdp__add" data-hnf-quickbuy-cart>Add to Cart</button>
++        <button type="button" class="hnf-pdp__add" data-hnf-quickbuy-cart>View Cart</button>
+ 
+         <button type="button" class="hnf-pdp__add hnf-pdp__add--outline" data-hnf-quickbuy-buy>Buy Now</button>
+ 
+@@ -1849,9 +1850,15 @@
+ 
+ 
+ 
+-  function updateForVariant(v) {
+-
+-    if (!v) return;
++  function updateForVariant(v) {
++    if (!v) {
++      /* No variant matches this option combination: never leave the previous
++         variant id in the form, or Add to Cart silently adds the wrong item. */
++      [addBtn, stickyAdd].forEach(function (btn) { if (btn) btn.disabled = true; });
++      if (addLabel) addLabel.textContent = 'Unavailable';
++      if (stickyAdd) stickyAdd.textContent = 'Unavailable';
++      return;
++    }
+ 
+     variantIdInput.value = v.id;
+ 
+@@ -1967,9 +1974,29 @@
+ 
+ 
+ 
+-  function addToCart(onSuccess) {
+-
+-    if (!variantIdInput.value) return Promise.resolve();
++  var addError = root.querySelector('[data-hnf-add-error]');
++
++  function showAddError(message) {
++    if (!addError) return;
++    addError.textContent = message || '';
++    addError.hidden = !message;
++  }
++
++  /* /cart/add.js called with an `items` array answers { items: [...], sections },
++     but Dawn's <cart-notification>.renderContents() finds the popup row via a
++     top-level `key` (the single-item response shape). Without it the lookup is
++     "#cart-notification-product-undefined", renderContents() throws, and every
++     Add to Cart click fell through to the /cart redirect below. */
++  function toCartUiState(response) {
++    if (response && !response.key && response.items && response.items[0]) {
++      response.key = response.items[0].key;
++    }
++    return response;
++  }
++
++  function addToCart(onSuccess) {
++    if (!variantIdInput.value) return Promise.resolve();
++    showAddError('');
+ 
+     var qty = qtyInput ? (parseInt(qtyInput.value, 10) || 1) : 1;
+ 
+@@ -1995,9 +2022,20 @@
+ 
+     })
+ 
+-      .then(function (res) { if (!res.ok) throw new Error('add failed'); return res.json(); })
+-
+-      .then(function (item) {
++      .then(function (res) {
++        return res.json().catch(function () { return {}; }).then(function (body) {
++          if (!res.ok) {
++            /* e.g. 422 "only 10 left": the add was refused, so say why
++               instead of bouncing the shopper to the cart page. */
++            var err = new Error(body.description || body.message || 'add failed');
++            err.cartRefused = res.status === 422;
++            throw err;
++          }
++          return body;
++        });
++      })
++      .then(function (item) {
++        item = toCartUiState(item);
+ 
+         [addBtn, stickyAdd].forEach(function (btn) { if (btn) btn.setAttribute('data-state', 'added'); });
+ 
+@@ -2041,9 +2079,12 @@
+ 
+       })
+ 
+-      .catch(function () {
+-
+-        [addBtn, stickyAdd].forEach(function (btn) { if (btn) btn.setAttribute('data-state', 'idle'); });
++      .catch(function (error) {
++        [addBtn, stickyAdd].forEach(function (btn) { if (btn) btn.setAttribute('data-state', 'idle'); });
++        if (error && error.cartRefused) {
++          showAddError(error.message);
++          return;
++        }
+ 
+         /* Genuine network/add failure: land on the cart page to show current state,
+            never on the checkout-triggering permalink used previously. */
+@@ -2062,10 +2103,12 @@
+ 
+        reusing the response already captured from the add that just happened. */
+ 
+-    if (cartUi && lastAddResponse && lastAddResponse.sections && typeof cartUi.renderContents === 'function') {
+-
+-      cartUi.renderContents(lastAddResponse);
+-
++    if (cartUi && lastAddResponse && lastAddResponse.sections && typeof cartUi.renderContents === 'function') {
++      try {
++        cartUi.renderContents(lastAddResponse);
++      } catch (renderError) {
++        window.location.href = '/cart';
++      }
+     }
+ 
+     document.dispatchEvent(new CustomEvent('cart:refresh'));
+@@ -2108,11 +2151,16 @@
+ 
+   if (qbClose) qbClose.addEventListener('click', function () { quickbuy.hidden = true; refreshDrawer(); });
+ 
+-  quickbuy.addEventListener('click', function (e) { if (e.target === quickbuy) { quickbuy.hidden = true; refreshDrawer(); } });
++  if (quickbuy) quickbuy.addEventListener('click', function (e) { if (e.target === quickbuy) { quickbuy.hidden = true; refreshDrawer(); } });
+ 
+   if (qbCartBtn) qbCartBtn.addEventListener('click', function () { quickbuy.hidden = true; refreshDrawer(); });
+ 
+-  if (qbBuyBtn) qbBuyBtn.addEventListener('click', function () { window.location.href = '/checkout'; });
++  if (qbBuyBtn) qbBuyBtn.addEventListener('click', function () {
++    /* Let the free-gift sync (snippets/hnf-free-gift.liquid) settle first so a
++       $100+ order reaches checkout with its free roller. */
++    var settle = window.hnfGiftSync ? window.hnfGiftSync() : Promise.resolve();
++    settle.then(function () {}, function () {}).then(function () { window.location.href = '/checkout'; });
++  });
+ 
+ 
+ 
+diff --git a/live/sections/main-cart-items.liquid b/live/sections/main-cart-items.liquid
+index b7de814..89d4666 100644
+--- a/live/sections/main-cart-items.liquid
++++ b/live/sections/main-cart-items.liquid
+@@ -246,6 +246,8 @@
+                             {%- endif -%}
+                             <quantity-input class="quantity cart-quantity">
+                               {% assign can_update_quantity = item.instructions.can_update_quantity | default: true %}
++                              {%- comment -%} The free gift is managed by snippets/hnf-free-gift.liquid. {%- endcomment -%}
++                              {% if item.variant.id == 48947160383563 %}{% assign can_update_quantity = false %}{% endif %}
+                               <button
+                                 class="quantity__button"
+                                 name="minus"
+@@ -305,6 +307,7 @@
+                             id="Remove-{{ item.index | plus: 1 }}"
+                             data-index="{{ item.index | plus: 1 }}"
+                             {% assign can_remove = item.instructions.can_remove | default: true %}
++                            {% if item.variant.id == 48947160383563 %}{% assign can_remove = false %}{% endif %}
+                             {% if can_remove == false %}
+                               class="hidden"
+                             {% endif %}
+diff --git a/live/sections/main-collection-product-grid.liquid b/live/sections/main-collection-product-grid.liquid
+index 4eba742..e6ab71b 100644
+--- a/live/sections/main-collection-product-grid.liquid
++++ b/live/sections/main-collection-product-grid.liquid
+@@ -158,6 +158,8 @@
+               >
+                 {% assign skip_card_product_styles = false %}
+                 {%- for product in collection.products -%}
++                  {%- comment -%} e.g. the $0 free-gift product: published so it can be added to carts, never listed. {%- endcomment -%}
++                  {%- if product.tags contains 'hidden' -%}{%- continue -%}{%- endif -%}
+                   {% assign lazy_load = false %}
+                   {%- if forloop.index > 2 -%}
+                     {%- assign lazy_load = true -%}
+diff --git a/live/sections/related-products.liquid b/live/sections/related-products.liquid
+index 8e7c5cf..57dbccf 100644
+--- a/live/sections/related-products.liquid
++++ b/live/sections/related-products.liquid
+@@ -37,6 +37,7 @@
+       >
+         {% assign skip_card_product_styles = false %}
+         {% for recommendation in recommendations.products %}
++          {%- if recommendation.tags contains 'hidden' -%}{%- continue -%}{%- endif -%}
+           <li class="grid__item">
+             {% render 'card-product',
+               card_product: recommendation,
+diff --git a/live/sections/repline-home.liquid b/live/sections/repline-home.liquid
+index 1905176..8a43906 100644
+--- a/live/sections/repline-home.liquid
++++ b/live/sections/repline-home.liquid
+@@ -571,7 +571,7 @@
+   assign offer_price = 37499
+   assign offer_savings = 3795
+   assign offer_cart_url = '/cart/43205518557259:1,43197429481547:1,43198517575755:1'
+-  assign individual_cart_url = '/cart/43198712381515:1,43198521049163:1,43198517968971:1,43198518198347:1'
++
+ -%}
+ 
+ <div class="hnf-home">
+@@ -695,7 +695,7 @@
+ 
+           <div class="hnf-cta-row">
+             <a class="hnf-btn" href="{{ offer_cart_url }}">Get the Everyday Set →</a>
+-            <a class="hnf-btn hnf-btn--outline-dark" href="{{ individual_cart_url }}">Shop individually →</a>
++            <a class="hnf-btn hnf-btn--outline-dark" href="/pages/everyday-set#build-your-own">Shop individually →</a>
+           </div>
+         </div>
+       </div>
+diff --git a/live/snippets/hnf-bundle-picker.liquid b/live/snippets/hnf-bundle-picker.liquid
+index f1d3631..9f38940 100644
+--- a/live/snippets/hnf-bundle-picker.liquid
++++ b/live/snippets/hnf-bundle-picker.liquid
+@@ -3,11 +3,12 @@
+   Pricing is enforced by the native Shopify automatic discount
+   "Bundle & Save: 15% off 2+ items" (mix & match); this block only sets the
+   quantity input and shows the maths. Rendered inside #hnf-pdp-form.
+-  Hidden for products that have no quantity break (walking pad, bike, bundle).
++  Hidden for products that have no quantity break, i.e. products that are not on the
++  discount: walking pad, bike, bundle, yoga foam roller, free gift.
+ {%- endcomment -%}
+ {%- liquid
+   assign hnf_bp_skip = false
+-  if product.id == 8107948834891 or product.id == 8109643825227 or product.id == 8110436974667
++  if product.id == 8107948834891 or product.id == 8109643825227 or product.id == 8110436974667 or product.id == 8107907317835 or product.id == 9588018315339
+     assign hnf_bp_skip = true
+   endif
+   assign hnf_unit = current_variant.price
+diff --git a/live/snippets/hnf-free-gift.liquid b/live/snippets/hnf-free-gift.liquid
+index ce250f1..ac1759e 100644
+--- a/live/snippets/hnf-free-gift.liquid
++++ b/live/snippets/hnf-free-gift.liquid
+@@ -3,57 +3,100 @@
+   Keeps exactly one Yoga Foam Roller line tagged _hnf_gift in the cart while the
+   non-gift subtotal is >= $100, and removes it below that. The gift is a separate,
+   hidden $0 product, so it needs no discount and never conflicts with
+-  "Bundle & Save: 15% off 2+ items". This script never changes prices itself. Rendered once in layout/theme.liquid.
++  "Bundle & Save: 15% off 2+ items". This script never changes prices itself.
++  Rendered once per page from sections/hnf-announcement-marquee.liquid (header group).
++
++  Gift lines are recognised by variant id, not only by the _hnf_gift property, so a
++  copy added by hand (e.g. /cart/add?id=<gift variant>) is still treated as the gift:
++  it never counts toward the $100 and is removed when the order doesn't qualify.
++  window.hnfGiftSync() returns a promise that resolves once the cart has settled.
+ {%- endcomment -%}
+ <script>
+ (function () {
++  if (window.hnfGiftSync) return;
+   var GIFT_VARIANT = 48947160383563;   /* "Free Gift: Yoga Foam Roller" ($0, hidden product) */
+   var THRESHOLD = 10000;               /* cents */
++  var MAX_STEPS = 4;
+   var rawFetch = window.fetch.bind(window);
+-  var busy = false;
+-  function isGift(i) { return i.properties && i.properties._hnf_gift; }
++  var running = null;
++  var rerun = false;
++  function isGift(i) { return i.variant_id === GIFT_VARIANT || (i.properties && i.properties._hnf_gift); }
+   function post(url, body) {
+     return rawFetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body) });
+   }
+-  function sync() {
+-    if (busy) return Promise.resolve(false);
+-    busy = true;
++  /* One corrective step; resolves true if it changed the cart. */
++  function step() {
+     return rawFetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+       .then(function (r) { return r.json(); })
+       .then(function (cart) {
+         var gifts = cart.items.filter(isGift);
+         var base = cart.items.filter(function (i) { return !isGift(i); })
+           .reduce(function (s, i) { return s + i.final_line_price; }, 0);
+-        if (base >= THRESHOLD && gifts.length === 0) {
+-          return post('/cart/add.js', { items: [{ id: GIFT_VARIANT, quantity: 1, properties: { _hnf_gift: 'Free gift' } }] }).then(function () { return true; });
+-        }
+-        if (base < THRESHOLD && gifts.length) {
++        var tagged = gifts.filter(function (i) { return i.properties && i.properties._hnf_gift; });
++        if (base < THRESHOLD) {
++          if (!gifts.length) return false;
+           return post('/cart/change.js', { id: gifts[0].key, quantity: 0 }).then(function () { return true; });
+         }
+-        if (gifts.length && gifts[0].quantity !== 1) {
+-          return post('/cart/change.js', { id: gifts[0].key, quantity: 1 }).then(function () { return true; });
++        if (!tagged.length) {
++          if (gifts.length) return post('/cart/change.js', { id: gifts[0].key, quantity: 0 }).then(function () { return true; });
++          return post('/cart/add.js', { items: [{ id: GIFT_VARIANT, quantity: 1, properties: { _hnf_gift: 'Free gift' } }] }).then(function () { return true; });
+         }
++        var extra = gifts.filter(function (i) { return i !== tagged[0]; });
++        if (extra.length) return post('/cart/change.js', { id: extra[0].key, quantity: 0 }).then(function () { return true; });
++        if (tagged[0].quantity !== 1) return post('/cart/change.js', { id: tagged[0].key, quantity: 1 }).then(function () { return true; });
+         return false;
+-      })
++      });
++  }
++  function settle(n, changed) {
++    return step().then(function (did) {
++      return did && n > 1 ? settle(n - 1, true) : (changed || did);
++    });
++  }
++  /* Never drop a request: if a sync is already running, run once more after it. */
++  function sync() {
++    if (running) { rerun = true; return running; }
++    running = settle(MAX_STEPS, false)
+       .catch(function () { return false; })
+-      .finally(function () { busy = false; });
++      .then(function (changed) {
++        running = null;
++        if (rerun) { rerun = false; return sync().then(function (again) { return changed || again; }); }
++        return changed;
++      });
++    return running;
+   }
++  window.hnfGiftSync = sync;
++  function onCartPage() { return /^\/cart\/?$/.test(location.pathname); }
+   function afterChange() {
+     setTimeout(function () {
+       sync().then(function (changed) {
+         if (!changed) return;
+-        if (/^\/cart\/?$/.test(location.pathname)) { location.reload(); return; }
++        if (onCartPage()) { location.reload(); return; }
++        refreshBubble();
+         document.dispatchEvent(new CustomEvent('cart:refresh'));
+       });
+     }, 80);
+   }
++  /* Keep the header count in step when the gift is added or removed off the cart page. */
++  function refreshBubble() {
++    var bubble = document.getElementById('cart-icon-bubble');
++    if (!bubble) return;
++    rawFetch('/?sections=cart-icon-bubble')
++      .then(function (r) { return r.json(); })
++      .then(function (sections) {
++        var html = sections && sections['cart-icon-bubble'];
++        if (!html) return;
++        var section = new DOMParser().parseFromString(html, 'text/html').querySelector('.shopify-section');
++        if (section) bubble.innerHTML = section.innerHTML;
++      })
++      .catch(function () {});
++  }
+   window.fetch = function (input, init) {
+     var p = rawFetch(input, init);
+     var url = String((input && input.url) || input || '');
+     if (/\/cart\/(add|change|update|clear)(\.js)?/.test(url)) p.then(afterChange, function () {});
+     return p;
+   };
+-  if (/^\/cart\/?$/.test(location.pathname)) {
++  if (onCartPage()) {
+     sync().then(function (changed) { if (changed) location.reload(); });
+   }
+ })();

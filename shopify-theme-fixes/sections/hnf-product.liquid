@@ -1,0 +1,2353 @@
+{%- style -%}
+
+  .hnf-pdp {
+
+    --ink: #0b0b0b; --ink-2: #151515; --paper: #ffffff; --soft-bg: #f5f5f3; --soft-line: #eaeae7;
+
+    --text: #111111; --muted: #666666; --accent: #ff5a1f; --accent-hover: #ff7440;
+
+    background: var(--paper); color: var(--text); font-family: var(--font-body-family, Inter, sans-serif);
+
+  }
+
+  .hnf-pdp * { box-sizing: border-box; }
+
+  .hnf-pdp__inner { max-width: 132rem; margin: 0 auto; padding: 0 2rem; }
+
+  .hnf-pdp__eyebrow { display: block; font-weight: 700; font-size: 1.2rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.8rem; }
+
+  .hnf-pdp__h2 { font-family: var(--font-heading-family, Anton, sans-serif); font-weight: 400; text-transform: uppercase; font-size: clamp(2.4rem, 3.6vw, 3.4rem); line-height: 1.04; margin: 0 0 1.2rem; }
+
+
+
+  /* ---------- HERO ---------- */
+
+  .hnf-pdp__hero { padding: clamp(2.4rem, 4vw, 4.4rem) 0 clamp(3.2rem, 5vw, 5.2rem); }
+
+  .hnf-pdp__hero-grid { display: grid; grid-template-columns: 1fr; gap: 3.2rem; min-width: 0; }
+
+  @media screen and (min-width: 990px) {
+
+    .hnf-pdp__hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 5rem; align-items: flex-start; }
+
+  }
+
+
+
+  /* Gallery — min-width:0 on every grid item below prevents CSS Grid's
+
+     default content-based sizing from blowing out the row width and
+
+     pushing the main image off-screen. */
+
+  .hnf-pdp__gallery { display: grid; grid-template-columns: 1fr; gap: 1rem; min-width: 0; }
+
+  @media screen and (min-width: 990px) {
+
+    .hnf-pdp__gallery { position: sticky; top: 2rem; grid-template-columns: 7.4rem minmax(0, 1fr); }
+
+  }
+
+  .hnf-pdp__thumbs { display: flex; gap: 0.9rem; overflow-x: auto; order: 2; min-width: 0; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+
+  .hnf-pdp__thumbs::-webkit-scrollbar { display: none; }
+
+  @media screen and (min-width: 990px) {
+
+    .hnf-pdp__thumbs { order: 1; flex-direction: column; overflow-x: visible; max-height: 62rem; overflow-y: auto; }
+
+  }
+
+  .hnf-pdp__thumb { position: relative; flex: none; width: 6.6rem; height: 6.6rem; background: var(--soft-bg); border: 2px solid transparent; border-radius: 4px; padding: 0; cursor: pointer; overflow: hidden; }
+
+  .hnf-pdp__thumb.is-active { border-color: var(--ink); }
+
+  .hnf-pdp__thumb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .hnf-pdp__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+
+  .hnf-pdp__thumb-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(11,11,11,0.35); color: #fff; pointer-events: none; }
+
+  .hnf-pdp__thumb-play svg { width: 1.8rem; height: 1.8rem; }
+
+  .hnf-pdp__main-media { order: 1; position: relative; background: var(--soft-bg); aspect-ratio: 1 / 1; overflow: hidden; min-width: 0; width: 100%; }
+
+  @media screen and (min-width: 990px) { .hnf-pdp__main-media { order: 2; } }
+
+  .hnf-pdp__main-media img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+
+  .hnf-pdp__main-media video { width: 100%; height: 100%; object-fit: contain; display: block; background: var(--ink); }
+
+  .hnf-pdp__main-media img[hidden], .hnf-pdp__main-media video[hidden] { display: none; }
+
+  .hnf-pdp__zoom-hint { position: absolute; right: 1.4rem; bottom: 1.4rem; background: rgba(11,11,11,0.72); color: #fff; font-size: 1.1rem; font-weight: 600; padding: 0.6rem 1rem; border-radius: 2px; border: none; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+
+  .hnf-pdp__zoom-hint svg { width: 1.4rem; height: 1.4rem; }
+
+  .hnf-pdp__zoom-hint:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+  .hnf-pdp__main-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 4rem; height: 4rem; background: rgba(255,255,255,0.85); border: none; border-radius: 50%; color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+
+  .hnf-pdp__main-nav svg { width: 2rem; height: 2rem; }
+
+  .hnf-pdp__main-nav:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .hnf-pdp__main-nav:hover { background: #fff; }
+
+  .hnf-pdp__main-prev { left: 1rem; }
+
+  .hnf-pdp__main-next { right: 1rem; }
+
+  @media screen and (min-width: 750px) { .hnf-pdp__main-prev { left: 1.4rem; } .hnf-pdp__main-next { right: 1.4rem; } }
+
+
+
+  .hnf-pdp__lightbox { position: fixed; inset: 0; z-index: 1000; background: rgba(11,11,11,0.96); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; touch-action: pan-y; }
+
+  .hnf-pdp__lightbox[hidden] { display: none; }
+
+  .hnf-pdp__lightbox-stage { position: relative; flex: 1 1 auto; width: 100%; display: flex; align-items: center; justify-content: center; min-height: 0; }
+
+  .hnf-pdp__lightbox-stage img { max-width: 100%; max-height: 100%; object-fit: contain; user-select: none; }
+
+  .hnf-pdp__lightbox-close { position: absolute; top: 2rem; right: 2rem; width: 4.4rem; height: 4.4rem; background: rgba(255,255,255,0.08); border: none; border-radius: 2px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; }
+
+  .hnf-pdp__lightbox-close svg { width: 2rem; height: 2rem; }
+
+  .hnf-pdp__lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 4.8rem; height: 4.8rem; background: rgba(255,255,255,0.08); border: none; border-radius: 2px; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; }
+
+  .hnf-pdp__lightbox-nav:disabled { opacity: 0.25; cursor: default; }
+
+  .hnf-pdp__lightbox-nav svg { width: 2.2rem; height: 2.2rem; }
+
+  .hnf-pdp__lightbox-prev { left: 1rem; } .hnf-pdp__lightbox-next { right: 1rem; }
+
+  @media screen and (min-width: 750px) { .hnf-pdp__lightbox-prev { left: 2rem; } .hnf-pdp__lightbox-next { right: 2rem; } }
+
+  .hnf-pdp__lightbox-counter { color: #fff; font-size: 1.3rem; font-weight: 600; letter-spacing: 0.02em; margin: 1.6rem 0 0.4rem; flex: none; }
+
+  .hnf-pdp__lightbox-thumbs { display: flex; gap: 0.8rem; overflow-x: auto; max-width: 100%; padding: 0 1rem 0.4rem; flex: none; scrollbar-width: none; }
+
+  .hnf-pdp__lightbox-thumbs::-webkit-scrollbar { display: none; }
+
+  .hnf-pdp__lightbox-thumb { flex: none; width: 5.4rem; height: 5.4rem; border-radius: 4px; overflow: hidden; border: 2px solid transparent; background: var(--ink-2); padding: 0; cursor: pointer; opacity: 0.55; }
+
+  .hnf-pdp__lightbox-thumb.is-active { border-color: #fff; opacity: 1; }
+
+  .hnf-pdp__lightbox-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+
+  html.hnf-pdp-lightbox-open { overflow: hidden; }
+
+
+
+  /* Purchase panel */
+
+  .hnf-pdp__purchase { display: flex; flex-direction: column; min-width: 0; }
+
+  .hnf-pdp__title { font-family: var(--font-heading-family, Anton, sans-serif); font-weight: 400; text-transform: uppercase; font-size: clamp(2.8rem, 4vw, 3.8rem); line-height: 1.02; margin: 0 0 1.2rem; color: var(--ink); }
+
+  .hnf-pdp__rating { display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1.4rem; font-size: 1.3rem; color: var(--muted); }
+
+  .hnf-pdp__rating-stars { color: var(--accent); letter-spacing: 0.1em; }
+
+  .hnf-pdp__desc { font-size: 1.6rem; line-height: 1.6; color: var(--muted); margin: 0 0 2rem; max-width: 54ch; }
+
+  .hnf-pdp__price-row { display: flex; align-items: baseline; gap: 1.2rem; padding-top: 1.8rem; border-top: 1px solid var(--soft-line); margin-bottom: 2.2rem; }
+
+  .hnf-pdp__price { font-size: 3rem; font-weight: 700; color: var(--ink); }
+
+  .hnf-pdp__price--sale { color: var(--accent); }
+
+  .hnf-pdp__compare { font-size: 1.7rem; color: var(--muted); text-decoration: line-through; }
+
+  .hnf-pdp__savings { font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; background: var(--accent); color: #fff; padding: 0.4rem 0.8rem; border-radius: 2px; }
+
+
+
+  .hnf-pdp__options { margin-bottom: 1.8rem; }
+
+  .hnf-pdp__option-label { display: block; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.8rem; }
+
+  .hnf-pdp__option-label span { font-weight: 400; text-transform: none; color: var(--muted); letter-spacing: 0; }
+
+  .hnf-pdp__swatches { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+
+  .hnf-pdp__swatch { min-width: 4.6rem; height: 4.2rem; padding: 0 1.4rem; border: 1.5px solid var(--soft-line); border-radius: 4px; background: #fff; font-size: 1.3rem; font-weight: 600; cursor: pointer; color: var(--text); transition: border-color .12s ease, background-color .12s ease; }
+
+  .hnf-pdp__swatch:hover { border-color: var(--ink); }
+
+  .hnf-pdp__swatch.is-selected { border-color: var(--ink); background: var(--ink); color: #fff; }
+
+  .hnf-pdp__swatch:disabled { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+
+
+
+  .hnf-pdp__buy-row { display: flex; gap: 1rem; margin-bottom: 1.6rem; }
+
+  .hnf-pdp__qty { display: flex; align-items: center; border: 1.5px solid var(--soft-line); border-radius: 2px; overflow: hidden; flex: none; }
+
+  .hnf-pdp__qty button { width: 4.6rem; height: 5.6rem; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text); }
+
+  .hnf-pdp__qty button:hover { background: var(--soft-bg); }
+
+  .hnf-pdp__qty input { width: 4.6rem; height: 5.6rem; border: none; border-left: 1.5px solid var(--soft-line); border-right: 1.5px solid var(--soft-line); text-align: center; font-size: 1.5rem; font-weight: 600; -moz-appearance: textfield; }
+
+  .hnf-pdp__qty input::-webkit-outer-spin-button, .hnf-pdp__qty input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .hnf-pdp__add {
+
+    flex: 1; min-height: 5.6rem; background: var(--accent); color: #fff; border: none; border-radius: 2px; font-weight: 700;
+
+    font-size: 1.4rem; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: background-color .12s ease;
+
+    display: flex; align-items: center; justify-content: center; gap: 0.8rem; padding: 0 2.4rem;
+
+  }
+
+  .hnf-pdp__add:hover { background: var(--accent-hover); }
+
+  .hnf-pdp__add[data-state="loading"] { opacity: 0.7; pointer-events: none; }
+
+  .hnf-pdp__add[data-state="added"] { background: #1a7a3c; }
+
+  .hnf-pdp__add:disabled { background: var(--soft-line); color: var(--muted); cursor: not-allowed; }
+
+  .hnf-pdp__add--outline { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+
+  .hnf-pdp__add--outline:hover { background: var(--ink); color: #fff; }
+
+  .hnf-pdp__dynamic-checkout { margin-bottom: 1.8rem; }
+  .hnf-pdp__add-error { margin: -0.8rem 0 1.6rem; font-size: 1.35rem; color: #b42318; }
+
+  .hnf-pdp__dynamic-checkout .shopify-payment-button__button { min-height: 5.4rem; border-radius: 2px; overflow: hidden; }
+
+
+
+  .hnf-pdp__reassure { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; padding: 1.6rem 0; border-top: 1px solid var(--soft-line); border-bottom: 1px solid var(--soft-line); margin-bottom: 2rem; }
+
+  .hnf-pdp__reassure-item { text-align: center; }
+
+  .hnf-pdp__reassure-item svg { width: 2.4rem; height: 2.4rem; color: var(--accent); margin: 0 auto 0.6rem; display: block; }
+
+  .hnf-pdp__reassure-item span { display: block; font-size: 1.15rem; font-weight: 600; line-height: 1.3; }
+
+
+
+  .hnf-pdp__accordion { border-top: 1px solid var(--soft-line); }
+
+  .hnf-pdp__accordion details { border-bottom: 1px solid var(--soft-line); }
+
+  .hnf-pdp__accordion summary { display: flex; justify-content: space-between; align-items: center; padding: 1.6rem 0; font-weight: 700; font-size: 1.4rem; cursor: pointer; list-style: none; }
+
+  .hnf-pdp__accordion summary::-webkit-details-marker { display: none; }
+
+  .hnf-pdp__accordion summary::after { content: '+'; font-size: 2rem; color: var(--accent); font-weight: 400; transition: transform .15s ease; }
+
+  .hnf-pdp__accordion details[open] summary::after { transform: rotate(45deg); }
+
+  .hnf-pdp__accordion-body { padding: 0 0 1.8rem; font-size: 1.35rem; line-height: 1.6; color: var(--muted); }
+
+  .hnf-pdp__spec-table { width: 100%; border-collapse: collapse; }
+
+  .hnf-pdp__spec-table tr { border-top: 1px solid var(--soft-line); }
+
+  .hnf-pdp__spec-table tr:first-child { border-top: none; }
+
+  .hnf-pdp__spec-table th, .hnf-pdp__spec-table td { padding: 0.9rem 0; text-align: left; font-weight: 400; font-size: 1.3rem; vertical-align: top; }
+
+  .hnf-pdp__spec-table th { width: 40%; color: var(--muted); font-weight: 600; }
+
+
+
+  /* ---------- STORY ---------- */
+
+  .hnf-pdp__section { padding: clamp(4.4rem, 7vw, 7.2rem) 0; }
+
+  .hnf-pdp__section--soft { background: var(--soft-bg); }
+
+  .hnf-pdp__story-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+
+  @media screen and (min-width: 990px) { .hnf-pdp__story-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 5rem; } }
+
+  .hnf-pdp__story-media { aspect-ratio: 4 / 5; overflow: hidden; background: var(--soft-bg); display: flex; align-items: center; justify-content: center; min-width: 0; }
+
+  .hnf-pdp__story-media img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+  .hnf-pdp__story-body p { font-size: 1.7rem; line-height: 1.6; color: var(--muted); margin: 0 0 1.4rem; }
+
+  .hnf-pdp__benefit-list { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; gap: 1.4rem; }
+
+  .hnf-pdp__benefit-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+
+  .hnf-pdp__benefit-icon { width: 3.6rem; height: 3.6rem; flex: none; border-radius: 50%; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; }
+
+  .hnf-pdp__benefit-icon svg { width: 1.8rem; height: 1.8rem; }
+
+  .hnf-pdp__benefit-item h3 { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; margin: 0 0 0.3rem; }
+
+  .hnf-pdp__benefit-item p { font-size: 1.3rem; color: var(--muted); margin: 0; line-height: 1.5; }
+
+
+
+  /* ---------- IN ACTION ---------- */
+
+  .hnf-pdp__action-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+
+  @media screen and (min-width: 640px) { .hnf-pdp__action-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+
+  .hnf-pdp__action-item { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: var(--soft-bg); display: flex; align-items: center; justify-content: center; min-width: 0; }
+
+  .hnf-pdp__action-item img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+  .hnf-pdp__action-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.4rem; background: linear-gradient(0deg, rgba(11,11,11,0.75) 0%, rgba(11,11,11,0) 100%); color: #fff; font-size: 1.25rem; font-weight: 600; }
+
+
+
+  /* ---------- STEPS ---------- */
+
+  .hnf-pdp__steps { display: grid; grid-template-columns: 1fr; gap: 1.6rem; counter-reset: hnf-step; }
+
+  @media screen and (min-width: 750px) { .hnf-pdp__steps { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+
+  .hnf-pdp__step { border-top: 2px solid var(--accent); padding-top: 1.6rem; }
+
+  .hnf-pdp__step-num { display: block; font-family: var(--font-heading-family, Anton, sans-serif); font-size: 1.8rem; color: var(--accent); margin-bottom: 0.6rem; }
+
+  .hnf-pdp__step h3 { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; margin: 0 0 0.5rem; }
+
+  .hnf-pdp__step p { font-size: 1.3rem; color: var(--muted); line-height: 1.5; margin: 0; }
+
+
+
+  /* ---------- INCLUDED ---------- */
+
+  .hnf-pdp__included-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2rem; }
+
+  @media screen and (min-width: 750px) { .hnf-pdp__included-grid { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+
+  .hnf-pdp__included-item { background: #fff; border: 1px solid var(--soft-line); min-width: 0; }
+
+  .hnf-pdp__included-media { aspect-ratio: 1/1; background: var(--soft-bg); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+  .hnf-pdp__included-media img { width: 78%; height: 78%; object-fit: contain; }
+
+  .hnf-pdp__included-body { padding: 1.4rem; }
+
+  .hnf-pdp__included-body h3 { font-size: 1.3rem; font-weight: 700; margin: 0 0 0.4rem; }
+
+  .hnf-pdp__included-body p { font-size: 1.2rem; color: var(--muted); margin: 0; line-height: 1.45; }
+
+
+
+  /* ---------- EVERYDAY METHOD ---------- */
+
+  .hnf-pdp__method { background: var(--ink); color: #fff; padding: clamp(3.6rem, 6vw, 5.6rem) 0; }
+
+  .hnf-pdp__method-grid { display: grid; grid-template-columns: 1fr; gap: 2.4rem; align-items: center; }
+
+  @media screen and (min-width: 900px) { .hnf-pdp__method-grid { grid-template-columns: minmax(0,1.2fr) minmax(0,0.8fr); } }
+
+  .hnf-pdp__method-eyebrow { color: var(--accent); font-weight: 700; font-size: 1.2rem; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 1rem; }
+
+  .hnf-pdp__method h2 { color: #fff; }
+
+  .hnf-pdp__method p { font-size: 1.5rem; line-height: 1.6; color: #c9c9c9; margin: 0 0 1rem; max-width: 60ch; }
+
+  .hnf-pdp__method-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; padding: 2.2rem; text-align: center; overflow: hidden; }
+
+  .hnf-pdp__method-card h3 { font-family: var(--font-heading-family, Anton, sans-serif); font-weight: 400; text-transform: uppercase; font-size: 2rem; margin: 0 0 0.6rem; color: #fff; }
+
+  .hnf-pdp__method-card p { font-size: 1.25rem; color: #c9c9c9; margin: 0 0 1.6rem; }
+
+  .hnf-pdp__method-card .hnf-pdp__add { border-radius: 4px; }
+
+
+
+  /* ---------- REVIEWS ---------- */
+
+  .hnf-pdp__reviews-empty { text-align: center; max-width: 50rem; margin: 0 auto; padding: 3.2rem 2rem; border: 1px dashed var(--soft-line); }
+
+  .hnf-pdp__reviews-empty svg { width: 3rem; height: 3rem; color: var(--accent); margin: 0 auto 1.2rem; display: block; }
+
+  .hnf-pdp__reviews-empty p { font-size: 1.4rem; color: var(--muted); margin: 0 0 1.6rem; }
+
+  .hnf-pdp__reviews-summary { text-align: center; max-width: 40rem; margin: 0 auto 3rem; }
+
+  .hnf-pdp__reviews-summary .hnf-pdp__rating-big { font-size: 4rem; font-weight: 700; }
+
+
+
+  /* ---------- FAQ ---------- */
+
+  .hnf-pdp__faq { max-width: 76rem; margin: 0 auto; }
+
+  .hnf-pdp__faq details { border-bottom: 1px solid var(--soft-line); }
+
+  .hnf-pdp__faq summary { display: flex; justify-content: space-between; align-items: center; padding: 1.8rem 0; font-weight: 700; font-size: 1.5rem; cursor: pointer; list-style: none; }
+
+  .hnf-pdp__faq summary::-webkit-details-marker { display: none; }
+
+  .hnf-pdp__faq summary::after { content: '+'; font-size: 2.2rem; color: var(--accent); font-weight: 400; transition: transform .15s ease; }
+
+  .hnf-pdp__faq details[open] summary::after { transform: rotate(45deg); }
+
+  .hnf-pdp__faq p { font-size: 1.35rem; line-height: 1.6; color: var(--muted); margin: 0 0 1.8rem; }
+
+
+
+  /* ---------- FINAL CTA ---------- */
+
+  .hnf-pdp__final { text-align: center; }
+
+  .hnf-pdp__final .hnf-pdp__h2 { text-align: center; }
+
+  .hnf-pdp__final p { font-size: 1.6rem; color: var(--muted); max-width: 54ch; margin: 0 auto 2.4rem; }
+
+  .hnf-pdp__final-price { font-size: 1.6rem; font-weight: 700; margin-bottom: 1.6rem; }
+
+
+
+  /* ---------- STICKY BUY BAR (now shown on every viewport size, not just mobile,
+
+     so price + Add to Cart follow the visitor once they scroll past the main buy box) ---------- */
+
+  .hnf-pdp__sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; background: #fff; border-top: 1px solid var(--soft-line); box-shadow: 0 -4px 18px rgba(0,0,0,0.08); transform: translateY(100%); transition: transform .2s ease; }
+
+  .hnf-pdp__sticky.is-visible { transform: translateY(0); }
+
+  .hnf-pdp__sticky-inner { max-width: 132rem; margin: 0 auto; padding: 1rem 2rem; display: flex; align-items: center; gap: 1.6rem; }
+
+  .hnf-pdp__sticky-media { width: 4.8rem; height: 4.8rem; flex: none; background: var(--soft-bg); border-radius: 4px; overflow: hidden; }
+
+  .hnf-pdp__sticky-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .hnf-pdp__sticky-info { flex: 1; min-width: 0; }
+
+  .hnf-pdp__sticky-name { font-size: 1.3rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .hnf-pdp__sticky-price { font-size: 1.5rem; font-weight: 700; }
+
+  .hnf-pdp__sticky-add { flex: none; min-height: 5rem; padding: 0 2.4rem; background: var(--accent); color: #fff; border: none; border-radius: 2px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 1.3rem; cursor: pointer; }
+
+  .hnf-pdp__sticky-add[data-state="loading"] { opacity: 0.7; pointer-events: none; }
+
+  @media screen and (max-width: 480px) { .hnf-pdp__sticky-name { display: none; } }
+
+
+
+  /* ---------- QUICK-BUY POPUP ---------- */
+
+  .hnf-pdp__quickbuy { position: fixed; inset: 0; z-index: 200; background: rgba(11,11,11,0.6); display: flex; align-items: flex-end; justify-content: center; }
+
+  .hnf-pdp__quickbuy[hidden] { display: none; }
+
+  @media screen and (min-width: 640px) { .hnf-pdp__quickbuy { align-items: center; } }
+
+  .hnf-pdp__quickbuy-card { background: #fff; width: 100%; max-width: 44rem; padding: 2.4rem; border-radius: 8px 8px 0 0; position: relative; }
+
+  @media screen and (min-width: 640px) { .hnf-pdp__quickbuy-card { border-radius: 8px; } }
+
+  .hnf-pdp__quickbuy-close { position: absolute; top: 1.4rem; right: 1.4rem; width: 3.2rem; height: 3.2rem; border: none; background: var(--soft-bg); border-radius: 50%; cursor: pointer; font-size: 1.6rem; line-height: 1; color: var(--text); }
+
+  .hnf-pdp__quickbuy-title { font-family: var(--font-heading-family, Anton, sans-serif); font-weight: 400; text-transform: uppercase; font-size: 1.8rem; margin: 0 0 1.8rem; display: flex; align-items: center; gap: 0.8rem; }
+
+  .hnf-pdp__quickbuy-title svg { width: 2rem; height: 2rem; color: #1a7a3c; flex: none; }
+
+  .hnf-pdp__quickbuy-row { display: flex; align-items: center; gap: 1.4rem; margin-bottom: 2.2rem; padding-bottom: 2.2rem; border-bottom: 1px solid var(--soft-line); }
+
+  .hnf-pdp__quickbuy-media { width: 7rem; height: 7rem; flex: none; background: var(--soft-bg); border-radius: 4px; overflow: hidden; }
+
+  .hnf-pdp__quickbuy-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .hnf-pdp__quickbuy-name { font-size: 1.4rem; font-weight: 700; margin: 0 0 0.3rem; }
+
+  .hnf-pdp__quickbuy-price { font-size: 1.3rem; color: var(--muted); margin: 0; }
+
+  .hnf-pdp__quickbuy-actions { display: flex; flex-direction: column; gap: 1rem; }
+
+
+
+  /* Reserve space at the very bottom of the page so the sticky bar never
+
+     overlaps the last section's content once it's visible. */
+
+  .hnf-pdp__sticky-spacer { height: 0; }
+
+{%- endstyle -%}
+
+
+
+{%- liquid
+
+  assign current_variant = product.selected_or_first_available_variant
+
+  assign excluded_list = section.settings.excluded_images | split: ','
+
+
+
+  assign gallery_media = product.media | where: 'media_type', 'image'
+
+  assign non_image_media = product.media | where: 'media_type', 'video'
+
+  assign gallery_media = gallery_media | concat: non_image_media
+
+  assign gallery_count = 0
+
+  for media in gallery_media
+
+    assign is_excluded = false
+
+    for fragment in excluded_list
+
+      if fragment != blank and media.preview_image.src contains fragment
+
+        assign is_excluded = true
+
+      endif
+
+    endfor
+
+    unless is_excluded
+
+      assign gallery_count = gallery_count | plus: 1
+
+    endunless
+
+  endfor
+
+-%}
+
+
+
+<div class="hnf-pdp" id="hnf-pdp-{{ section.id }}">
+
+
+
+  {%- comment -%} ============ HERO ============ {%- endcomment -%}
+
+  <section class="hnf-pdp__hero">
+
+    <div class="hnf-pdp__inner hnf-pdp__hero-grid">
+
+
+
+      <div class="hnf-pdp__gallery">
+
+        <div class="hnf-pdp__thumbs" data-hnf-thumbs role="list" aria-label="Product images">
+
+          {%- assign thumb_shown = false -%}
+
+          {%- assign thumb_i = 0 -%}
+
+          {%- for media in gallery_media -%}
+
+            {%- assign is_excluded = false -%}
+
+            {%- for fragment in excluded_list -%}
+
+              {%- if fragment != blank and media.preview_image.src contains fragment -%}{%- assign is_excluded = true -%}{%- endif -%}
+
+            {%- endfor -%}
+
+            {%- unless is_excluded -%}
+
+              <button
+
+                type="button"
+
+                class="hnf-pdp__thumb{% unless thumb_shown %} is-active{% endunless %}"
+
+                data-hnf-thumb
+
+                data-index="{{ thumb_i }}"
+
+                data-media-id="{{ media.id }}"
+
+                aria-label="Show image {{ thumb_i | plus: 1 }} of {{ gallery_count }}"
+
+              >
+
+                {%- if media.media_type == 'video' -%}
+
+                  <img src="{{ media.preview_image | image_url: width: 200 }}" alt="{{ media.alt | default: product.title }}" loading="lazy">
+
+                  <span class="hnf-pdp__thumb-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+
+                {%- else -%}
+
+                  <img src="{{ media | image_url: width: 200 }}" alt="{{ media.alt | default: product.title }}" loading="lazy">
+
+                {%- endif -%}
+
+              </button>
+
+              {%- assign thumb_shown = true -%}
+
+              {%- assign thumb_i = thumb_i | plus: 1 -%}
+
+            {%- endunless -%}
+
+          {%- endfor -%}
+
+        </div>
+
+        <div class="hnf-pdp__main-media" data-hnf-main-media>
+
+          {%- assign shown_any = false -%}
+
+          {%- assign main_i = 0 -%}
+
+          {%- for media in gallery_media -%}
+
+            {%- assign is_excluded = false -%}
+
+            {%- for fragment in excluded_list -%}
+
+              {%- if fragment != blank and media.preview_image.src contains fragment -%}{%- assign is_excluded = true -%}{%- endif -%}
+
+            {%- endfor -%}
+
+            {%- unless is_excluded -%}
+
+              {%- if media.media_type == 'video' -%}
+
+                <video
+
+                  data-hnf-main-image
+
+                  data-media-type="video"
+
+                  data-index="{{ main_i }}"
+
+                  data-media-id="{{ media.id }}"
+
+                  {% if shown_any %}hidden{% endif %}
+
+                  poster="{{ media.preview_image | image_url: width: 1200 }}"
+
+                  controls
+
+                  muted
+
+                  playsinline
+
+                  preload="metadata"
+
+                >
+
+                  {%- for source in media.sources -%}
+
+                    {%- if source.mime_type == 'video/mp4' -%}
+
+                      <source src="{{ source.url }}" type="{{ source.mime_type }}">
+
+                    {%- endif -%}
+
+                  {%- endfor -%}
+
+                </video>
+
+              {%- else -%}
+
+                <img
+
+                  src="{{ media | image_url: width: 1200 }}"
+
+                  data-full="{{ media | image_url: width: 2000 }}"
+
+                  alt="{{ media.alt | default: product.title }}"
+
+                  data-hnf-main-image
+
+                  data-media-type="image"
+
+                  data-index="{{ main_i }}"
+
+                  data-media-id="{{ media.id }}"
+
+                  {% if shown_any %}hidden{% endif %}
+
+                  width="1200"
+
+                  height="1200"
+
+                  loading="eager"
+
+                  fetchpriority="{% unless shown_any %}high{% else %}auto{% endunless %}"
+
+                >
+
+              {%- endif -%}
+
+              {%- assign shown_any = true -%}
+
+              {%- assign main_i = main_i | plus: 1 -%}
+
+            {%- endunless -%}
+
+          {%- endfor -%}
+
+          {%- unless shown_any -%}{{ 'product-1' | placeholder_svg_tag }}{%- endunless -%}
+
+          {%- if gallery_count > 1 -%}
+
+            <button type="button" class="hnf-pdp__main-nav hnf-pdp__main-prev" data-hnf-main-prev aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+
+            <button type="button" class="hnf-pdp__main-nav hnf-pdp__main-next" data-hnf-main-next aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+
+          {%- endif -%}
+
+          <button type="button" class="hnf-pdp__zoom-hint" data-hnf-open-lightbox aria-label="Open full-screen image viewer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4M8 11h6M11 8v6"/></svg> Zoom</button>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="hnf-pdp__purchase">
+
+        {%- if section.settings.eyebrow != blank -%}
+
+          <span class="hnf-pdp__eyebrow">{{ section.settings.eyebrow }}</span>
+
+        {%- endif -%}
+
+        <h1 class="hnf-pdp__title">{{ product.title }}</h1>
+
+
+
+{%- if product.metafields.judgeme.review_widget_data -%}
+
+  <div class="hnf-pdp__rating">
+
+    {%- assign hnf_rating = product.metafields.reviews.rating.value.rating | default: 0 -%}
+    {%- assign hnf_rating_count = product.metafields.reviews.rating_count.value | default: 0 -%}
+    {%- assign hnf_full_stars = hnf_rating | round -%}
+    <span class="hnf-pdp__rating-stars" aria-hidden="true">{%- for i in (1..5) -%}{%- if i <= hnf_full_stars -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}</span>
+
+    <span>
+      {%- if hnf_rating_count > 0 -%}
+        {{ hnf_rating | round: 1 }} out of 5 · {{ hnf_rating_count }} {{ hnf_rating_count | pluralize: 'review', 'reviews' }}
+      {%- else -%}
+        Rated by Judge.me customers
+      {%- endif -%}
+    </span>
+
+  </div>
+
+{%- endif -%}
+
+
+
+        {%- if section.settings.short_description != blank -%}
+
+          <div class="hnf-pdp__desc">{{ section.settings.short_description }}</div>
+
+        {%- endif -%}
+
+
+
+        <div class="hnf-pdp__price-row">
+
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+
+            <span class="hnf-pdp__price hnf-pdp__price--sale" data-hnf-price>{{ current_variant.price | money }}</span>
+
+            <span class="hnf-pdp__compare" data-hnf-compare>{{ current_variant.compare_at_price | money }}</span>
+
+            {%- assign savings = current_variant.compare_at_price | minus: current_variant.price -%}
+
+            <span class="hnf-pdp__savings" data-hnf-savings>Save {{ savings | money }}</span>
+
+          {%- else -%}
+
+            <span class="hnf-pdp__price" data-hnf-price>{{ current_variant.price | money }}</span>
+
+          {%- endif -%}
+
+        </div>
+
+
+
+        {%- form 'product', product, id: 'hnf-pdp-form', class: 'hnf-pdp__form', novalidate: 'novalidate' -%}
+
+          <input type="hidden" name="id" value="{{ current_variant.id }}" data-hnf-variant-id>
+
+
+
+          {%- unless product.has_only_default_variant -%}
+
+            {%- for option in product.options_with_values -%}
+
+              <div class="hnf-pdp__options">
+
+                <label class="hnf-pdp__option-label">{{ option.name }}: <span data-hnf-option-value="{{ forloop.index0 }}">{{ option.selected_value }}</span></label>
+
+                <div class="hnf-pdp__swatches">
+
+                  {%- for value in option.values -%}
+
+                    <button
+
+                      type="button"
+
+                      class="hnf-pdp__swatch{% if value == option.selected_value %} is-selected{% endif %}"
+
+                      data-hnf-option-btn
+
+                      data-option-index="{{ forloop.parentloop.index0 }}"
+
+                      data-value="{{ value | escape }}"
+
+                    >{{ value }}</button>
+
+                  {%- endfor -%}
+
+                </div>
+
+              </div>
+
+            {%- endfor -%}
+
+          {%- endunless -%}
+
+
+
+          {%- render 'hnf-bundle-picker', product: product, current_variant: current_variant -%}
+
+          <div class="hnf-pdp__buy-row">
+
+            <div class="hnf-pdp__qty">
+
+              <button type="button" data-hnf-qty-minus aria-label="Decrease quantity">&minus;</button>
+
+              <input type="number" name="quantity" value="1" min="1" data-hnf-qty-input aria-label="Quantity">
+
+              <button type="button" data-hnf-qty-plus aria-label="Increase quantity">+</button>
+
+            </div>
+
+            <button type="submit" class="hnf-pdp__add" data-hnf-add-btn data-state="idle" {% unless current_variant.available %}disabled{% endunless %}>
+
+              <span data-hnf-add-label>{% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}</span>
+
+            </button>
+
+          </div>
+
+
+
+          <p class="hnf-pdp__add-error" data-hnf-add-error role="alert" hidden></p>
+          {%- if current_variant.available -%}
+            <div class="hnf-pdp__dynamic-checkout">
+
+              {{ form | payment_button }}
+
+            </div>
+
+          {%- endif -%}
+
+        {%- endform -%}
+
+
+
+        <div class="hnf-pdp__reassure">
+
+          <div class="hnf-pdp__reassure-item">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l7 3v6c0 5-3.4 8.5-7 10-3.6-1.5-7-5-7-10V5l7-3z"/></svg>
+
+            <span>Secure checkout</span>
+
+          </div>
+
+          <div class="hnf-pdp__reassure-item">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+
+            <span>Free shipping $100+</span>
+
+          </div>
+
+          <div class="hnf-pdp__reassure-item">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 1 2.6 5.9M4 12V6M4 12h6"/></svg>
+
+            <span>30-day returns</span>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="hnf-pdp__accordion">
+
+          {%- assign spec_blocks = section.blocks | where: 'type', 'spec' -%}
+
+          {%- if spec_blocks.size > 0 -%}
+
+            <details open>
+
+              <summary>Specifications</summary>
+
+              <div class="hnf-pdp__accordion-body">
+
+                <table class="hnf-pdp__spec-table">
+
+                  {%- for block in spec_blocks -%}
+
+                    <tr {{ block.shopify_attributes }}><th>{{ block.settings.label }}</th><td>{{ block.settings.value }}</td></tr>
+
+                  {%- endfor -%}
+
+                </table>
+
+              </div>
+
+            </details>
+
+          {%- endif -%}
+
+          <details>
+
+            <summary>Shipping</summary>
+
+            <div class="hnf-pdp__accordion-body">Orders are processed within 1&ndash;3 business days. Most deliveries arrive within 7&ndash;15 business days after that. Standard US shipping is a flat $5.99, and free on orders over $100. See our <a href="/pages/shipping-policy">Shipping Policy</a>.</div>
+
+          </details>
+
+          <details>
+
+            <summary>Returns</summary>
+
+            <div class="hnf-pdp__accordion-body">30 days from delivery. See our <a href="/pages/refund-policy">Refund &amp; Return Policy</a> for the current window and conditions.</div>
+
+          </details>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  {%- comment -%} ============ STORY ============ {%- endcomment -%}
+
+  {%- if section.settings.story_heading != blank -%}
+
+    <section class="hnf-pdp__section">
+
+      <div class="hnf-pdp__inner">
+
+        <div class="hnf-pdp__story-grid">
+
+          <div class="hnf-pdp__story-media">
+
+            {%- assign story_img = section.settings.story_image | default: product.images[1] -%}
+
+            {%- if story_img -%}
+
+              <img src="{{ story_img | image_url: width: 1000 }}" alt="{{ product.title }}" loading="lazy">
+
+            {%- endif -%}
+
+          </div>
+
+          <div class="hnf-pdp__story-body">
+
+            <span class="hnf-pdp__eyebrow">Why we carry it</span>
+
+            <h2 class="hnf-pdp__h2">{{ section.settings.story_heading }}</h2>
+
+            {{ section.settings.story_body }}
+
+            {%- assign benefit_blocks = section.blocks | where: 'type', 'benefit' -%}
+
+            {%- if benefit_blocks.size > 0 -%}
+
+              <ul class="hnf-pdp__benefit-list">
+
+                {%- for block in benefit_blocks -%}
+
+                  <li class="hnf-pdp__benefit-item" {{ block.shopify_attributes }}>
+
+                    <span class="hnf-pdp__benefit-icon">
+
+                      {%- case block.settings.icon -%}
+
+                        {%- when 'home' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/></svg>
+
+                        {%- when 'volume' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9H4z"/></svg>
+
+                        {%- when 'shield' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l7 3v6c0 5-3.4 8.5-7 10-3.6-1.5-7-5-7-10V5l7-3z"/></svg>
+
+                        {%- when 'clock' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+
+                        {%- when 'weight' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="9" width="3" height="6"/><rect x="19" y="9" width="3" height="6"/><rect x="6" y="7" width="3" height="10"/><rect x="15" y="7" width="3" height="10"/><path d="M9 12h6"/></svg>
+
+                        {%- when 'ruler' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8v3M11 8v3M15 8v3"/></svg>
+
+                        {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+
+                      {%- endcase -%}
+
+                    </span>
+
+                    <div>
+
+                      <h3>{{ block.settings.title }}</h3>
+
+                      <p>{{ block.settings.text }}</p>
+
+                    </div>
+
+                  </li>
+
+                {%- endfor -%}
+
+              </ul>
+
+            {%- endif -%}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  {%- endif -%}
+
+
+
+  {%- comment -%} ============ IN ACTION ============ {%- endcomment -%}
+
+  {%- assign action_blocks = section.blocks | where: 'type', 'action_image' -%}
+
+  {%- if action_blocks.size > 0 -%}
+
+    <section class="hnf-pdp__section hnf-pdp__section--soft">
+
+      <div class="hnf-pdp__inner">
+
+        <span class="hnf-pdp__eyebrow" style="text-align:center;display:block;">See it up close</span>
+
+        <h2 class="hnf-pdp__h2" style="text-align:center;">{{ section.settings.action_heading | default: 'The details that matter.' }}</h2>
+
+        <div class="hnf-pdp__action-grid" style="margin-top:2.4rem;">
+
+          {%- for block in action_blocks -%}
+
+            {%- assign action_img = block.settings.image | default: product.images[forloop.index] -%}
+
+            <div class="hnf-pdp__action-item" {{ block.shopify_attributes }}>
+
+              {%- if action_img -%}
+
+                <img src="{{ action_img | image_url: width: 900 }}" alt="{{ block.settings.caption | default: product.title }}" loading="lazy">
+
+              {%- endif -%}
+
+              {%- if block.settings.caption != blank -%}
+
+                <span class="hnf-pdp__action-caption">{{ block.settings.caption }}</span>
+
+              {%- endif -%}
+
+            </div>
+
+          {%- endfor -%}
+
+        </div>
+
+      </div>
+
+    </section>
+
+  {%- endif -%}
+
+
+
+  {%- comment -%} ============ HOW IT FITS INTO A WORKOUT ============ {%- endcomment -%}
+
+  {%- assign step_blocks = section.blocks | where: 'type', 'step' -%}
+
+  {%- if step_blocks.size > 0 -%}
+
+    <section class="hnf-pdp__section">
+
+      <div class="hnf-pdp__inner">
+
+        <span class="hnf-pdp__eyebrow" style="text-align:center;display:block;">How it fits into your routine</span>
+
+        <h2 class="hnf-pdp__h2" style="text-align:center;">{{ section.settings.steps_heading | default: 'Simple to start. Easy to stick with.' }}</h2>
+
+        <div class="hnf-pdp__steps" style="margin-top:2.6rem;">
+
+          {%- for block in step_blocks -%}
+
+            <div class="hnf-pdp__step" {{ block.shopify_attributes }}>
+
+              <span class="hnf-pdp__step-num">0{{ forloop.index }}</span>
+
+              <h3>{{ block.settings.title }}</h3>
+
+              <p>{{ block.settings.text }}</p>
+
+            </div>
+
+          {%- endfor -%}
+
+        </div>
+
+      </div>
+
+    </section>
+
+  {%- endif -%}
+
+
+
+  {%- comment -%} ============ WHAT YOU GET ============ {%- endcomment -%}
+
+  {%- assign included_blocks = section.blocks | where: 'type', 'included_item' -%}
+
+  {%- if included_blocks.size > 0 -%}
+
+    <section class="hnf-pdp__section hnf-pdp__section--soft">
+
+      <div class="hnf-pdp__inner">
+
+        <span class="hnf-pdp__eyebrow" style="text-align:center;display:block;">In the box</span>
+
+        <h2 class="hnf-pdp__h2" style="text-align:center;">What you get.</h2>
+
+        <div class="hnf-pdp__included-grid" style="margin-top:2.6rem;">
+
+          {%- for block in included_blocks -%}
+
+            <div class="hnf-pdp__included-item" {{ block.shopify_attributes }}>
+
+              <div class="hnf-pdp__included-media">
+
+                {%- assign inc_img = block.settings.image | default: product.featured_image -%}
+
+                {%- if inc_img -%}<img src="{{ inc_img | image_url: width: 400 }}" alt="{{ block.settings.title }}" loading="lazy">{%- endif -%}
+
+              </div>
+
+              <div class="hnf-pdp__included-body">
+
+                <h3>{{ block.settings.title }}</h3>
+
+                <p>{{ block.settings.text }}</p>
+
+              </div>
+
+            </div>
+
+          {%- endfor -%}
+
+        </div>
+
+      </div>
+
+    </section>
+
+  {%- endif -%}
+
+
+
+  {%- comment -%} ============ EVERYDAY METHOD ============ {%- endcomment -%}
+
+  <section class="hnf-pdp__method">
+
+    <div class="hnf-pdp__inner hnf-pdp__method-grid">
+
+      <div>
+
+        <span class="hnf-pdp__method-eyebrow">The Hearth &amp; Nook Method</span>
+
+        <h2 class="hnf-pdp__h2">4 Weeks to a Better Core</h2>
+
+        <p>A free, no-equipment home workout plan &mdash; three short sessions a week, built to help you get consistent use out of what you just bought. {{ section.settings.method_note }}</p>
+
+      </div>
+
+      <div class="hnf-pdp__method-card">
+
+        <h3>Free Plan</h3>
+
+        <p>Sent by email when you sign up. No purchase required.</p>
+
+        <a class="hnf-pdp__add" style="text-decoration:none;display:inline-flex;" href="/pages/4-weeks-to-a-better-core">Get the plan &rarr;</a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  {%- comment -%} ============ REVIEWS ============ {%- endcomment -%}
+
+<section class="hnf-pdp__section">
+
+  <div class="hnf-pdp__inner">
+
+
+
+    <div class="hnf-pdp__reviews-summary">
+
+      <span class="hnf-pdp__eyebrow" style="text-align:center;display:block;">
+
+        Customer Reviews
+
+      </span>
+
+
+
+      <h2 class="hnf-pdp__h2" style="text-align:center;">
+
+        What customers are saying.
+
+      </h2>
+
+    </div>
+
+
+
+    <!-- Start of Judge.me code -->
+
+    {% assign has_legacy = false %}
+
+    {% if product.metafields.judgeme.widget.size > 20 %}
+
+      {% assign has_legacy = true %}
+
+    {% endif %}
+
+
+
+    <div style="clear:both"></div>
+
+
+
+    <div
+
+      id="judgeme_product_reviews"
+
+      class="jdgm-widget jdgm-review-widget"
+
+      data-product-title="{{ product.title | escape }}"
+
+      data-id="{{ product.id }}"
+
+      data-product-id="{{ product.id }}"
+
+      data-widget="review"
+
+      data-auto-install="false"
+
+      data-shop-reviews-count="{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}"
+
+      data-entry-point="review_widget.js"
+
+      data-entry-key="review-widget/main.js"
+
+    >
+
+      {% if has_legacy %}
+
+        <div class="jdgm-legacy-widget-content" style="display:none;">
+
+          {{ product.metafields.judgeme.widget }}
+
+        </div>
+
+      {% endif %}
+
+    </div>
+
+
+
+    {% if product.metafields.judgeme.review_widget_data %}
+
+      <script>
+
+        jdgm.data ||= {};
+
+        jdgm.data.reviewWidget ||= {};
+
+        jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}
+
+      </script>
+
+    {% endif %}
+
+    <!-- End of Judge.me code -->
+
+
+
+  </div>
+
+</section>
+
+
+
+  {%- comment -%} ============ FAQ ============ {%- endcomment -%}
+
+  {%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
+
+  {%- if faq_blocks.size > 0 -%}
+
+    <section class="hnf-pdp__section hnf-pdp__section--soft">
+
+      <div class="hnf-pdp__inner">
+
+        <span class="hnf-pdp__eyebrow" style="text-align:center;display:block;">Questions</span>
+
+        <h2 class="hnf-pdp__h2" style="text-align:center;">Before you buy.</h2>
+
+        <div class="hnf-pdp__faq" style="margin-top:2.6rem;">
+
+          {%- for block in faq_blocks -%}
+
+            <details {{ block.shopify_attributes }}>
+
+              <summary>{{ block.settings.question }}</summary>
+
+              <p>{{ block.settings.answer }}</p>
+
+            </details>
+
+          {%- endfor -%}
+
+        </div>
+
+      </div>
+
+    </section>
+
+  {%- endif -%}
+
+
+
+  {%- comment -%} ============ FINAL CTA ============ {%- endcomment -%}
+
+  <section class="hnf-pdp__section hnf-pdp__final">
+
+    <div class="hnf-pdp__inner">
+
+      <span class="hnf-pdp__eyebrow" style="text-align:center;display:block;">Ready when you are</span>
+
+      <h2 class="hnf-pdp__h2">Ready to train at home?</h2>
+
+      <p>{{ section.settings.final_note | default: "Make your workouts easier to start, and easier to stick with." }}</p>
+
+      <div class="hnf-pdp__final-price">{{ current_variant.price | money }}</div>
+
+      <button type="button" class="hnf-pdp__add" style="max-width:32rem;margin:0 auto;" data-hnf-final-add {% unless current_variant.available %}disabled{% endunless %}>
+
+        {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <div class="hnf-pdp__lightbox" data-hnf-lightbox role="dialog" aria-modal="true" aria-label="{{ product.title | escape }} image viewer" hidden>
+
+    <div class="hnf-pdp__lightbox-stage">
+
+      <button type="button" class="hnf-pdp__lightbox-close" data-hnf-lightbox-close aria-label="Close image viewer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+
+      <button type="button" class="hnf-pdp__lightbox-nav hnf-pdp__lightbox-prev" data-hnf-lightbox-prev aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+
+      <img src="" alt="" data-hnf-lightbox-image>
+
+      <button type="button" class="hnf-pdp__lightbox-nav hnf-pdp__lightbox-next" data-hnf-lightbox-next aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+
+    </div>
+
+    <p class="hnf-pdp__lightbox-counter" data-hnf-lightbox-counter aria-live="polite"></p>
+
+    <div class="hnf-pdp__lightbox-thumbs" data-hnf-lightbox-thumbs role="list" aria-label="Jump to image"></div>
+
+  </div>
+
+
+
+  <div class="hnf-pdp__sticky" data-hnf-sticky>
+
+    <div class="hnf-pdp__sticky-inner">
+
+      <div class="hnf-pdp__sticky-media"><img src="{{ product.featured_image | image_url: width: 100 }}" alt="{{ product.title }}"></div>
+
+      <div class="hnf-pdp__sticky-info">
+
+        <div class="hnf-pdp__sticky-name">{{ product.title }}</div>
+
+        <div class="hnf-pdp__sticky-price" data-hnf-sticky-price>{{ current_variant.price | money }}</div>
+
+      </div>
+
+      <button type="button" class="hnf-pdp__sticky-add" data-hnf-sticky-add {% unless current_variant.available %}disabled{% endunless %}>
+
+        {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="hnf-pdp__quickbuy" data-hnf-quickbuy hidden>
+
+    <div class="hnf-pdp__quickbuy-card">
+
+      <button type="button" class="hnf-pdp__quickbuy-close" data-hnf-quickbuy-close aria-label="Close">&times;</button>
+
+      <p class="hnf-pdp__quickbuy-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Added to your cart</p>
+
+      <div class="hnf-pdp__quickbuy-row">
+
+        <div class="hnf-pdp__quickbuy-media"><img data-hnf-quickbuy-image src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.title }}"></div>
+
+        <div>
+
+          <p class="hnf-pdp__quickbuy-name" data-hnf-quickbuy-name>{{ product.title }}</p>
+
+          <p class="hnf-pdp__quickbuy-price" data-hnf-quickbuy-price>{{ current_variant.price | money }}</p>
+
+        </div>
+
+      </div>
+
+      <div class="hnf-pdp__quickbuy-actions">
+
+        <button type="button" class="hnf-pdp__add" data-hnf-quickbuy-cart>View Cart</button>
+
+        <button type="button" class="hnf-pdp__add hnf-pdp__add--outline" data-hnf-quickbuy-buy>Buy Now</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+(function () {
+
+  var root = document.getElementById('hnf-pdp-{{ section.id }}');
+
+  if (!root) return;
+
+
+
+  var variants = {{ product.variants | json }};
+
+  var moneyFormat = {{ shop.money_format | json }};
+
+
+
+  function formatMoney(cents) {
+
+    var amount = (cents / 100).toFixed(2);
+
+    return moneyFormat.replace(/\{\{\s*amount\s*\}\}/, amount).replace('{{amount}}', amount);
+
+  }
+
+
+
+  /* ---- Gallery ---- */
+
+  var thumbs = root.querySelectorAll('[data-hnf-thumb]');
+
+  var mainImages = root.querySelectorAll('[data-hnf-main-image]');
+
+  function showImage(index) {
+
+    mainImages.forEach(function (img) { img.hidden = img.getAttribute('data-index') != index; });
+
+    thumbs.forEach(function (t) { t.classList.toggle('is-active', t.getAttribute('data-index') == index); });
+
+  }
+
+  thumbs.forEach(function (t) {
+
+    t.addEventListener('click', function () { showImage(t.getAttribute('data-index')); });
+
+  });
+
+
+
+  function getCurrentMainIndex() {
+
+    var visible = root.querySelector('[data-hnf-main-image]:not([hidden])');
+
+    return visible ? (parseInt(visible.getAttribute('data-index'), 10) || 0) : 0;
+
+  }
+
+  function stepMain(delta) {
+
+    var total = mainImages.length;
+
+    if (total < 2) return;
+
+    var next = (getCurrentMainIndex() + delta + total) % total;
+
+    showImage(next);
+
+  }
+
+  var mainPrev = root.querySelector('[data-hnf-main-prev]');
+
+  var mainNext = root.querySelector('[data-hnf-main-next]');
+
+  if (mainPrev) mainPrev.addEventListener('click', function (e) { e.stopPropagation(); stepMain(-1); });
+
+  if (mainNext) mainNext.addEventListener('click', function (e) { e.stopPropagation(); stepMain(1); });
+
+
+
+  /* ---- Lightbox ----
+
+     Only image-type media are zoomable (video already has native controls +
+
+     its own fullscreen button, so it's excluded from the lightbox's nav set). */
+
+  var lightbox = root.querySelector('[data-hnf-lightbox]');
+
+  var lightboxImg = root.querySelector('[data-hnf-lightbox-image]');
+
+  var lightboxCounter = root.querySelector('[data-hnf-lightbox-counter]');
+
+  var lightboxThumbsWrap = root.querySelector('[data-hnf-lightbox-thumbs]');
+
+  var lightboxImages = Array.prototype.filter.call(mainImages, function (el) {
+
+    return el.getAttribute('data-media-type') !== 'video';
+
+  });
+
+  var currentIndex = 0;
+
+  var lastFocusedEl = null;
+
+
+
+  if (lightboxThumbsWrap && lightboxImages.length > 1) {
+
+    lightboxImages.forEach(function (img, i) {
+
+      var btn = document.createElement('button');
+
+      btn.type = 'button';
+
+      btn.className = 'hnf-pdp__lightbox-thumb';
+
+      btn.setAttribute('data-lb-thumb', i);
+
+      btn.setAttribute('aria-label', 'Show image ' + (i + 1) + ' of ' + lightboxImages.length);
+
+      var thumbImg = document.createElement('img');
+
+      thumbImg.src = img.getAttribute('src');
+
+      thumbImg.alt = '';
+
+      thumbImg.loading = 'lazy';
+
+      btn.appendChild(thumbImg);
+
+      btn.addEventListener('click', function () { openLightbox(img.getAttribute('data-index')); });
+
+      lightboxThumbsWrap.appendChild(btn);
+
+    });
+
+  }
+
+  var lightboxThumbBtns = lightboxThumbsWrap ? lightboxThumbsWrap.querySelectorAll('[data-lb-thumb]') : [];
+
+
+
+  function lightboxPositionOf(mainIndex) {
+
+    for (var i = 0; i < lightboxImages.length; i++) {
+
+      if (lightboxImages[i].getAttribute('data-index') == mainIndex) return i;
+
+    }
+
+    return 0;
+
+  }
+
+
+
+  function openLightbox(index) {
+
+    currentIndex = parseInt(index, 10) || 0;
+
+    var img = root.querySelector('[data-hnf-main-image][data-index="' + currentIndex + '"]');
+
+    if (!img || img.getAttribute('data-media-type') === 'video') return;
+
+    lightboxImg.src = img.getAttribute('data-full');
+
+    lightboxImg.alt = img.alt;
+
+    var pos = lightboxPositionOf(currentIndex);
+
+    if (lightboxCounter) lightboxCounter.textContent = (pos + 1) + ' / ' + lightboxImages.length;
+
+    lightboxThumbBtns.forEach(function (b, i) { b.classList.toggle('is-active', i === pos); });
+
+    if (lbPrev) lbPrev.disabled = lightboxImages.length < 2;
+
+    if (lbNext) lbNext.disabled = lightboxImages.length < 2;
+
+    lastFocusedEl = document.activeElement;
+
+    lightbox.hidden = false;
+
+    document.documentElement.classList.add('hnf-pdp-lightbox-open');
+
+    document.addEventListener('keydown', onLightboxKeydown);
+
+    requestAnimationFrame(function () { if (lbClose) lbClose.focus(); });
+
+  }
+
+
+
+  function closeLightbox() {
+
+    lightbox.hidden = true;
+
+    document.documentElement.classList.remove('hnf-pdp-lightbox-open');
+
+    document.removeEventListener('keydown', onLightboxKeydown);
+
+    if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') lastFocusedEl.focus();
+
+  }
+
+
+
+  function stepLightbox(delta) {
+
+    if (!lightboxImages.length) return;
+
+    var pos = lightboxPositionOf(currentIndex);
+
+    var nextPos = (pos + delta + lightboxImages.length) % lightboxImages.length;
+
+    var nextIndex = lightboxImages[nextPos].getAttribute('data-index');
+
+    openLightbox(nextIndex);
+
+    showImage(nextIndex);
+
+  }
+
+
+
+  function onLightboxKeydown(e) {
+
+    if (e.key === 'Escape') { closeLightbox(); return; }
+
+    if (e.key === 'ArrowLeft') { stepLightbox(-1); return; }
+
+    if (e.key === 'ArrowRight') { stepLightbox(1); return; }
+
+    if (e.key === 'Tab') {
+
+      var focusable = lightbox.querySelectorAll('button:not(:disabled)');
+
+      if (!focusable.length) return;
+
+      var first = focusable[0];
+
+      var last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+
+    }
+
+  }
+
+
+
+  var mainMedia = root.querySelector('[data-hnf-main-media]');
+
+  function tryOpenFromVisible() {
+
+    var visible = root.querySelector('[data-hnf-main-image]:not([hidden])');
+
+    if (visible) openLightbox(visible.getAttribute('data-index'));
+
+  }
+
+  if (mainMedia) mainMedia.addEventListener('click', function (e) {
+
+    if (e.target.closest('[data-hnf-open-lightbox], [data-hnf-main-prev], [data-hnf-main-next]')) return;
+
+    if (e.target.tagName === 'VIDEO') return;
+
+    tryOpenFromVisible();
+
+  });
+
+  var zoomHint = root.querySelector('[data-hnf-open-lightbox]');
+
+  if (zoomHint) zoomHint.addEventListener('click', function (e) { e.stopPropagation(); tryOpenFromVisible(); });
+
+
+
+  var lbClose = root.querySelector('[data-hnf-lightbox-close]');
+
+  if (lbClose) lbClose.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', function (e) {
+
+    if (e.target === lightbox || e.target.classList.contains('hnf-pdp__lightbox-stage')) closeLightbox();
+
+  });
+
+  var lbPrev = root.querySelector('[data-hnf-lightbox-prev]');
+
+  var lbNext = root.querySelector('[data-hnf-lightbox-next]');
+
+  if (lbPrev) lbPrev.addEventListener('click', function () { stepLightbox(-1); });
+
+  if (lbNext) lbNext.addEventListener('click', function () { stepLightbox(1); });
+
+
+
+  /* Touch swipe */
+
+  var touchStartX = null;
+
+  var touchStartY = null;
+
+  var lightboxStage = root.querySelector('.hnf-pdp__lightbox-stage');
+
+  if (lightboxStage) {
+
+    lightboxStage.addEventListener('touchstart', function (e) {
+
+      touchStartX = e.touches[0].clientX;
+
+      touchStartY = e.touches[0].clientY;
+
+    }, { passive: true });
+
+    lightboxStage.addEventListener('touchend', function (e) {
+
+      if (touchStartX === null) return;
+
+      var dx = e.changedTouches[0].clientX - touchStartX;
+
+      var dy = e.changedTouches[0].clientY - touchStartY;
+
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+
+        stepLightbox(dx > 0 ? -1 : 1);
+
+      }
+
+      touchStartX = null;
+
+      touchStartY = null;
+
+    }, { passive: true });
+
+  }
+
+
+
+  /* ---- Quantity ---- */
+
+  var qtyInput = root.querySelector('[data-hnf-qty-input]');
+
+  var qtyMinus = root.querySelector('[data-hnf-qty-minus]');
+
+  var qtyPlus = root.querySelector('[data-hnf-qty-plus]');
+
+  if (qtyMinus) qtyMinus.addEventListener('click', function () { qtyInput.value = Math.max(1, (parseInt(qtyInput.value, 10) || 1) - 1); });
+
+  if (qtyPlus) qtyPlus.addEventListener('click', function () { qtyInput.value = (parseInt(qtyInput.value, 10) || 1) + 1; });
+
+
+
+  /* ---- Variant selection ---- */
+
+  var optionButtons = root.querySelectorAll('[data-hnf-option-btn]');
+
+  var variantIdInput = root.querySelector('[data-hnf-variant-id]');
+
+  var priceEl = root.querySelector('[data-hnf-price]');
+
+  var compareEl = root.querySelector('[data-hnf-compare]');
+
+  var savingsEl = root.querySelector('[data-hnf-savings]');
+
+  var addBtn = root.querySelector('[data-hnf-add-btn]');
+
+  var addLabel = root.querySelector('[data-hnf-add-label]');
+
+  var stickyPrice = root.querySelector('[data-hnf-sticky-price]');
+
+  var stickyAdd = root.querySelector('[data-hnf-sticky-add]');
+
+  var quickbuyPrice = root.querySelector('[data-hnf-quickbuy-price]');
+
+
+
+  var selectedOptions = [];
+
+  {% unless product.has_only_default_variant %}
+
+    {% for option in product.options_with_values %}selectedOptions[{{ forloop.index0 }}] = {{ option.selected_value | json }};{% endfor %}
+
+  {% endunless %}
+
+
+
+  function findVariant() {
+
+    return variants.filter(function (v) {
+
+      return v.options.every(function (opt, i) { return selectedOptions[i] == null || opt == selectedOptions[i]; });
+
+    })[0];
+
+  }
+
+
+
+  function updateForVariant(v) {
+    if (!v) {
+      /* No variant matches this option combination: never leave the previous
+         variant id in the form, or Add to Cart silently adds the wrong item. */
+      [addBtn, stickyAdd].forEach(function (btn) { if (btn) btn.disabled = true; });
+      if (addLabel) addLabel.textContent = 'Unavailable';
+      if (stickyAdd) stickyAdd.textContent = 'Unavailable';
+      return;
+    }
+
+    variantIdInput.value = v.id;
+
+    if (priceEl) priceEl.textContent = formatMoney(v.price);
+
+    if (v.compare_at_price && v.compare_at_price > v.price) {
+
+      if (compareEl) { compareEl.hidden = false; compareEl.textContent = formatMoney(v.compare_at_price); }
+
+      if (savingsEl) { savingsEl.hidden = false; savingsEl.textContent = 'Save ' + formatMoney(v.compare_at_price - v.price); }
+
+    } else {
+
+      if (compareEl) compareEl.hidden = true;
+
+      if (savingsEl) savingsEl.hidden = true;
+
+    }
+
+    var available = v.available;
+
+    [addBtn, stickyAdd].forEach(function (btn) {
+
+      if (!btn) return;
+
+      btn.disabled = !available;
+
+    });
+
+    if (addLabel) addLabel.textContent = available ? 'Add to Cart' : 'Sold Out';
+
+    if (stickyAdd) stickyAdd.textContent = available ? 'Add to Cart' : 'Sold Out';
+
+    if (stickyPrice) stickyPrice.textContent = formatMoney(v.price);
+
+    if (quickbuyPrice) quickbuyPrice.textContent = formatMoney(v.price);
+
+  }
+
+
+
+  optionButtons.forEach(function (btn) {
+
+    btn.addEventListener('click', function () {
+
+      var optIndex = parseInt(btn.getAttribute('data-option-index'), 10);
+
+      var value = btn.getAttribute('data-value');
+
+      selectedOptions[optIndex] = value;
+
+      root.querySelectorAll('[data-hnf-option-btn][data-option-index="' + optIndex + '"]').forEach(function (b) {
+
+        b.classList.toggle('is-selected', b === btn);
+
+      });
+
+      var label = root.querySelector('[data-hnf-option-value="' + optIndex + '"]');
+
+      if (label) label.textContent = value;
+
+      var v = findVariant();
+
+      updateForVariant(v);
+
+    });
+
+  });
+
+
+
+  /* ---- Add to cart (AJAX) ----
+
+     This theme's cart_type setting is "notification" (not "drawer"), so the
+
+     live cart UI element is <cart-notification>, not <cart-drawer> —
+
+     bare document.querySelector('cart-drawer') always returns null here.
+
+     Mirror Dawn's own product-form.js: look up whichever cart UI element is
+
+     actually present, ask it which theme sections it needs re-rendered, and
+
+     pass that as `sections` on the /cart/add.js call so its renderContents()
+
+     receives the shape it expects. Without this, the item still adds
+
+     server-side but the header cart-count bubble and the native cart
+
+     popup never update. */
+
+  var cartUi = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+
+  var lastAddResponse = null;
+
+
+
+  function patchCartIconBubble(response) {
+
+    if (!response || !response.sections || !response.sections['cart-icon-bubble']) return;
+
+    var bubble = document.getElementById('cart-icon-bubble');
+
+    if (!bubble) return;
+
+    var parsed = new DOMParser().parseFromString(response.sections['cart-icon-bubble'], 'text/html');
+
+    var section = parsed.querySelector('.shopify-section');
+
+    if (section) bubble.innerHTML = section.innerHTML;
+
+  }
+
+
+
+  var addError = root.querySelector('[data-hnf-add-error]');
+
+  function showAddError(message) {
+    if (!addError) return;
+    addError.textContent = message || '';
+    addError.hidden = !message;
+  }
+
+  /* /cart/add.js called with an `items` array answers { items: [...], sections },
+     but Dawn's <cart-notification>.renderContents() finds the popup row via a
+     top-level `key` (the single-item response shape). Without it the lookup is
+     "#cart-notification-product-undefined", renderContents() throws, and every
+     Add to Cart click fell through to the /cart redirect below. */
+  function toCartUiState(response) {
+    if (response && !response.key && response.items && response.items[0]) {
+      response.key = response.items[0].key;
+    }
+    return response;
+  }
+
+  function addToCart(onSuccess) {
+    if (!variantIdInput.value) return Promise.resolve();
+    showAddError('');
+
+    var qty = qtyInput ? (parseInt(qtyInput.value, 10) || 1) : 1;
+
+    [addBtn, stickyAdd].forEach(function (btn) { if (btn) btn.setAttribute('data-state', 'loading'); });
+
+    var payload = { items: [{ id: parseInt(variantIdInput.value, 10), quantity: qty }] };
+
+    if (cartUi && typeof cartUi.getSectionsToRender === 'function') {
+
+      payload.sections = cartUi.getSectionsToRender().map(function (s) { return s.id; });
+
+      payload.sections_url = window.location.pathname;
+
+    }
+
+    return fetch('/cart/add.js', {
+
+      method: 'POST',
+
+      headers: { 'Content-Type': 'application/json' },
+
+      body: JSON.stringify(payload)
+
+    })
+
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (body) {
+          if (!res.ok) {
+            /* e.g. 422 "only 10 left": the add was refused, so say why
+               instead of bouncing the shopper to the cart page. */
+            var err = new Error(body.description || body.message || 'add failed');
+            err.cartRefused = res.status === 422;
+            throw err;
+          }
+          return body;
+        });
+      })
+      .then(function (item) {
+        item = toCartUiState(item);
+
+        [addBtn, stickyAdd].forEach(function (btn) { if (btn) btn.setAttribute('data-state', 'added'); });
+
+        setTimeout(function () {
+
+          [addBtn, stickyAdd].forEach(function (btn) { if (btn) btn.setAttribute('data-state', 'idle'); });
+
+        }, 2200);
+
+        lastAddResponse = item;
+
+        patchCartIconBubble(item);
+
+        /* A failure here (e.g. Dawn's cart-notification renderContents throwing on a
+           missing section mount) is a UI-refresh problem, not a failed add - the item
+           is already in the cart. It must never fall into the network-failure catch()
+           below, whose fallback is a Shopify cart PERMALINK (/cart/{variant}:{qty})
+           that redirects straight to hosted checkout, not to the cart page. Letting a
+           render bug reach that fallback was silently sending shoppers into full
+           checkout on a click labelled "Add to Cart" with no cart step in between. */
+
+        try {
+
+          if (onSuccess) {
+
+            onSuccess(item);
+
+          } else if (cartUi && item.sections && typeof cartUi.renderContents === 'function') {
+
+            cartUi.renderContents(item);
+
+          }
+
+        } catch (renderError) {
+
+          window.location.href = '/cart';
+
+        }
+
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+
+      })
+
+      .catch(function (error) {
+        [addBtn, stickyAdd].forEach(function (btn) { if (btn) btn.setAttribute('data-state', 'idle'); });
+        if (error && error.cartRefused) {
+          showAddError(error.message);
+          return;
+        }
+
+        /* Genuine network/add failure: land on the cart page to show current state,
+           never on the checkout-triggering permalink used previously. */
+
+        window.location.href = '/cart';
+
+      });
+
+  }
+
+
+
+  function refreshDrawer() {
+
+    /* Opens the real cart UI once the custom quick-buy popup is dismissed,
+
+       reusing the response already captured from the add that just happened. */
+
+    if (cartUi && lastAddResponse && lastAddResponse.sections && typeof cartUi.renderContents === 'function') {
+      try {
+        cartUi.renderContents(lastAddResponse);
+      } catch (renderError) {
+        window.location.href = '/cart';
+      }
+    }
+
+    document.dispatchEvent(new CustomEvent('cart:refresh'));
+
+  }
+
+
+
+  var form = root.querySelector('#hnf-pdp-form');
+
+  if (form) form.addEventListener('submit', function (e) { e.preventDefault(); addToCart(); });
+
+  var finalAdd = root.querySelector('[data-hnf-final-add]');
+
+  if (finalAdd) finalAdd.addEventListener('click', function () { addToCart(); });
+
+
+
+  /* ---- Sticky bar: add immediately, then show quick-buy popup ---- */
+
+  var quickbuy = root.querySelector('[data-hnf-quickbuy]');
+
+  var qbClose = root.querySelector('[data-hnf-quickbuy-close]');
+
+  var qbCartBtn = root.querySelector('[data-hnf-quickbuy-cart]');
+
+  var qbBuyBtn = root.querySelector('[data-hnf-quickbuy-buy]');
+
+
+
+  if (stickyAdd) stickyAdd.addEventListener('click', function () {
+
+    addToCart(function () {
+
+      if (quickbuy) quickbuy.hidden = false;
+
+    });
+
+  });
+
+  if (qbClose) qbClose.addEventListener('click', function () { quickbuy.hidden = true; refreshDrawer(); });
+
+  if (quickbuy) quickbuy.addEventListener('click', function (e) { if (e.target === quickbuy) { quickbuy.hidden = true; refreshDrawer(); } });
+
+  if (qbCartBtn) qbCartBtn.addEventListener('click', function () { quickbuy.hidden = true; refreshDrawer(); });
+
+  if (qbBuyBtn) qbBuyBtn.addEventListener('click', function () {
+    /* Let the free-gift sync (snippets/hnf-free-gift.liquid) settle first so a
+       $100+ order reaches checkout with its free roller. */
+    var settle = window.hnfGiftSync ? window.hnfGiftSync() : Promise.resolve();
+    settle.then(function () {}, function () {}).then(function () { window.location.href = '/checkout'; });
+  });
+
+
+
+  /* ---- Sticky bar visibility (now enabled on all viewport sizes) ---- */
+
+  var sticky = root.querySelector('[data-hnf-sticky]');
+
+  var heroForm = root.querySelector('.hnf-pdp__buy-row');
+
+  if (sticky && heroForm && 'IntersectionObserver' in window) {
+
+    var io = new IntersectionObserver(function (entries) {
+
+      sticky.classList.toggle('is-visible', !entries[0].isIntersecting);
+
+    }, { rootMargin: '-80px 0px 0px 0px' });
+
+    io.observe(heroForm);
+
+  }
+
+})();
+
+</script>
+
+
+
+{% schema %}
+
+{
+
+  "name": "HNF · Product page",
+
+  "tag": "section",
+
+  "class": "hnf-pdp-section",
+
+  "settings": [
+
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow / category label" },
+
+    { "type": "richtext", "id": "short_description", "label": "Short benefit-oriented description" },
+
+    { "type": "text", "id": "story_heading", "label": "Story heading" },
+
+    { "type": "richtext", "id": "story_body", "label": "Story body" },
+
+    { "type": "image_picker", "id": "story_image", "label": "Story image (defaults to product's 2nd photo)" },
+
+    { "type": "text", "id": "action_heading", "label": "\"In action\" heading", "default": "The details that matter." },
+
+    { "type": "text", "id": "steps_heading", "label": "Steps heading", "default": "Simple to start. Easy to stick with." },
+
+    { "type": "text", "id": "method_note", "label": "Everyday Method note (optional extra sentence)" },
+
+    { "type": "text", "id": "final_note", "label": "Final CTA supporting line", "default": "Make your workouts easier to start, and easier to stick with." },
+
+    { "type": "text", "id": "excluded_images", "label": "Exclude images from gallery", "info": "Comma-separated filename fragments to hide (e.g. a bad supplier scan). Leave blank to show all." }
+
+  ],
+
+  "blocks": [
+
+    {
+
+      "type": "benefit",
+
+      "name": "Benefit",
+
+      "settings": [
+
+        { "type": "select", "id": "icon", "label": "Icon", "default": "check", "options": [
+
+          { "value": "check", "label": "Check" },
+
+          { "value": "home", "label": "Home" },
+
+          { "value": "volume", "label": "Quiet" },
+
+          { "value": "shield", "label": "Shield" },
+
+          { "value": "clock", "label": "Clock" },
+
+          { "value": "weight", "label": "Weight" },
+
+          { "value": "ruler", "label": "Ruler" }
+
+        ]},
+
+        { "type": "text", "id": "title", "label": "Title" },
+
+        { "type": "text", "id": "text", "label": "Text" }
+
+      ]
+
+    },
+
+    {
+
+      "type": "action_image",
+
+      "name": "In-action image",
+
+      "settings": [
+
+        { "type": "image_picker", "id": "image", "label": "Image (defaults to a product photo)" },
+
+        { "type": "text", "id": "caption", "label": "Caption" }
+
+      ]
+
+    },
+
+    {
+
+      "type": "step",
+
+      "name": "Routine step",
+
+      "settings": [
+
+        { "type": "text", "id": "title", "label": "Title" },
+
+        { "type": "text", "id": "text", "label": "Text" }
+
+      ]
+
+    },
+
+    {
+
+      "type": "included_item",
+
+      "name": "Included item",
+
+      "settings": [
+
+        { "type": "image_picker", "id": "image", "label": "Image (defaults to main product photo)" },
+
+        { "type": "text", "id": "title", "label": "Title" },
+
+        { "type": "text", "id": "text", "label": "Description" }
+
+      ]
+
+    },
+
+    {
+
+      "type": "spec",
+
+      "name": "Specification row",
+
+      "settings": [
+
+        { "type": "text", "id": "label", "label": "Label" },
+
+        { "type": "text", "id": "value", "label": "Value" }
+
+      ]
+
+    },
+
+    {
+
+      "type": "faq",
+
+      "name": "FAQ",
+
+      "settings": [
+
+        { "type": "text", "id": "question", "label": "Question" },
+
+        { "type": "textarea", "id": "answer", "label": "Answer" }
+
+      ]
+
+    }
+
+  ],
+
+  "presets": [
+
+    { "name": "HNF · Product page" }
+
+  ]
+
+}
+
+{% endschema %}

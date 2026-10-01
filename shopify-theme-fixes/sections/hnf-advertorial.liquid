@@ -1,0 +1,25 @@
+{%- comment -%}
+  Advertorial page shell (templates/page.advertorial.json).
+  The advertorial HTML carries its own headline, byline and styling, so this section
+  prints only page.content: no theme page title (which duplicated the headline) and
+  no scroll-reveal wrapper (which left the article at ~0 opacity until it animated in).
+{%- endcomment -%}
+<style>
+  .hnf-advertorial { padding: 2.4rem 1.6rem 5.6rem; }
+  @media screen and (min-width: 750px) { .hnf-advertorial { padding: 4rem 2.4rem 7.2rem; } }
+  /* Comparison/feature tables: base.css gives .rte tables a fixed layout, which on a
+     phone squeezes 4 columns into ~80px each and overlaps the words. Let them keep a
+     readable width and scroll sideways inside the article instead. */
+  .hnf-advertorial table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .hnf-advertorial table > tbody { display: table; width: 100%; min-width: 560px; }
+</style>
+<div class="hnf-advertorial">
+  <article class="rte">{{ page.content }}</article>
+</div>
+
+{% schema %}
+{
+  "name": "HNF advertorial",
+  "settings": []
+}
+{% endschema %}

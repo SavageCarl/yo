@@ -1,0 +1,103 @@
+{%- comment -%}
+  Native free-gift sync (replaces Kaching progressive gifts).
+  Keeps exactly one Yoga Foam Roller line tagged _hnf_gift in the cart while the
+  non-gift subtotal is >= $100, and removes it below that. The gift is a separate,
+  hidden $0 product, so it needs no discount and never conflicts with
+  "Bundle & Save: 15% off 2+ items". This script never changes prices itself.
+  Rendered once per page from sections/hnf-announcement-marquee.liquid (header group).
+
+  Gift lines are recognised by variant id, not only by the _hnf_gift property, so a
+  copy added by hand (e.g. /cart/add?id=<gift variant>) is still treated as the gift:
+  it never counts toward the $100 and is removed when the order doesn't qualify.
+  window.hnfGiftSync() returns a promise that resolves once the cart has settled.
+{%- endcomment -%}
+<script>
+(function () {
+  if (window.hnfGiftSync) return;
+  var GIFT_VARIANT = 48947160383563;   /* "Free Gift: Yoga Foam Roller" ($0, hidden product) */
+  var THRESHOLD = 10000;               /* cents */
+  var MAX_STEPS = 4;
+  var rawFetch = window.fetch.bind(window);
+  var running = null;
+  var rerun = false;
+  function isGift(i) { return i.variant_id === GIFT_VARIANT || (i.properties && i.properties._hnf_gift); }
+  function post(url, body) {
+    return rawFetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body) });
+  }
+  /* One corrective step; resolves true if it changed the cart. */
+  function step() {
+    return rawFetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(function (cart) {
+        var gifts = cart.items.filter(isGift);
+        var base = cart.items.filter(function (i) { return !isGift(i); })
+          .reduce(function (s, i) { return s + i.final_line_price; }, 0);
+        var tagged = gifts.filter(function (i) { return i.properties && i.properties._hnf_gift; });
+        if (base < THRESHOLD) {
+          if (!gifts.length) return false;
+          return post('/cart/change.js', { id: gifts[0].key, quantity: 0 }).then(function () { return true; });
+        }
+        if (!tagged.length) {
+          if (gifts.length) return post('/cart/change.js', { id: gifts[0].key, quantity: 0 }).then(function () { return true; });
+          return post('/cart/add.js', { items: [{ id: GIFT_VARIANT, quantity: 1, properties: { _hnf_gift: 'Free gift' } }] }).then(function () { return true; });
+        }
+        var extra = gifts.filter(function (i) { return i !== tagged[0]; });
+        if (extra.length) return post('/cart/change.js', { id: extra[0].key, quantity: 0 }).then(function () { return true; });
+        if (tagged[0].quantity !== 1) return post('/cart/change.js', { id: tagged[0].key, quantity: 1 }).then(function () { return true; });
+        return false;
+      });
+  }
+  function settle(n, changed) {
+    return step().then(function (did) {
+      return did && n > 1 ? settle(n - 1, true) : (changed || did);
+    });
+  }
+  /* Never drop a request: if a sync is already running, run once more after it. */
+  function sync() {
+    if (running) { rerun = true; return running; }
+    running = settle(MAX_STEPS, false)
+      .catch(function () { return false; })
+      .then(function (changed) {
+        running = null;
+        if (rerun) { rerun = false; return sync().then(function (again) { return changed || again; }); }
+        return changed;
+      });
+    return running;
+  }
+  window.hnfGiftSync = sync;
+  function onCartPage() { return /^\/cart\/?$/.test(location.pathname); }
+  function afterChange() {
+    setTimeout(function () {
+      sync().then(function (changed) {
+        if (!changed) return;
+        if (onCartPage()) { location.reload(); return; }
+        refreshBubble();
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+      });
+    }, 80);
+  }
+  /* Keep the header count in step when the gift is added or removed off the cart page. */
+  function refreshBubble() {
+    var bubble = document.getElementById('cart-icon-bubble');
+    if (!bubble) return;
+    rawFetch('/?sections=cart-icon-bubble')
+      .then(function (r) { return r.json(); })
+      .then(function (sections) {
+        var html = sections && sections['cart-icon-bubble'];
+        if (!html) return;
+        var section = new DOMParser().parseFromString(html, 'text/html').querySelector('.shopify-section');
+        if (section) bubble.innerHTML = section.innerHTML;
+      })
+      .catch(function () {});
+  }
+  window.fetch = function (input, init) {
+    var p = rawFetch(input, init);
+    var url = String((input && input.url) || input || '');
+    if (/\/cart\/(add|change|update|clear)(\.js)?/.test(url)) p.then(afterChange, function () {});
+    return p;
+  };
+  if (onCartPage()) {
+    sync().then(function (changed) { if (changed) location.reload(); });
+  }
+})();
+</script>

@@ -1,0 +1,631 @@
+{%- style -%}
+  .hnf-lp {
+    --ink: #0b0b0b; --ink-2: #151515; --paper: #ffffff; --paper-dim: #f5f5f3;
+    --warm-bg: #f8f4ee; --warm-bg-2: #f2ece2; --soft-gray: #eaeae7;
+    --text: #111111; --muted: #666666; --accent: #ff5a1f; --accent-hover: #ff7440;
+    background: var(--paper); color: var(--text);
+  }
+  .hnf-lp * { box-sizing: border-box; }
+  .hnf-lp__section { padding: clamp(5rem, 8vw, 8rem) 0; }
+  .hnf-lp__section--warm { background: linear-gradient(180deg, var(--warm-bg) 0%, var(--warm-bg-2) 100%); }
+  .hnf-lp__section--gray { background: var(--paper-dim); }
+  .hnf-lp__section--black { background: var(--ink); color: #fff; }
+  .hnf-lp__inner { max-width: 84rem; margin: 0 auto; padding: 0 2rem; }
+  .hnf-lp__inner--wide { max-width: 110rem; }
+  @media screen and (max-width: 749px) { .hnf-lp__section { padding: clamp(3.5rem, 12vw, 5rem) 0; } }
+
+  .hnf-lp__eyebrow {
+    display: block; font-family: var(--font-body-family); font-weight: 600; font-size: 1.2rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.9rem; text-align: center;
+  }
+  .hnf-lp__h2 {
+    font-family: var(--font-heading-family); font-weight: 400; text-transform: uppercase;
+    font-size: clamp(2.8rem, 4.4vw, 4rem); line-height: 1.04; letter-spacing: 0.005em;
+    margin: 0 0 1.4rem; text-align: center; color: var(--text);
+  }
+  .hnf-lp__section--black .hnf-lp__h2 { color: #fff; }
+  .hnf-lp__lede {
+    font-family: var(--font-body-family); font-size: 1.6rem; line-height: 1.6; color: var(--muted);
+    max-width: 60ch; margin: 0 auto; text-align: center;
+  }
+  .hnf-lp__section--black .hnf-lp__lede { color: #c9c9c9; }
+
+  .hnf-lp__btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.7rem;
+    min-height: 5.4rem; padding: 0 3rem; font-family: var(--font-body-family); font-weight: 700;
+    font-size: 1.35rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
+    border-radius: 2px; background: var(--accent); color: #fff; border: 2px solid var(--accent);
+    box-shadow: 0 16px 32px -16px rgba(255,90,31,0.5);
+    transition: background-color .12s ease, border-color .12s ease, transform .12s ease;
+  }
+  .hnf-lp__btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  .hnf-lp__btn--outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.5); box-shadow: none; }
+  .hnf-lp__btn--outline:hover { background: #fff; color: var(--ink); }
+
+  /* HERO */
+  .hnf-lp__hero { position: relative; background: var(--ink); overflow: hidden; }
+  .hnf-lp__hero-media { position: absolute; inset: 0; }
+  .hnf-lp__hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; opacity: 0.55; }
+  .hnf-lp__hero-scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,11,11,0.92) 0%, rgba(11,11,11,0.55) 55%, rgba(11,11,11,0.25) 100%); }
+  .hnf-lp__hero-inner { position: relative; z-index: 1; padding: clamp(7rem, 14vw, 12rem) 2rem; max-width: 110rem; margin: 0 auto; }
+  .hnf-lp__hero-eyebrow { font-family: var(--font-body-family); font-weight: 600; font-size: 1.3rem; letter-spacing: 0.18em; text-transform: uppercase; color: #a3a3a3; margin: 0 0 1.4rem; }
+  .hnf-lp__hero h1 { font-family: var(--font-heading-family); font-weight: 400; text-transform: uppercase; color: #fff; font-size: clamp(3.4rem, 6.5vw, 6.4rem); line-height: 0.96; letter-spacing: 0.005em; margin: 0 0 2rem; max-width: 18ch; }
+  .hnf-lp__hero p { font-family: var(--font-body-family); font-size: 1.7rem; line-height: 1.55; color: #d8d8d8; max-width: 46ch; margin: 0 0 3rem; }
+  .hnf-lp__hero-ctas { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+
+  /* TRUSTED BY — made much bigger/bolder than the rest of the small eyebrow text */
+  .hnf-lp__section--warm .hnf-lp__eyebrow { font-size: 1.7rem; letter-spacing: 0.14em; margin-bottom: 2rem; }
+  .hnf-lp__trustbar { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2.8rem 5.2rem; margin-top: 1.4rem; }
+  .hnf-lp__trust-item { display: flex; align-items: center; gap: 1.2rem; font-family: var(--font-body-family); font-weight: 700; font-size: 1.9rem; letter-spacing: 0.01em; color: var(--text); }
+  .hnf-lp__trust-item svg { width: 3.4rem; height: 3.4rem; color: var(--accent); flex: none; }
+  @media screen and (max-width: 749px) {
+    .hnf-lp__trust-item { font-size: 1.5rem; gap: 0.9rem; }
+    .hnf-lp__trust-item svg { width: 2.6rem; height: 2.6rem; }
+    .hnf-lp__trustbar { gap: 2rem 3rem; }
+  }
+
+  /* PROBLEM */
+  .hnf-lp__problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.6rem; margin-top: 3.6rem; }
+  .hnf-lp__problem-card { text-align: left; border-top: 2px solid var(--accent); padding-top: 1.8rem; }
+  .hnf-lp__problem-card h3 { font-family: var(--font-body-family); font-weight: 700; font-size: 1.5rem; margin: 0 0 0.8rem; color: var(--text); }
+  .hnf-lp__problem-card p { font-family: var(--font-body-family); font-size: 1.3rem; line-height: 1.55; color: var(--muted); margin: 0; }
+  @media screen and (max-width: 749px) { .hnf-lp__problem-grid { grid-template-columns: 1fr; } }
+
+  /* THE SET intro — pure-CSS Ken Burns zoom/pan on the STATIC image. No AI
+     video regeneration involved, so the baked-in text stays pixel-perfect. */
+  .hnf-lp__set-media { max-width: 74rem; margin: 3.6rem auto 0; box-shadow: 0 30px 70px -32px rgba(11,11,11,0.4); border: 1px solid rgba(11,11,11,0.06); overflow: hidden; }
+  .hnf-lp__set-media img { width: 100%; height: auto; display: block; }
+  @keyframes hnf-lp-kenburns {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.07) translate(-1.2%, -1%); }
+  }
+  .hnf-lp__set-media-kb {
+    animation: hnf-lp-kenburns 17s ease-in-out infinite alternate;
+    transform-origin: center center;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hnf-lp__set-media-kb { animation: none; }
+  }
+
+  /* WHAT YOU GET */
+  .hnf-lp__items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4rem; margin-top: 3.6rem; }
+  .hnf-lp__item-card { background: var(--paper); border: 1px solid var(--soft-gray); padding: 2.2rem; display: flex; flex-direction: column; gap: 1.4rem; }
+  .hnf-lp__item-card--free { border-color: var(--accent); }
+  .hnf-lp__item-media { aspect-ratio: 1/1; background: var(--paper-dim); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hnf-lp__item-media img { width: 78%; height: 78%; object-fit: contain; }
+  .hnf-lp__item-tag { display: inline-block; align-self: flex-start; font-family: var(--font-body-family); font-weight: 700; font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.9rem; background: var(--paper-dim); color: var(--muted); }
+  .hnf-lp__item-card--free .hnf-lp__item-tag { background: var(--accent); color: #fff; }
+  .hnf-lp__item-name { font-family: var(--font-heading-family); font-weight: 400; text-transform: uppercase; font-size: 2.1rem; line-height: 1.05; margin: 0; color: var(--text); }
+  .hnf-lp__item-purpose { font-family: var(--font-body-family); font-weight: 600; font-size: 1.25rem; color: var(--text); margin: 0; }
+  .hnf-lp__item-benefit { font-family: var(--font-body-family); font-size: 1.25rem; line-height: 1.5; color: var(--muted); margin: 0; }
+  .hnf-lp__item-value { display: flex; align-items: baseline; gap: 0.8rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--soft-gray); }
+  .hnf-lp__item-value b { font-family: var(--font-body-family); font-weight: 700; font-size: 1.5rem; color: var(--text); }
+  .hnf-lp__item-value span { font-family: var(--font-body-family); font-size: 1.1rem; color: var(--muted); }
+  @media screen and (max-width: 989px) { .hnf-lp__items { grid-template-columns: repeat(2, 1fr); } }
+  @media screen and (max-width: 640px) { .hnf-lp__items { grid-template-columns: 1fr; } }
+
+  /* WHY IT WORKS */
+  .hnf-lp__pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3.6rem; }
+  .hnf-lp__pillar { text-align: center; }
+  .hnf-lp__pillar-icon { width: 5.6rem; height: 5.6rem; margin: 0 auto 1.4rem; border-radius: 50%; border: 2px solid var(--accent); color: var(--accent); display: flex; align-items: center; justify-content: center; }
+  .hnf-lp__pillar-icon svg { width: 2.6rem; height: 2.6rem; }
+  .hnf-lp__pillar h3 { font-family: var(--font-body-family); font-weight: 700; font-size: 1.4rem; letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 0.7rem; color: var(--text); }
+  .hnf-lp__pillar p { font-family: var(--font-body-family); font-size: 1.2rem; line-height: 1.5; color: var(--muted); margin: 0; }
+  @media screen and (max-width: 749px) { .hnf-lp__pillars { grid-template-columns: repeat(2, 1fr); } }
+
+  /* BEST SELLERS (quick add) */
+  .hnf-lp__cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 3.6rem; }
+  .hnf-lp__card { background: var(--paper); border: 1px solid var(--soft-gray); display: flex; flex-direction: column; }
+  .hnf-lp__card-media { aspect-ratio: 1/1; background: linear-gradient(180deg, #fff 0%, var(--warm-bg) 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hnf-lp__card-media img { width: 78%; height: 78%; object-fit: contain; }
+  .hnf-lp__card-body { padding: 1.8rem; display: flex; flex-direction: column; gap: 0.8rem; flex: 1; }
+  .hnf-lp__card-name { font-family: var(--font-heading-family); font-weight: 400; text-transform: uppercase; font-size: 1.7rem; line-height: 1.05; margin: 0; color: var(--text); }
+  .hnf-lp__card-price { font-family: var(--font-body-family); font-weight: 700; font-size: 1.5rem; color: var(--text); margin: 0 0 0.4rem; }
+  .hnf-lp__quickadd {
+    margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+    min-height: 4.6rem; font-family: var(--font-body-family); font-weight: 700; font-size: 1.15rem;
+    letter-spacing: 0.04em; text-transform: uppercase; color: #fff; background: var(--accent); border: none;
+    cursor: pointer; border-radius: 2px; transition: background-color .12s ease;
+  }
+  .hnf-lp__quickadd:hover { background: var(--accent-hover); }
+  .hnf-lp__quickadd[data-state="loading"] { opacity: 0.7; pointer-events: none; }
+  .hnf-lp__quickadd[data-state="added"] { background: #1a7a3c; }
+  @media screen and (max-width: 989px) { .hnf-lp__cards { grid-template-columns: repeat(2, 1fr); } }
+  @media screen and (max-width: 520px) { .hnf-lp__cards { grid-template-columns: 1fr; } }
+
+  /* PRODUCT BENEFITS */
+  .hnf-lp__benefits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.4rem; margin-top: 3.6rem; }
+  .hnf-lp__benefit { text-align: left; }
+  .hnf-lp__benefit h3 { font-family: var(--font-body-family); font-weight: 600; font-size: 1.3rem; letter-spacing: 0.03em; text-transform: uppercase; margin: 0 0 0.6rem; color: #fff; }
+  .hnf-lp__benefit p { font-family: var(--font-body-family); font-size: 1.2rem; line-height: 1.5; color: #b8b8b8; margin: 0; }
+  @media screen and (max-width: 749px) { .hnf-lp__benefits { grid-template-columns: repeat(2, 1fr); } }
+
+  /* LIFESTYLE — given real vertical spacing + a background color so it never
+     visually fuses with the black Product Benefits section above it; fixed
+     aspect-ratio (not max-height crop) so the new wide-composed photo never
+     gets zoomed into an awkward random crop. */
+  .hnf-lp__lifestyle-wrap { background: var(--paper); padding: clamp(3rem, 6vw, 5rem) 0; }
+  .hnf-lp__lifestyle-media { max-width: 130rem; margin: 0 auto; padding: 0 2rem; }
+  .hnf-lp__lifestyle-media img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 35%; display: block; }
+
+  /* GUARANTEE */
+  .hnf-lp__guarantee { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4rem; margin-top: 3.6rem; }
+  .hnf-lp__guarantee-card { text-align: center; padding: 2.4rem 1.8rem; background: var(--paper); border: 1px solid var(--soft-gray); }
+  .hnf-lp__guarantee-card svg { width: 3.6rem; height: 3.6rem; color: var(--accent); margin: 0 auto 1.4rem; display: block; }
+  .hnf-lp__guarantee-card h3 { font-family: var(--font-body-family); font-weight: 700; font-size: 1.5rem; margin: 0 0 0.8rem; color: var(--text); }
+  .hnf-lp__guarantee-card p { font-family: var(--font-body-family); font-size: 1.25rem; line-height: 1.5; color: var(--muted); margin: 0; }
+  @media screen and (max-width: 749px) { .hnf-lp__guarantee { grid-template-columns: 1fr; } }
+
+  /* EDUCATION */
+  .hnf-lp__guides { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3.6rem; }
+  .hnf-lp__guide { display: block; text-decoration: none; color: var(--text); border: 1px solid var(--soft-gray); }
+  .hnf-lp__guide-media { aspect-ratio: 16/10; overflow: hidden; background: var(--paper-dim); }
+  .hnf-lp__guide-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hnf-lp__guide-body { padding: 1.8rem 2rem 2.2rem; }
+  .hnf-lp__guide-label { font-family: var(--font-body-family); font-weight: 600; font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.6rem; }
+  .hnf-lp__guide-title { font-family: var(--font-heading-family); font-weight: 400; text-transform: uppercase; font-size: 1.9rem; margin: 0 0 0.7rem; }
+  .hnf-lp__guide-desc { font-family: var(--font-body-family); font-size: 1.25rem; line-height: 1.5; color: var(--muted); margin: 0; }
+  @media screen and (max-width: 749px) { .hnf-lp__guides { grid-template-columns: 1fr; } }
+
+  /* FAQ */
+  .hnf-lp__faq { max-width: 78rem; margin: 3.6rem auto 0; }
+  .hnf-lp__faq-item { border-bottom: 1px solid var(--soft-gray); }
+  .hnf-lp__faq-item summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 1.6rem; cursor: pointer;
+    padding: 2rem 0; font-family: var(--font-body-family); font-weight: 700; font-size: 1.5rem; color: var(--text); list-style: none;
+  }
+  .hnf-lp__faq-item summary::-webkit-details-marker { display: none; }
+  .hnf-lp__faq-item summary::after { content: '+'; font-size: 2.2rem; color: var(--accent); font-weight: 400; flex: none; transition: transform .15s ease; }
+  .hnf-lp__faq-item[open] summary::after { transform: rotate(45deg); }
+  .hnf-lp__faq-item p { font-family: var(--font-body-family); font-size: 1.3rem; line-height: 1.6; color: var(--muted); margin: 0 0 2rem; max-width: 68ch; }
+
+  /* FINAL OFFER */
+  .hnf-lp__final { text-align: center; }
+  .hnf-lp__final-price { display: flex; align-items: baseline; justify-content: center; gap: 1.2rem; margin: 2.2rem 0 0.6rem; flex-wrap: wrap; }
+  .hnf-lp__final-price b { font-family: var(--font-body-family); font-weight: 700; font-size: 4rem; color: #fff; }
+  .hnf-lp__final-price span { font-family: var(--font-body-family); font-size: 1.4rem; color: #b8b8b8; }
+  .hnf-lp__final-savings { font-family: var(--font-body-family); font-weight: 800; font-size: 1.7rem; text-transform: uppercase; letter-spacing: 0.01em; color: var(--accent); margin: 0 0 2.6rem; }
+  .hnf-lp__final-ctas { display: flex; justify-content: center; gap: 1.4rem; flex-wrap: wrap; }
+{%- endstyle -%}
+
+{%- liquid
+  assign p_walking_pad = all_products['3-in-1-walking-pad-treadmill-for-home-portable-walking-pad-under-desk-low-noise-lightweight-treadmill-with-led-display-remote-control-black']
+  assign p_waist_twister = all_products['waist-twisting-machine-ab-twister-board-waist-twister-waist-twisting-fitness-tool-waist-twister-for-women-belly-fat-ultra-quiet-20db-home-fitness-board-with-foot-massage']
+  assign p_chest_trainer = all_products['twister-arm-trainer-chest-workout-equipment-chest-trainer']
+  assign p_thigh_trainer = all_products['thigh-trainer-360-adjustable-pelvic-floor-exercise-devices-with-display-counter-and-bandage-leg-inner-thigh-trainer-home-fitness-equipment-for-hip-leg-arm']
+  assign p_resistance_bands = all_products['resistance-bands-set-of-5-pull-up-bands-pull-up-assistance-bands-exercise-bands-resistance-bands-set-for-legs-working-out']
+  assign p_foam_roller = all_products['yoga-foam-roller']
+
+  assign offer_price = 37499
+  assign offer_savings = 3795
+  assign offer_cart_url = '/cart/43205518557259:1,43197429481547:1,43198517575755:1'
+
+  assign v_walking_pad = 43198712381515
+  assign v_waist_twister = 43198521049163
+  assign v_chest_trainer = 43198517968971
+  assign v_thigh_trainer = 43198518198347
+-%}
+
+<div class="hnf-lp">
+
+  {%- comment -%} 1. HERO — new environmental establishing shot (walking pad in a
+     warm-lit apartment), replacing the previous single-product close-up. {%- endcomment -%}
+  <section class="hnf-lp__hero">
+    <div class="hnf-lp__hero-media">
+      <img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hnf-lp-hero-v2.png?v=1789669526&width=1600" loading="eager" fetchpriority="high" alt="A woman using the Walking Pad in a warm-lit home gym">
+    </div>
+    <div class="hnf-lp__hero-scrim"></div>
+    <div class="hnf-lp__hero-inner">
+      <p class="hnf-lp__hero-eyebrow">Hearth &amp; Nook Fitness</p>
+      <h1>A home gym that actually gets used.</h1>
+      <p>The Everyday Set covers cardio, strength, and core in one order — four pieces built for small spaces, plus two bonus pieces free.</p>
+      <div class="hnf-lp__hero-ctas">
+        <a class="hnf-lp__btn" href="{{ offer_cart_url }}">Shop The Everyday Set →</a>
+        <a class="hnf-lp__btn hnf-lp__btn--outline" href="#what-you-get">See what's included</a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 2. TRUSTED BY — real trust facts, no fabricated press {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--warm">
+    <div class="hnf-lp__inner">
+      <p class="hnf-lp__eyebrow">Trusted by home fitness enthusiasts</p>
+      <div class="hnf-lp__trustbar">
+        <div class="hnf-lp__trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l7 3v6c0 5-3.4 8.5-7 10-3.6-1.5-7-5-7-10V5l7-3z"/></svg> Secure checkout</div>
+        <div class="hnf-lp__trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg> Free shipping over $100</div>
+        <div class="hnf-lp__trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 1 1 2.6 5.9M4 12V6M4 12h6"/></svg> 30-day returns</div>
+        <div class="hnf-lp__trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg> 10% off your first order</div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 3. THE PROBLEM / DESIRE — copy shortened, scannable {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--white">
+    <div class="hnf-lp__inner">
+      <span class="hnf-lp__eyebrow">Why home workouts stall out</span>
+      <h2 class="hnf-lp__h2">Most home gyms don't fail from lack of effort.</h2>
+      <p class="hnf-lp__lede">Equipment that doesn't fit the room, doesn't get used, and never leaves the box. The Everyday Set fixes all three.</p>
+      <div class="hnf-lp__problem-grid">
+        <div class="hnf-lp__problem-card">
+          <h3>No time to drive to a gym</h3>
+          <p>Training is easier when the equipment is already in the room.</p>
+        </div>
+        <div class="hnf-lp__problem-card">
+          <h3>No space for a full setup</h3>
+          <p>Every piece is sized for apartments and small rooms.</p>
+        </div>
+        <div class="hnf-lp__problem-card">
+          <h3>Too many pieces, no plan</h3>
+          <p>Four pieces that work together — cardio, strength, and core in one system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 4. THE EVERYDAY SET — static image with a pure-CSS Ken Burns
+     zoom/pan (no AI video regeneration, so the baked-in text stays crisp). {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--gray">
+    <div class="hnf-lp__inner">
+      <span class="hnf-lp__eyebrow">The system</span>
+      <h2 class="hnf-lp__h2">One order. A complete everyday setup.</h2>
+      <p class="hnf-lp__lede">Walking Pad, Waist Twister Board, Chest &amp; Arm Trainer, and Thigh Trainer — plus a Resistance Band Set and Yoga Foam Roller included free.</p>
+      <div class="hnf-lp__set-media">
+        <img class="hnf-lp__set-media-kb" src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/8a577f07-fabb-40e6-b0eb-e7b6af964206_1.png?v=1789619730&width=1400" loading="lazy" alt="The Everyday Set — all six pieces">
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 5. WHAT YOU GET — real per-item pricing/value breakdown {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--white" id="what-you-get">
+    <div class="hnf-lp__inner hnf-lp__inner--wide">
+      <span class="hnf-lp__eyebrow">What you get</span>
+      <h2 class="hnf-lp__h2">Six pieces. Every dollar accounted for.</h2>
+      <p class="hnf-lp__lede">The bundle price is $374.99 for all six — here's exactly what that includes and what each piece is worth on its own.</p>
+      <div class="hnf-lp__items">
+        {%- if p_walking_pad != blank -%}
+          <div class="hnf-lp__item-card">
+            <span class="hnf-lp__item-tag">Included</span>
+            <div class="hnf-lp__item-media">{{ p_walking_pad.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_walking_pad.title }}</div>
+            <h3 class="hnf-lp__item-name">Walking Pad</h3>
+            <p class="hnf-lp__item-purpose">Daily movement + cardio</p>
+            <p class="hnf-lp__item-benefit">Low-impact steps under a desk or in front of the TV — the easiest way to hit daily movement without a dedicated workout.</p>
+            <div class="hnf-lp__item-value"><b>{{ p_walking_pad.price | money }}</b><span>standalone value</span></div>
+          </div>
+        {%- endif -%}
+        {%- if p_waist_twister != blank -%}
+          <div class="hnf-lp__item-card">
+            <span class="hnf-lp__item-tag">Included</span>
+            <div class="hnf-lp__item-media">{{ p_waist_twister.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_waist_twister.title }}</div>
+            <h3 class="hnf-lp__item-name">Waist Twister Board</h3>
+            <p class="hnf-lp__item-purpose">Core + rotational training</p>
+            <p class="hnf-lp__item-benefit">An ultra-quiet twisting motion (rated 20dB) that works your core and improves balance without disturbing the rest of the house.</p>
+            <div class="hnf-lp__item-value"><b>{{ p_waist_twister.price | money }}</b><span>standalone value</span></div>
+          </div>
+        {%- endif -%}
+        {%- if p_chest_trainer != blank -%}
+          <div class="hnf-lp__item-card">
+            <span class="hnf-lp__item-tag">Included</span>
+            <div class="hnf-lp__item-media">{{ p_chest_trainer.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_chest_trainer.title }}</div>
+            <h3 class="hnf-lp__item-name">Chest &amp; Arm Trainer</h3>
+            <p class="hnf-lp__item-purpose">Upper-body training</p>
+            <p class="hnf-lp__item-benefit">A compact twisting-resistance trainer that works chest, shoulders, and arms — small enough to store under a bed.</p>
+            <div class="hnf-lp__item-value"><b>{{ p_chest_trainer.price | money }}</b><span>standalone value</span></div>
+          </div>
+        {%- endif -%}
+        {%- if p_thigh_trainer != blank -%}
+          <div class="hnf-lp__item-card">
+            <span class="hnf-lp__item-tag">Included</span>
+            <div class="hnf-lp__item-media">{{ p_thigh_trainer.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_thigh_trainer.title }}</div>
+            <h3 class="hnf-lp__item-name">Thigh Trainer</h3>
+            <p class="hnf-lp__item-purpose">Focused lower-body training</p>
+            <p class="hnf-lp__item-benefit">An adjustable pelvic-floor and inner-thigh trainer with a display counter, for targeted lower-body work.</p>
+            <div class="hnf-lp__item-value"><b>{{ p_thigh_trainer.price | money }}</b><span>standalone value</span></div>
+          </div>
+        {%- endif -%}
+        {%- if p_resistance_bands != blank -%}
+          <div class="hnf-lp__item-card hnf-lp__item-card--free">
+            <span class="hnf-lp__item-tag">Free with the set</span>
+            <div class="hnf-lp__item-media">{{ p_resistance_bands.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_resistance_bands.title }}</div>
+            <h3 class="hnf-lp__item-name">Resistance Band Set</h3>
+            <p class="hnf-lp__item-purpose">Versatile resistance training</p>
+            <p class="hnf-lp__item-benefit">Five bands in a graduated range from light to heavy, with a door anchor and handles included.</p>
+            <div class="hnf-lp__item-value"><b>{{ p_resistance_bands.price | money }}</b><span>value — yours free</span></div>
+          </div>
+        {%- endif -%}
+        {%- if p_foam_roller != blank -%}
+          <div class="hnf-lp__item-card hnf-lp__item-card--free">
+            <span class="hnf-lp__item-tag">Free with the set</span>
+            <div class="hnf-lp__item-media">{{ p_foam_roller.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_foam_roller.title }}</div>
+            <h3 class="hnf-lp__item-name">Yoga Foam Roller</h3>
+            <p class="hnf-lp__item-purpose">Recovery + mobility</p>
+            <p class="hnf-lp__item-benefit">A textured foam roller for post-workout recovery and everyday mobility work.</p>
+            <div class="hnf-lp__item-value"><b>{{ p_foam_roller.price | money }}</b><span>value — yours free</span></div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 6. WHY THIS COMBINATION WORKS {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--gray">
+    <div class="hnf-lp__inner">
+      <span class="hnf-lp__eyebrow">Why this combination works</span>
+      <h2 class="hnf-lp__h2">Four pieces. Every fundamental covered.</h2>
+      <p class="hnf-lp__lede">Not six random SKUs — a system that covers cardio, strength, core, and recovery.</p>
+      <div class="hnf-lp__pillars">
+        <div class="hnf-lp__pillar">
+          <div class="hnf-lp__pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="17" cy="5" r="2"/><path d="M10 22l2-7 3 2 3-6-4-3-3 2-4 1"/></svg></div>
+          <h3>Cardio</h3>
+          <p>Walking Pad — daily movement without leaving the room.</p>
+        </div>
+        <div class="hnf-lp__pillar">
+          <div class="hnf-lp__pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 12h12M4 9v6M20 9v6M7 7v10M17 7v10"/></svg></div>
+          <h3>Strength</h3>
+          <p>Chest &amp; Arm Trainer and Thigh Trainer — targeted upper- and lower-body work.</p>
+        </div>
+        <div class="hnf-lp__pillar">
+          <div class="hnf-lp__pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9l6 3"/></svg></div>
+          <h3>Core</h3>
+          <p>Waist Twister Board — rotational core and balance training.</p>
+        </div>
+        <div class="hnf-lp__pillar">
+          <div class="hnf-lp__pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12c2-4 6-6 8-6s6 2 8 6c-2 4-6 6-8 6s-6-2-8-6z"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <h3>Recovery</h3>
+          <p>Resistance Bands + Foam Roller — mobility and recovery, included free.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 7. BEST SELLERS — real per-product quick add {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--white" id="build-your-own">
+    <div class="hnf-lp__inner hnf-lp__inner--wide">
+      <span class="hnf-lp__eyebrow">Prefer to build your own?</span>
+      <h2 class="hnf-lp__h2">Every piece, sold individually.</h2>
+      <p class="hnf-lp__lede">Add any single piece straight to your cart — no page reload.</p>
+      <div class="hnf-lp__cards">
+        {%- if p_walking_pad != blank -%}
+          <div class="hnf-lp__card">
+            <div class="hnf-lp__card-media">{{ p_walking_pad.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_walking_pad.title }}</div>
+            <div class="hnf-lp__card-body">
+              <h3 class="hnf-lp__card-name">Walking Pad</h3>
+              <p class="hnf-lp__card-price">{{ p_walking_pad.price | money }}</p>
+              <button type="button" class="hnf-lp__quickadd" data-variant-id="{{ v_walking_pad }}" data-state="idle">Add to cart</button>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if p_waist_twister != blank -%}
+          <div class="hnf-lp__card">
+            <div class="hnf-lp__card-media">{{ p_waist_twister.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_waist_twister.title }}</div>
+            <div class="hnf-lp__card-body">
+              <h3 class="hnf-lp__card-name">Waist Twister Board</h3>
+              <p class="hnf-lp__card-price">{{ p_waist_twister.price | money }}</p>
+              <button type="button" class="hnf-lp__quickadd" data-variant-id="{{ v_waist_twister }}" data-state="idle">Add to cart</button>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if p_chest_trainer != blank -%}
+          <div class="hnf-lp__card">
+            <div class="hnf-lp__card-media">{{ p_chest_trainer.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_chest_trainer.title }}</div>
+            <div class="hnf-lp__card-body">
+              <h3 class="hnf-lp__card-name">Chest &amp; Arm Trainer</h3>
+              <p class="hnf-lp__card-price">{{ p_chest_trainer.price | money }}</p>
+              <button type="button" class="hnf-lp__quickadd" data-variant-id="{{ v_chest_trainer }}" data-state="idle">Add to cart</button>
+            </div>
+          </div>
+        {%- endif -%}
+        {%- if p_thigh_trainer != blank -%}
+          <div class="hnf-lp__card">
+            <div class="hnf-lp__card-media">{{ p_thigh_trainer.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: p_thigh_trainer.title }}</div>
+            <div class="hnf-lp__card-body">
+              <h3 class="hnf-lp__card-name">Thigh Trainer</h3>
+              <p class="hnf-lp__card-price">{{ p_thigh_trainer.price | money }}</p>
+              <button type="button" class="hnf-lp__quickadd" data-variant-id="{{ v_thigh_trainer }}" data-state="idle">Add to cart</button>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 8. PRODUCT BENEFITS {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--black">
+    <div class="hnf-lp__inner">
+      <span class="hnf-lp__eyebrow">Built for real homes</span>
+      <h2 class="hnf-lp__h2">Small space. No excuses.</h2>
+      <div class="hnf-lp__benefits">
+        <div class="hnf-lp__benefit"><h3>Space-saving</h3><p>Every piece is sized for apartments and small rooms — nothing here needs a garage.</p></div>
+        <div class="hnf-lp__benefit"><h3>Genuinely quiet</h3><p>The Waist Twister Board is rated ultra-quiet at 20dB — use it without waking anyone up.</p></div>
+        <div class="hnf-lp__benefit"><h3>Beginner-friendly</h3><p>No complex settings — each piece does one thing well, so there's no learning curve.</p></div>
+        <div class="hnf-lp__benefit"><h3>Buy the whole set or one piece</h3><p>Start with a single item and add the rest later — nothing here locks you into the full bundle.</p></div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 9. LIFESTYLE — new well-composed wide photo, real spacing above
+     and below so it never visually fuses with the black section before it. {%- endcomment -%}
+  <div class="hnf-lp__lifestyle-wrap">
+    <div class="hnf-lp__lifestyle-media">
+      <img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hnf-lp-lifestyle-v2.png?v=1789669526&width=1600" loading="lazy" alt="A woman stretching on a yoga mat in a warm-lit home gym">
+    </div>
+  </div>
+
+  {%- comment -%} 10. GUARANTEE / SHIPPING / RETURNS — real terms only {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--gray">
+    <div class="hnf-lp__inner">
+      <span class="hnf-lp__eyebrow">No purchase anxiety</span>
+      <h2 class="hnf-lp__h2">Straightforward terms.</h2>
+      <div class="hnf-lp__guarantee">
+        <div class="hnf-lp__guarantee-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+          <h3>Free shipping over $100</h3>
+          <p>Applied automatically at checkout on qualifying orders — including The Everyday Set.</p>
+        </div>
+        <div class="hnf-lp__guarantee-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 1 1 2.6 5.9M4 12V6M4 12h6"/></svg>
+          <h3>30-day returns</h3>
+          <p>Not the right fit? Return it within 30 days.</p>
+        </div>
+        <div class="hnf-lp__guarantee-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l7 3v6c0 5-3.4 8.5-7 10-3.6-1.5-7-5-7-10V5l7-3z"/></svg>
+          <h3>Secure checkout</h3>
+          <p>Every order is processed through Shopify's encrypted checkout.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 11. EDUCATION {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--white">
+    <div class="hnf-lp__inner">
+      <span class="hnf-lp__eyebrow">Train smarter</span>
+      <h2 class="hnf-lp__h2">Guides for building your setup.</h2>
+      <div class="hnf-lp__guides">
+        <a class="hnf-lp__guide" href="/pages/how-to-build-your-first-home-gym">
+          <div class="hnf-lp__guide-media"><img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hf_20260916_002423_1a3020ec-0808-43be-9335-09da2249537d.png?v=1789518303&width=900" loading="lazy" alt="How to build your first home gym"></div>
+          <div class="hnf-lp__guide-body">
+            <span class="hnf-lp__guide-label">Guide</span>
+            <h3 class="hnf-lp__guide-title">How to build your first home gym</h3>
+            <p class="hnf-lp__guide-desc">Where to start, what to add second, and how to keep your space organized.</p>
+          </div>
+        </a>
+        <a class="hnf-lp__guide" href="/pages/how-to-choose-home-gym-equipment">
+          <div class="hnf-lp__guide-media"><img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hf_20260916_002426_20657ff3-b0cd-41ac-9ee9-b8a290f6877b.png?v=1789518303&width=900" loading="lazy" alt="How to choose the right home gym equipment"></div>
+          <div class="hnf-lp__guide-body">
+            <span class="hnf-lp__guide-label">Guide</span>
+            <h3 class="hnf-lp__guide-title">How to choose the right equipment</h3>
+            <p class="hnf-lp__guide-desc">Space, weight range, and capacity.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 12. FAQ — honest answers only, no invented specs {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--gray">
+    <div class="hnf-lp__inner">
+      <span class="hnf-lp__eyebrow">Questions</span>
+      <h2 class="hnf-lp__h2">Before you order.</h2>
+      <div class="hnf-lp__faq">
+        <details class="hnf-lp__faq-item">
+          <summary>What exactly is included, and what's free?</summary>
+          <p>The Everyday Set includes the Walking Pad, Waist Twister Board, Chest &amp; Arm Trainer, and Thigh Trainer for {{ offer_price | money }} total — plus a Resistance Band Set and Yoga Foam Roller included free. All six ship together in one order.</p>
+        </details>
+        <details class="hnf-lp__faq-item">
+          <summary>Is the Waist Twister Board actually quiet?</summary>
+          <p>Yes — it's rated ultra-quiet at 20dB, so it's suitable for apartments or shared spaces without disturbing anyone nearby.</p>
+        </details>
+        <details class="hnf-lp__faq-item">
+          <summary>How much space do I need?</summary>
+          <p>The full set is designed for small rooms and apartments — the Walking Pad and Waist Twister Board are the largest pieces, and the rest tuck away easily when not in use.</p>
+        </details>
+        <details class="hnf-lp__faq-item">
+          <summary>Can I buy individual pieces instead of the full set?</summary>
+          <p>Yes — every product in The Everyday Set is also sold individually. See the "Prefer to build your own?" section above.</p>
+        </details>
+        <details class="hnf-lp__faq-item">
+          <summary>What's your return policy?</summary>
+          <p>30 days from delivery. If it's not the right fit, you can return it in that window.</p>
+        </details>
+        <details class="hnf-lp__faq-item">
+          <summary>Will I actually save money buying the bundle?</summary>
+          <p>Yes — buying all six pieces individually would cost $412.94; The Everyday Set is {{ offer_price | money }}, a real savings of {{ offer_savings | money }}.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 13. FINAL OFFER {%- endcomment -%}
+  <section class="hnf-lp__section hnf-lp__section--black hnf-lp__final">
+    <div class="hnf-lp__inner">
+      <span class="hnf-lp__eyebrow">The Everyday Set</span>
+      <h2 class="hnf-lp__h2">Walk. Train. Rotate. Target. Recover.</h2>
+      <p class="hnf-lp__lede">Six pieces, one order, a setup you'll actually use.</p>
+      <div class="hnf-lp__final-price">
+        <b>{{ offer_price | money }}</b>
+        <span>for all six pieces</span>
+      </div>
+      <p class="hnf-lp__final-savings">You save {{ offer_savings | money }} vs. buying separately</p>
+      <div class="hnf-lp__final-ctas">
+        <a class="hnf-lp__btn" href="{{ offer_cart_url }}">Shop The Everyday Set →</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  (function () {
+    /* This theme's cart_type is "notification", so the live cart UI element
+       is <cart-notification>, not <cart-drawer> — document.querySelector('cart-drawer')
+       always returns null here, and even if it existed, renderContents() needs
+       the add response's `.sections` shape, not a plain /cart.js payload. Mirror
+       Dawn's own product-form.js: look up whichever cart UI element is present,
+       ask it which sections it needs, and request those on the add call. */
+    var cartUi = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+    var buttons = document.querySelectorAll('.hnf-lp__quickadd');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (btn.getAttribute('data-state') === 'loading') return;
+        var variantId = btn.getAttribute('data-variant-id');
+        btn.setAttribute('data-state', 'loading');
+        var originalText = btn.textContent;
+        btn.textContent = 'Adding…';
+        var payload = { items: [{ id: parseInt(variantId, 10), quantity: 1 }] };
+        if (cartUi && typeof cartUi.getSectionsToRender === 'function') {
+          payload.sections = cartUi.getSectionsToRender().map(function (s) { return s.id; });
+          payload.sections_url = window.location.pathname;
+        }
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error('Add to cart failed');
+            return res.json();
+          })
+          .then(function (item) {
+            /* An `items` add answers { items: [...] }; cart-notification needs a top-level key. */
+            if (item && !item.key && item.items && item.items[0]) item.key = item.items[0].key;
+            btn.setAttribute('data-state', 'added');
+            btn.textContent = 'Added ✓';
+            if (item.sections) {
+              var bubble = document.getElementById('cart-icon-bubble');
+              if (bubble && item.sections['cart-icon-bubble']) {
+                var parsed = new DOMParser().parseFromString(item.sections['cart-icon-bubble'], 'text/html');
+                var section = parsed.querySelector('.shopify-section');
+                if (section) bubble.innerHTML = section.innerHTML;
+              }
+              if (cartUi && typeof cartUi.renderContents === 'function') {
+                try { cartUi.renderContents(item); } catch (renderError) { /* item is already in the cart */ }
+              }
+            }
+            document.dispatchEvent(new CustomEvent('cart:refresh'));
+            setTimeout(function () {
+              btn.setAttribute('data-state', 'idle');
+              btn.textContent = originalText;
+            }, 2200);
+          })
+          .catch(function () {
+            btn.setAttribute('data-state', 'idle');
+            btn.textContent = originalText;
+            /* Never fall back to a /cart/{id}:1 permalink: it skips the cart and opens
+               a checkout holding only this item. */
+            window.location.href = '/cart';
+          });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Everyday Set landing page",
+  "tag": "section",
+  "class": "section-hnf-everyday-set-landing",
+  "settings": [],
+  "presets": [{ "name": "Everyday Set landing page" }]
+}
+{% endschema %}

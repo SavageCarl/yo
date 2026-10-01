@@ -1,0 +1,875 @@
+{%- style -%}
+  /* ===== FITNESS BRAND DESIGN SYSTEM v4 (final polish) ===== */
+  .hnf-home {
+    --ink: #0b0b0b;
+    --ink-2: #151515;
+    --paper: #ffffff;
+    --paper-dim: #f5f5f3;
+    --soft-gray: #eaeae7;
+    --text: #111111;
+    --muted: #666666;
+    --accent: #ff5a1f;
+    --accent-hover: #ff7440;
+    background: var(--paper);
+    color: var(--text);
+  }
+  .hnf-home * { box-sizing: border-box; }
+
+  .hnf-section { padding: clamp(5.6rem, 8vw, 8.75rem) 0; }
+  .hnf-section--white { background: var(--paper); color: var(--text); }
+  .hnf-section--gray { background: var(--paper-dim); color: var(--text); }
+  .hnf-section--black { background: var(--ink); color: #fff; }
+  @media screen and (max-width: 749px) {
+    .hnf-section { padding: clamp(3.5rem, 12vw, 5rem) 0; }
+  }
+
+  .hnf-section__head { max-width: 62rem; margin: 0 0 clamp(2.8rem, 4.5vw, 4rem); }
+  .hnf-eyebrow {
+    display: block; font-family: var(--font-body-family); font-weight: 600;
+    font-size: 1.2rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 0.9rem;
+  }
+  .hnf-h2 {
+    font-family: var(--font-heading-family); font-weight: 400;
+    font-size: clamp(2.6rem, 4vw, 3.6rem); line-height: 1.05;
+    letter-spacing: 0.01em; margin: 0; text-transform: uppercase; color: var(--text);
+  }
+  .hnf-section--black .hnf-h2 { color: #fff; }
+  .hnf-viewall {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-body-family); font-weight: 700; font-size: 1.3rem;
+    letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--text); text-decoration: none; margin-top: clamp(2.2rem, 3vw, 3rem);
+  }
+  .hnf-viewall span { color: var(--accent); transition: transform .15s ease; }
+  .hnf-viewall:hover span { transform: translateX(4px); }
+
+  .hnf-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.7rem;
+    min-height: 5.2rem; padding: 0 2.8rem;
+    font-family: var(--font-body-family);
+    font-weight: 700; font-size: 1.3rem; letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none; border-radius: 2px;
+    background: var(--accent); color: #fff;
+    border: 2px solid var(--accent);
+    transition: background-color .12s ease, border-color .12s ease, color .12s ease, transform .12s ease;
+  }
+  .hnf-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  .hnf-btn--outline-light { background: transparent; color: #fff; border-color: #fff; }
+  .hnf-btn--outline-light:hover { background: #fff; color: var(--ink); }
+  .hnf-btn--outline-dark { background: transparent; color: var(--text); border-color: var(--ink); }
+  .hnf-btn--outline-dark:hover { background: var(--ink); color: #fff; }
+  .hnf-btn--sm { min-height: 4.4rem; padding: 0 2.2rem; font-size: 1.2rem; }
+  .hnf-cta-row { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; }
+
+  /* HERO — bigger, full width up to a generous cap on every viewport */
+  .hnf-hero { background: var(--ink); padding: clamp(4rem, 8vw, 6.5rem) 2rem; }
+  .hnf-hero__inner {
+    max-width: 64rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
+  .hnf-hero__media {
+    width: 100%; max-width: 58rem; aspect-ratio: 4 / 5; overflow: hidden; margin: 0 0 3.2rem; background: var(--ink-2);
+  }
+  .hnf-hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hnf-hero__text { display: flex; flex-direction: column; align-items: center; }
+  .hnf-hero__rule { width: 5.6rem; height: 4px; background: var(--accent); margin: 0 0 2rem; }
+  .hnf-hero__eyebrow {
+    font-family: var(--font-body-family); font-weight: 600;
+    font-size: 1.3rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #a3a3a3; margin: 0 0 1.2rem;
+  }
+  .hnf-hero__text h1 {
+    font-family: var(--font-heading-family); font-weight: 400; color: #fff;
+    text-transform: uppercase;
+    font-size: clamp(3rem, 5.4vw, 4.6rem); line-height: 1; letter-spacing: 0.005em;
+    margin: 0; max-width: 16ch;
+  }
+  .hnf-hero__text p {
+    font-family: var(--font-body-family); font-size: 1.6rem; line-height: 1.5;
+    color: #cfcfcf; max-width: 38rem; margin: 1.8rem auto 0;
+  }
+  .hnf-hero__text .hnf-cta-row { justify-content: center; margin-top: 2.6rem; }
+
+  /* THE EVERYDAY SET — image carries its own baked-in design (uploaded
+     manually). No fixed aspect-ratio/crop here — the image renders at its
+     full natural size so none of its baked-in text gets clipped. */
+  @keyframes hnf-fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hnf-offer { padding: clamp(5rem, 8vw, 8rem) 0; background: var(--paper); animation: hnf-fade-up .7s ease both; max-width: 100%; }
+  @media (prefers-reduced-motion: reduce) { .hnf-offer { animation: none; } }
+ .hnf-offer__grid {
+  display: flex;
+  gap: clamp(3rem, 5vw, 6rem);
+  align-items: flex-start;
+  max-width: 100%;
+}
+  .hnf-offer__media {
+    flex: 0 0 52%; max-width: 52%; position: relative; overflow: hidden; background: var(--ink); display: block;
+  }
+  .hnf-offer__media img { width: 100%; height: auto; display: block; }
+  .hnf-offer__title-link { color: inherit; text-decoration: none; }
+  .hnf-offer__title-link:hover { color: var(--accent); }
+
+  .hnf-offer__content { flex: 1 1 0%; min-width: 0; max-width: 100%; display: flex; flex-direction: column; justify-content: center; }
+  .hnf-offer__title {
+    font-family: var(--font-heading-family); font-weight: 400; text-transform: uppercase;
+    font-size: clamp(3.2rem, 5vw, 5rem); line-height: 0.98; letter-spacing: 0.005em;
+    margin: 0.6rem 0 1.6rem; color: var(--text); overflow-wrap: break-word;
+  }
+  .hnf-offer__lede {
+    font-family: var(--font-body-family); font-size: 1.6rem; line-height: 1.55;
+    color: var(--muted); max-width: 46ch; margin: 0 0 2.8rem; overflow-wrap: break-word;
+  }
+  .hnf-offer__label {
+    display: block; font-family: var(--font-body-family); font-weight: 700; font-size: 1.1rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); margin: 0 0 1.1rem;
+  }
+  .hnf-offer__includes ul {
+    list-style: none; margin: 0 0 2.6rem; padding: 0; display: flex; flex-direction: column; gap: 1.2rem; max-width: 100%;
+  }
+  .hnf-offer__item { display: flex; align-items: center; gap: 1.3rem; min-width: 0; }
+  .hnf-offer__thumb {
+    width: 5.4rem; height: 5.4rem; flex: none;
+    background: linear-gradient(135deg, var(--soft-gray) 0%, var(--paper-dim) 60%, #fff 100%);
+    border: 1px solid var(--soft-gray);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .hnf-offer__thumb img { width: 80%; height: 80%; object-fit: contain; display: block; }
+  .hnf-offer__item-name { font-family: var(--font-body-family); font-weight: 600; font-size: 1.4rem; color: var(--text); }
+  .hnf-offer__item-desc { display: block; font-family: var(--font-body-family); font-weight: 400; font-size: 1.2rem; color: var(--muted); margin-top: 0.2rem; }
+  .hnf-offer__perks {
+    display: flex; gap: 1.4rem 2.4rem; flex-wrap: wrap; margin: 0 0 2.6rem; max-width: 100%;
+    font-family: var(--font-body-family); font-weight: 600; font-size: 1.25rem; color: var(--text);
+  }
+  .hnf-offer__perks span { display: inline-flex; align-items: center; gap: 0.5rem; overflow-wrap: break-word; }
+  .hnf-offer__perks span::before { content: '✓'; color: var(--accent); font-weight: 700; }
+  .hnf-offer__price { display: flex; align-items: baseline; gap: 1.1rem; margin: 0 0 1rem; flex-wrap: wrap; }
+  .hnf-offer__price-now { font-family: var(--font-body-family); font-weight: 700; font-size: 3.2rem; color: var(--text); }
+  .hnf-offer__price-label { font-family: var(--font-body-family); font-size: 1.25rem; color: var(--muted); }
+  .hnf-offer__savings {
+    font-family: var(--font-body-family); font-weight: 800; font-size: 1.7rem; letter-spacing: 0.01em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 2.6rem; overflow-wrap: break-word;
+  }
+
+/* ===== BONUS BAR — FULL WIDTH, SYMMETRICAL + LARGER LABELS ===== */
+
+.hnf-offer__bonusbar {
+  background: var(--ink);
+  color: #fff;
+  margin-top: clamp(3rem, 5vw, 4rem);
+  padding: 2.2rem clamp(2rem, 3vw, 3.5rem);
+
+  width: 100%;
+  max-width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 2rem;
+  flex-wrap: nowrap;
+  overflow: hidden;
+
+  position: relative;
+}
+
+
+/* =========================================================
+   LEFT SIDE
+   +  2 FREE BONUS ITEMS
+   ========================================================= */
+
+.hnf-offer__bonusbar-label {
+  display: flex;
+  align-items: center;
+
+  /* Exact spacing between + and text */
+  gap: 1.2rem;
+
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+
+/* LEFT + */
+
+.hnf-offer__bonusbar-label::before {
+  content: '+';
+
+  width: 3.6rem;
+  height: 3.6rem;
+
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.9rem;
+  font-weight: 700;
+
+  flex: 0 0 3.6rem;
+}
+
+
+/* Hide the original + from the HTML */
+
+.hnf-offer__bonusbar-plus {
+  display: none;
+}
+
+
+/* LEFT "2 FREE BONUS ITEMS" */
+
+.hnf-offer__bonusbar-label b {
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+
+  text-transform: uppercase;
+
+  /* BIGGER */
+  font-size: 2.2rem;
+  line-height: 1;
+
+  letter-spacing: 0.01em;
+
+  color: #fff;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CENTER — BONUS PRODUCTS
+   ========================================================= */
+
+.hnf-offer__bonusbar-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: clamp(2.4rem, 3.5vw, 4rem);
+
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+
+.hnf-offer__bonusbar-item {
+  display: flex;
+  align-items: center;
+
+  gap: 1.1rem;
+
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+
+/* PRODUCT CIRCLES */
+
+.hnf-offer__bonusbar-thumb {
+  width: 5.4rem;
+  height: 5.4rem;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  background: #fff;
+
+  flex: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.hnf-offer__bonusbar-thumb img {
+  width: 78%;
+  height: 78%;
+
+  object-fit: contain;
+  display: block;
+}
+
+
+/* PRODUCT NAME */
+
+.hnf-offer__bonusbar-item div b {
+  display: block;
+
+  font-family: var(--font-body-family);
+  font-weight: 700;
+
+  font-size: 1.3rem;
+
+  color: #fff;
+
+  white-space: nowrap;
+}
+
+
+/* FREE TAG */
+
+.hnf-offer__bonusbar-free-tag {
+  color: var(--accent);
+}
+
+
+/* PRODUCT DESCRIPTION */
+
+.hnf-offer__bonusbar-item div span {
+  display: block;
+
+  font-family: var(--font-body-family);
+  font-size: 1.1rem;
+
+  color: #cfcfcf;
+
+  margin-top: 0.15rem;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   2 FREE BONUS ITEMS  +
+   ========================================================= */
+
+.hnf-offer__bonusbar::after {
+  content: '2 FREE BONUS ITEMS';
+
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+
+  text-transform: uppercase;
+
+  /* SAME SIZE AS LEFT */
+  font-size: 2.2rem;
+  line-height: 1;
+
+  letter-spacing: 0.01em;
+
+  color: #fff;
+
+  white-space: nowrap;
+
+  flex: 0 0 auto;
+
+  /*
+    EXACTLY reserves the same visual distance
+    between the text and the right + as the
+    left side has between + and text.
+  */
+  margin-right: 4.8rem;
+}
+
+
+/* RIGHT + */
+
+.hnf-offer__bonusbar::before {
+  content: '+';
+
+  position: absolute;
+
+  right: clamp(2rem, 3vw, 3.5rem);
+
+  width: 3.6rem;
+  height: 3.6rem;
+
+  border-radius: 50%;
+
+  border: 2px solid var(--accent);
+  color: var(--accent);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   DESKTOP BALANCE
+   ========================================================= */
+
+@media screen and (min-width: 750px) {
+
+  .hnf-offer__bonusbar-label,
+  .hnf-offer__bonusbar::after {
+    /*
+      Prevent either side from becoming
+      disproportionately small.
+    */
+    min-width: 18rem;
+  }
+
+  .hnf-offer__bonusbar-label {
+    justify-content: flex-start;
+  }
+
+  .hnf-offer__bonusbar::after {
+    text-align: right;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media screen and (max-width: 749px) {
+
+  .hnf-offer__bonusbar {
+    padding: 2rem;
+    overflow-x: auto;
+
+    justify-content: flex-start;
+  }
+
+  /* Remove duplicated right-side decoration on mobile */
+  .hnf-offer__bonusbar::before,
+  .hnf-offer__bonusbar::after {
+    display: none;
+  }
+
+  .hnf-offer__bonusbar-label {
+    flex: 0 0 auto;
+  }
+
+  .hnf-offer__bonusbar-items {
+    justify-content: flex-start;
+    flex: 0 0 auto;
+  }
+
+  .hnf-offer__bonusbar-label b {
+    font-size: 1.7rem;
+  }
+}
+  @media screen and (max-width: 849px) {
+    .hnf-offer__grid { flex-direction: column; }
+    .hnf-offer__media { max-width: 100%; flex-basis: auto; }
+    .hnf-offer .hnf-cta-row .hnf-btn { flex: 1 1 auto; width: 100%; justify-content: center; }
+  }
+
+  /* SHOP BY TRAINING */
+  .hnf-cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--soft-gray); }
+  .hnf-cat { position: relative; display: block; text-decoration: none; aspect-ratio: 3 / 4; overflow: hidden; background: var(--ink); }
+  .hnf-cat__media { position: absolute; inset: 0; }
+  .hnf-cat__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; filter: grayscale(15%) contrast(1.05); }
+  .hnf-cat:hover .hnf-cat__media img { transform: scale(1.05); }
+  .hnf-cat__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,11,0) 15%, rgba(11,11,11,0.6) 55%, rgba(11,11,11,0.95) 100%); }
+  .hnf-cat__body { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.8rem; }
+  .hnf-cat__name { font-family: var(--font-heading-family); font-weight: 400; color: #fff; font-size: clamp(1.6rem, 1.8vw, 2rem); letter-spacing: 0.01em; text-transform: uppercase; margin: 0 0 0.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.65); }
+  .hnf-cat__link { font-family: var(--font-body-family); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); text-shadow: 0 1px 6px rgba(0,0,0,0.65); }
+  @media screen and (min-width: 520px) and (max-width: 989px) { .hnf-cats { grid-template-columns: repeat(2, 1fr); } }
+
+  /* BEST SELLERS */
+  .hnf-features { display: flex; flex-direction: column; }
+  .hnf-feature { display: flex; align-items: center; gap: clamp(3rem, 5vw, 6rem); padding: clamp(3.5rem, 6vw, 5.5rem) 0; border-bottom: 1px solid var(--soft-gray); }
+  .hnf-feature:first-child { padding-top: 0; }
+  .hnf-feature:last-child { border-bottom: none; padding-bottom: 0; }
+  .hnf-feature--reverse { flex-direction: row-reverse; }
+  .hnf-feature__media { flex: 0 0 58%; max-width: 58%; aspect-ratio: 1 / 1; background: var(--paper-dim); display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 24px 50px -24px rgba(11,11,11,0.3); }
+  .hnf-feature__media img { width: 82%; height: 82%; object-fit: contain; display: block; }
+  .hnf-feature__content { flex: 1; min-width: 0; }
+  .hnf-feature__name { font-family: var(--font-heading-family); font-weight: 400; text-transform: uppercase; font-size: clamp(2.6rem, 3.4vw, 3.6rem); letter-spacing: 0.01em; line-height: 1.02; margin: 0.6rem 0 1.2rem; color: var(--text); }
+  .hnf-feature__tagline { font-family: var(--font-body-family); font-weight: 700; font-size: 1.7rem; line-height: 1.3; color: var(--text); margin: 0 0 1rem; max-width: 32ch; }
+  .hnf-feature__desc { font-family: var(--font-body-family); font-weight: 400; font-size: 1.35rem; line-height: 1.55; color: var(--muted); margin: 0 0 2.2rem; max-width: 40ch; }
+  .hnf-feature__desc strong { color: var(--text); font-weight: 700; }
+  .hnf-feature__price { font-family: var(--font-body-family); font-weight: 700; font-size: 2.1rem; color: var(--text); margin: 0 0 1.8rem; }
+  .hnf-feature__cta {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-body-family); font-weight: 700; font-size: 1.2rem; letter-spacing: 0.04em;
+    text-transform: uppercase; color: #fff; text-decoration: none;
+    background: var(--accent); padding: 0.9rem 1.7rem; border-radius: 2px;
+    transition: background-color .12s ease, transform .12s ease;
+  }
+  .hnf-feature__cta span { color: #fff; transition: transform .15s ease; }
+  .hnf-feature__cta:hover { background: var(--accent-hover); }
+  .hnf-feature__cta:hover span { transform: translateX(4px); }
+  @media screen and (max-width: 849px) {
+    .hnf-feature, .hnf-feature--reverse { flex-direction: column; gap: 2.4rem; }
+    .hnf-feature__media { max-width: 100%; flex-basis: auto; width: 100%; }
+  }
+
+  /* BENEFITS */
+  .hnf-trust { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.6rem; }
+  .hnf-trust__item { text-align: left; border-top: 2px solid var(--accent); padding-top: 1.6rem; }
+  .hnf-trust__title { font-family: var(--font-body-family); font-weight: 600; font-size: 1.4rem; letter-spacing: 0.04em; text-transform: uppercase; margin: 0 0 0.7rem; color: var(--text); }
+  .hnf-trust__body { font-family: var(--font-body-family); font-size: 1.3rem; line-height: 1.5; color: var(--muted); margin: 0; }
+
+  /* PROMO BANNER */
+  .hnf-promo { text-align: center; }
+  .hnf-promo__eyebrow { font-family: var(--font-body-family); font-weight: 600; font-size: 1.2rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.8rem; }
+  .hnf-promo h2 { font-family: var(--font-heading-family); font-weight: 400; color: var(--text); text-transform: uppercase; font-size: clamp(2.6rem, 5vw, 4rem); line-height: 1.02; letter-spacing: 0.01em; margin: 0 auto; max-width: 20ch; }
+  .hnf-promo__boxes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem; max-width: 62rem; margin: 3rem auto 0; }
+  .hnf-promo__box { border: 2px solid var(--accent); background: var(--paper); padding: 2.2rem 1.8rem; }
+  .hnf-promo__box-title { font-family: var(--font-heading-family); font-weight: 400; color: var(--accent); text-transform: uppercase; font-size: 1.9rem; letter-spacing: 0.01em; margin: 0 0 0.6rem; }
+  .hnf-promo__box-body { font-family: var(--font-body-family); font-size: 1.3rem; color: var(--muted); margin: 0; }
+  .hnf-promo__code { display: inline-block; margin-top: 0.9rem; padding: 0.5rem 1.1rem; font-family: var(--font-body-family); font-weight: 700; letter-spacing: 0.04em; background: var(--accent); color: #fff; font-size: 1.2rem; }
+  @media screen and (max-width: 640px) { .hnf-promo__boxes { grid-template-columns: 1fr; } }
+
+  /* TRAIN SMARTER guides */
+  .hnf-guides { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  .hnf-guide { display: block; text-decoration: none; color: var(--text); border: 1px solid var(--soft-gray); }
+  .hnf-guide__media { aspect-ratio: 16 / 10; overflow: hidden; background: var(--paper-dim); }
+  .hnf-guide__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; filter: grayscale(10%); }
+  .hnf-guide:hover .hnf-guide__media img { transform: scale(1.03); }
+  .hnf-guide__body { padding: 1.8rem 2rem 2.2rem; }
+  .hnf-guide__label { font-family: var(--font-body-family); font-weight: 600; font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.6rem; }
+  .hnf-guide__title { font-family: var(--font-heading-family); font-weight: 400; text-transform: uppercase; font-size: 1.9rem; letter-spacing: 0.01em; margin: 0 0 0.7rem; color: var(--text); }
+  .hnf-guide__desc { font-family: var(--font-body-family); font-size: 1.3rem; line-height: 1.5; color: var(--muted); margin: 0 0 1rem; }
+  .hnf-guide__link { font-family: var(--font-body-family); font-weight: 700; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text); }
+  .hnf-guide:hover .hnf-guide__link { color: var(--accent); }
+
+  /* FINAL CTA */
+  .hnf-final { background: var(--ink); text-align: center; padding: clamp(6rem, 10vw, 9.5rem) 2rem; }
+  .hnf-final__eyebrow { font-family: var(--font-heading-family); font-weight: 400; color: #fff; text-transform: uppercase; font-size: clamp(3.2rem, 6vw, 5.2rem); letter-spacing: 0.01em; line-height: 1.02; margin: 0; }
+  .hnf-final__sub { font-family: var(--font-body-family); color: #b8b8b8; font-size: 1.7rem; margin: 1.4rem 0 0; }
+  .hnf-final .hnf-cta-row { justify-content: center; margin-top: 3.2rem; }
+  .hnf-final__badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 2.4rem; margin-top: 3.6rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.14); }
+  .hnf-final__badge { display: flex; align-items: center; gap: 0.8rem; font-family: var(--font-body-family); font-weight: 600; font-size: 1.2rem; letter-spacing: 0.04em; text-transform: uppercase; color: #e6e6e6; }
+  .hnf-final__badge-icon { display: inline-flex; color: var(--accent); flex: none; }
+  .hnf-final__badge-icon svg { width: 2rem; height: 2rem; display: block; }
+  @media screen and (max-width: 640px) {
+    .hnf-final__badges { gap: 1.6rem 2.2rem; }
+    .hnf-final__badge { font-size: 1.05rem; }
+  }
+
+  @media screen and (max-width: 989px) {
+    .hnf-cats { grid-template-columns: 1fr; }
+    .hnf-trust { grid-template-columns: repeat(2, 1fr); }
+    .hnf-guides { grid-template-columns: 1fr; }
+  }
+  @media screen and (max-width: 520px) { .hnf-trust { grid-template-columns: 1fr; } }
+{%- endstyle -%}
+
+{%- liquid
+  assign p_kettlebell = all_products['kettlebell']
+  assign p_ab_trainer = all_products['spine-twist-and-stretch-trainer-abdominal-machine-for-home-gym-workout']
+  assign p_waist_twister = all_products['waist-twisting-machine-ab-twister-board-waist-twister-waist-twisting-fitness-tool-waist-twister-for-women-belly-fat-ultra-quiet-20db-home-fitness-board-with-foot-massage']
+  assign p_chest_trainer = all_products['twister-arm-trainer-chest-workout-equipment-chest-trainer']
+  assign p_walking_pad = all_products['3-in-1-walking-pad-treadmill-for-home-portable-walking-pad-under-desk-low-noise-lightweight-treadmill-with-led-display-remote-control-black']
+  assign p_thigh_trainer = all_products['thigh-trainer-360-adjustable-pelvic-floor-exercise-devices-with-display-counter-and-bandage-leg-inner-thigh-trainer-home-fitness-equipment-for-hip-leg-arm']
+  assign p_resistance_bands = all_products['resistance-bands-set-of-5-pull-up-bands-pull-up-assistance-bands-exercise-bands-resistance-bands-set-for-legs-working-out']
+  assign p_foam_roller = all_products['yoga-foam-roller']
+
+  assign coll_strength = collections['strength']
+  assign coll_resistance = collections['resistance-mobility']
+  assign coll_accessories = collections['accessories-storage']
+  assign coll_cardio = collections['cardio']
+
+  assign offer_price = 37499
+  assign offer_savings = 3795
+  assign offer_cart_url = '/cart/43205518557259:1,43197429481547:1,43198517575755:1'
+
+-%}
+
+<div class="hnf-home">
+
+  {%- comment -%} 1. HERO — bigger, full width up to a generous cap {%- endcomment -%}
+  <section class="hnf-hero">
+    <div class="hnf-hero__inner">
+      <div class="hnf-hero__media">
+        <img
+          src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hf_20260916_152203_2f9aed3d-0464-4a92-9282-7bb48c38108e.png?v=1789572215"
+          loading="eager"
+          fetchpriority="high"
+          alt="A woman training in a moody home gym"
+        >
+      </div>
+      <div class="hnf-hero__text">
+        <div class="hnf-hero__rule"></div>
+        <p class="hnf-hero__eyebrow">{{ section.settings.hero_kicker | default: 'Hearth & Nook Fitness' }}</p>
+        <h1>{{ section.settings.hero_heading | default: 'Build the home gym that actually gets used.' }}</h1>
+        <p>{{ section.settings.hero_body | default: 'Start with one piece. Build a setup, not a pile of gear.' }}</p>
+        <div class="hnf-cta-row">
+          <a class="hnf-btn" href="#start-here">Shop the essentials →</a>
+          <a class="hnf-btn hnf-btn--outline-light" href="#shop-by-goal">Shop by goal</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 2. START HERE — product-first: every card says what the
+     product is for and links straight to its product page. Products and
+     copy come from snippets/hnf-nav.liquid. {%- endcomment -%}
+  <section class="hnf-section hnf-section--white" id="start-here">
+    <div class="page-width">
+      <div class="hnf-section__head">
+        <span class="hnf-eyebrow">Start here</span>
+        <h2 class="hnf-h2">Simple equipment. Real movement.</h2>
+        <p class="hnf-section__sub">Each piece does one job well. Pick the one that fits your routine.</p>
+      </div>
+      {%- render 'hnf-nav', view: 'home-grid' -%}
+      <a class="hnf-viewall" href="{{ routes.all_products_collection_url }}">View all equipment <span>→</span></a>
+    </div>
+  </section>
+
+  {%- comment -%} 3. SHOP BY GOAL — goal cards link directly to products. {%- endcomment -%}
+  <section class="hnf-section hnf-section--gray" id="shop-by-goal">
+    <div class="page-width">
+      <div class="hnf-section__head">
+        <span class="hnf-eyebrow">Shop by goal</span>
+        <h2 class="hnf-h2">What do you want to work on?</h2>
+      </div>
+      {%- render 'hnf-nav', view: 'home-goals' -%}
+    </div>
+  </section>
+
+  {%- comment -%} 2. THE EVERYDAY SET — image carries its own design (manually
+     uploaded); no overlay callouts, no forced crop — image renders at full
+     natural size. Cart adds the $374.99 bundle SKU
+     (gid://shopify/Product/8110436974667) + the 2 real bonus products; the
+     BXGY discount (DiscountAutomaticNode/1500798681163) triggers off buying
+     that bundle SKU and makes the 2 bonus items free. $374.99 is a genuine
+     ~$37.95 savings vs. buying all 6 items separately ($412.94). "Shop
+     individually" adds the 4 core items straight to cart at their regular,
+     non-bundle prices. Title/image now link to the full Everyday Set landing
+     page (/pages/everyday-set); the CTA button stays a direct cart add. {%- endcomment -%}
+  <section class="hnf-offer">
+    <div class="page-width">
+      <div class="hnf-offer__grid">
+        <a class="hnf-offer__media" href="/pages/everyday-set">
+          <img
+            src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/8a577f07-fabb-40e6-b0eb-e7b6af964206_1.png?v=1789619730"
+            loading="eager"
+            alt="The Everyday Set — walking pad, waist twister board, chest and arm trainer, thigh trainer, resistance band set, and yoga foam roller arranged in a home gym"
+          >
+        </a>
+
+        <div class="hnf-offer__content">
+          <span class="hnf-eyebrow">Hearth &amp; Nook Fitness</span>
+          <h2 class="hnf-offer__title"><a class="hnf-offer__title-link" href="/pages/everyday-set">The Everyday Set</a></h2>
+          <p class="hnf-offer__lede">One curated setup for a more active home — walk, train your upper body, work your core, and target your lower body, all from a single order.</p>
+
+          <div class="hnf-offer__includes">
+            <span class="hnf-offer__label">Includes</span>
+            <ul>
+              {%- if p_walking_pad != blank -%}
+                <li class="hnf-offer__item">
+                  <span class="hnf-offer__thumb">{{ p_walking_pad.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p_walking_pad.title }}</span>
+                  <span><span class="hnf-offer__item-name">Walking Pad</span><span class="hnf-offer__item-desc">Daily movement + cardio</span></span>
+                </li>
+              {%- endif -%}
+              {%- if p_waist_twister != blank -%}
+                <li class="hnf-offer__item">
+                  <span class="hnf-offer__thumb">{{ p_waist_twister.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p_waist_twister.title }}</span>
+                  <span><span class="hnf-offer__item-name">Waist Twister Board</span><span class="hnf-offer__item-desc">Core, balance + rotation training</span></span>
+                </li>
+              {%- endif -%}
+              {%- if p_chest_trainer != blank -%}
+                <li class="hnf-offer__item">
+                  <span class="hnf-offer__thumb">{{ p_chest_trainer.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p_chest_trainer.title }}</span>
+                  <span><span class="hnf-offer__item-name">Chest &amp; Arm Trainer</span><span class="hnf-offer__item-desc">Compact upper-body training</span></span>
+                </li>
+              {%- endif -%}
+              {%- if p_thigh_trainer != blank -%}
+                <li class="hnf-offer__item">
+                  <span class="hnf-offer__thumb">{{ p_thigh_trainer.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p_thigh_trainer.title }}</span>
+                  <span><span class="hnf-offer__item-name">Thigh Trainer</span><span class="hnf-offer__item-desc">Focused lower-body training</span></span>
+                </li>
+              {%- endif -%}
+            </ul>
+          </div>
+
+          <div class="hnf-offer__perks">
+            <span>Free shipping</span>
+            <span>10% off your first order — code FIRSTORDER10</span>
+          </div>
+
+          <div class="hnf-offer__price">
+            <span class="hnf-offer__price-now">{{ offer_price | money }}</span>
+            <span class="hnf-offer__price-label">for the 4-piece set</span>
+          </div>
+          <p class="hnf-offer__savings">You save {{ offer_savings | money }} vs. buying separately</p>
+
+          <div class="hnf-cta-row">
+            <a class="hnf-btn" href="{{ offer_cart_url }}">Get the Everyday Set →</a>
+            <a class="hnf-btn hnf-btn--outline-dark" href="/pages/everyday-set#build-your-own">Shop individually →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hnf-offer__bonusbar">
+        <div class="hnf-offer__bonusbar-label">
+          <span class="hnf-offer__bonusbar-plus">+</span>
+          <b>2 free bonus items</b>
+        </div>
+        <div class="hnf-offer__bonusbar-items">
+          {%- if p_resistance_bands != blank -%}
+            <div class="hnf-offer__bonusbar-item">
+              <span class="hnf-offer__bonusbar-thumb">{{ p_resistance_bands.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p_resistance_bands.title }}</span>
+              <div><b><span class="hnf-offer__bonusbar-free-tag">Free —</span> Resistance Band Set</b><span>Versatile resistance training</span></div>
+            </div>
+          {%- endif -%}
+          {%- if p_foam_roller != blank -%}
+            <div class="hnf-offer__bonusbar-item">
+              <span class="hnf-offer__bonusbar-thumb">{{ p_foam_roller.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p_foam_roller.title }}</span>
+              <div><b><span class="hnf-offer__bonusbar-free-tag">Free —</span> Yoga Foam Roller</b><span>Recovery + mobility</span></div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 4. FEATURED PRODUCT — one flagship, factual copy only
+     (claims come from the product's own title/specs). The old "Best sellers"
+     block was removed: it labelled four products "Bestseller" without sales
+     data to support it. {%- endcomment -%}
+  {%- if p_walking_pad != blank -%}
+  <section class="hnf-section hnf-section--white">
+    <div class="page-width">
+      <div class="hnf-features">
+        <div class="hnf-feature hnf-feature--reverse">
+          <a class="hnf-feature__media" href="{{ p_walking_pad.url }}">{{ p_walking_pad.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '500,750,1000', sizes: '(min-width: 990px) 50vw, 100vw', alt: p_walking_pad.featured_image.alt | default: p_walking_pad.title }}</a>
+          <div class="hnf-feature__content">
+            <span class="hnf-eyebrow">Featured</span>
+            <h3 class="hnf-feature__name">The Walking Pad</h3>
+            <p class="hnf-feature__tagline">Get your steps in without leaving the room.</p>
+            <p class="hnf-feature__desc">An under-desk walking pad you can use through work calls, TV or a podcast, then slide out of the way.</p>
+            <ul class="hnf-feature__list">
+              <li>Made for under-desk walking</li>
+              <li>Remote control and LED display</li>
+              <li>Low-noise, lightweight build</li>
+              <li>Ships free — it clears the $100 threshold on its own</li>
+            </ul>
+            <p class="hnf-feature__price">
+              {{ p_walking_pad.price | money }}
+              {%- if p_walking_pad.compare_at_price > p_walking_pad.price -%}
+                <s class="hnf-feature__was"><span class="visually-hidden">Regular price </span>{{ p_walking_pad.compare_at_price | money }}</s>
+              {%- endif -%}
+            </p>
+            <a class="hnf-btn" href="{{ p_walking_pad.url }}">Shop the Walking Pad →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- comment -%} 3. SHOP BY TRAINING — Core & Mobility image replaced (had
+     baked-in garbled AI text, "MANOEYROI"); rest kept as-is. {%- endcomment -%}
+  <section class="hnf-section hnf-section--gray" style="padding-bottom:0;">
+    <div class="page-width">
+      <div class="hnf-section__head">
+        <span class="hnf-eyebrow">Shop by training</span>
+        <h2 class="hnf-h2">Find your category.</h2>
+      </div>
+    </div>
+    <div class="hnf-cats">
+      <a class="hnf-cat" href="{{ coll_strength.url | default: '/collections/all' }}">
+        <div class="hnf-cat__media"><img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hnf-cat-strength-v3.png?v=1789597529&width=700" loading="lazy" alt="Strength"></div>
+        <div class="hnf-cat__scrim"></div>
+        <div class="hnf-cat__body"><h3 class="hnf-cat__name">Strength</h3><span class="hnf-cat__link">Shop →</span></div>
+      </a>
+      <a class="hnf-cat" href="{{ coll_resistance.url | default: '/collections/all' }}">
+        <div class="hnf-cat__media"><img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hnf-cat-resistance-v4.png?v=1789597529&width=700" loading="lazy" alt="Core & Mobility"></div>
+        <div class="hnf-cat__scrim"></div>
+        <div class="hnf-cat__body"><h3 class="hnf-cat__name">Core &amp; Mobility</h3><span class="hnf-cat__link">Shop →</span></div>
+      </a>
+      <a class="hnf-cat" href="{{ coll_cardio.url | default: '/collections/all' }}">
+        <div class="hnf-cat__media"><img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hf_20260916_155319_7e9e21fe-1d09-4b48-ad58-9007e2c496ef.png?v=1789574022&width=700" loading="lazy" alt="Cardio"></div>
+        <div class="hnf-cat__scrim"></div>
+        <div class="hnf-cat__body"><h3 class="hnf-cat__name">Cardio</h3><span class="hnf-cat__link">Shop →</span></div>
+      </a>
+      <a class="hnf-cat" href="{{ coll_accessories.url | default: '/collections/all' }}">
+        <div class="hnf-cat__media"><img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hnf-cat-accessories-v3.png?v=1789597529&width=700" loading="lazy" alt="Recovery & Accessories"></div>
+        <div class="hnf-cat__scrim"></div>
+        <div class="hnf-cat__body"><h3 class="hnf-cat__name">Recovery &amp; Accessories</h3><span class="hnf-cat__link">Shop →</span></div>
+      </a>
+    </div>
+  </section>
+
+  {%- comment -%} 5. BENEFITS {%- endcomment -%}
+  <section class="hnf-section hnf-section--white">
+    <div class="page-width">
+      <div class="hnf-trust">
+        <div class="hnf-trust__item"><h3 class="hnf-trust__title">Built for home</h3><p class="hnf-trust__body">Equipment that fits real spaces.</p></div>
+        <div class="hnf-trust__item"><h3 class="hnf-trust__title">Simple to use</h3><p class="hnf-trust__body">No unnecessary complexity.</p></div>
+        <div class="hnf-trust__item"><h3 class="hnf-trust__title">Easy to build</h3><p class="hnf-trust__body">Start with one piece. Add what you need.</p></div>
+        <div class="hnf-trust__item"><h3 class="hnf-trust__title">Support when you need it</h3><p class="hnf-trust__body">We're here before and after your purchase.</p></div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 6. PROMO BANNER {%- endcomment -%}
+  <section class="hnf-section hnf-section--gray hnf-promo">
+    <div class="page-width">
+      <span class="hnf-promo__eyebrow">Limited time</span>
+      <h2>Get more. Spend less.</h2>
+      <div class="hnf-promo__boxes">
+        <div class="hnf-promo__box"><h3 class="hnf-promo__box-title">Free Shipping</h3><p class="hnf-promo__box-body">On every order over $100 — automatically applied at checkout.</p></div>
+        <div class="hnf-promo__box"><h3 class="hnf-promo__box-title">10% Off</h3><p class="hnf-promo__box-body">Your first order, any amount.</p><span class="hnf-promo__code">Code: FIRSTORDER10</span></div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 7. TRAIN SMARTER {%- endcomment -%}
+  <section class="hnf-section hnf-section--white" id="train-smarter">
+    <div class="page-width">
+      <div class="hnf-section__head">
+        <span class="hnf-eyebrow">Train smarter</span>
+        <h2 class="hnf-h2">Guides for building your setup.</h2>
+      </div>
+      <div class="hnf-guides">
+        <a class="hnf-guide" href="/pages/how-to-choose-home-gym-equipment">
+          <div class="hnf-guide__media"><img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hf_20260916_002426_20657ff3-b0cd-41ac-9ee9-b8a290f6877b.png?v=1789518303&width=900" loading="lazy" alt="How to choose the right home gym equipment"></div>
+          <div class="hnf-guide__body">
+            <span class="hnf-guide__label">Guide</span>
+            <h3 class="hnf-guide__title">How to choose the right equipment</h3>
+            <p class="hnf-guide__desc">Space, weight range, and capacity.</p>
+            <span class="hnf-guide__link">Read guide →</span>
+          </div>
+        </a>
+        <a class="hnf-guide" href="/pages/how-to-build-your-first-home-gym">
+          <div class="hnf-guide__media"><img src="https://cdn.shopify.com/s/files/1/0683/2354/1067/files/hf_20260916_002423_1a3020ec-0808-43be-9335-09da2249537d.png?v=1789518303&width=900" loading="lazy" alt="How to build your first home gym"></div>
+          <div class="hnf-guide__body">
+            <span class="hnf-guide__label">Guide</span>
+            <h3 class="hnf-guide__title">How to build your first home gym</h3>
+            <p class="hnf-guide__desc">Where to start, what to add second, and how to keep your space organized.</p>
+            <span class="hnf-guide__link">Read guide →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 8. FINAL CTA {%- endcomment -%}
+  <section class="hnf-final">
+    <h2 class="hnf-final__eyebrow">{{ section.settings.closing_heading | default: 'Start with one piece.' }}</h2>
+    <p class="hnf-final__sub">Build toward a full setup.</p>
+    <div class="hnf-cta-row">
+      <a class="hnf-btn" href="{{ routes.all_products_collection_url }}">Shop equipment →</a>
+    </div>
+    {%- render 'hnf-final-badges' -%}
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Hearth & Nook Fitness",
+  "tag": "section",
+  "class": "section-hnf-home",
+  "settings": [
+    { "type": "text", "id": "hero_kicker", "label": "Hero kicker", "default": "Hearth & Nook Fitness" },
+    { "type": "text", "id": "hero_heading", "label": "Hero heading", "default": "Build the home gym that actually gets used." },
+    { "type": "textarea", "id": "hero_body", "label": "Hero body" },
+    { "type": "text", "id": "closing_heading", "label": "Closing heading", "default": "Start with one piece." }
+  ],
+  "presets": [
+    { "name": "Hearth & Nook Fitness" }
+  ]
+}
+{% endschema %}
